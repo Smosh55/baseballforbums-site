@@ -95,11 +95,11 @@
           </div>
         </div>
 
-     <label>Jersey Wording</label>
-<input name="jerseyWording" placeholder="Text on your jersey" maxlength="10" />
+        <label>Jersey Wording (max 10 characters)</label>
+        <input name="jerseyWording" placeholder="Enter text for your jersey" maxlength="10" />
 
-<label>Jersey Number</label>
-<input name="jerseyNumber" type="number" min="0" max="99" placeholder="Your jersey number" />
+        <label>Jersey Number (0-99)</label>
+        <input name="jerseyNumber" type="number" min="0" max="99" placeholder="Enter jersey number" />
 
         <label>Notes</label>
         <textarea name="notes" placeholder="Anything we should know (injuries, schedule constraints, etc.)"></textarea>
@@ -122,7 +122,7 @@
   </main>
 
   <script>
-    const ENDPOINT = "YOUR_APPS_SCRIPT_WEB_APP_URL_HERE";
+    const ENDPOINT = "https://script.google.com/macros/s/AKfycbwXbq4JVsiVWyhC52XpOO3DXrqSY1eEjzTgsGbUnkFfxcvVwvNLn5fnHACveEZTjl2D/exec";
 
     const form = document.getElementById("regForm");
     const btn = document.getElementById("submitBtn");
