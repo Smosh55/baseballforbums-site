@@ -61,7 +61,7 @@
             <label>Jersey Size</label>
             <select name="jerseySize">
               <option value="">Select</option>
-              <option>S</option><option>M</option><option>L</option><option>XL</option><option>2XL</option><option>3XL</option>
+              <option>S</option><option>M</option><option>L</option><option>XL</option><option>2XL</option><option>3XL</option><option>4XL</option><option>5XL</option>
             </select>
           </div>
           <div>
@@ -95,12 +95,18 @@
           </div>
         </div>
 
+        <label>Jersey Wording</label>
+        <input name="jerseyWording" placeholder="Text on your jersey" />
+
+        <label>Jersey Number</label>
+        <input name="jerseyNumber" type="number" min="0" placeholder="Your jersey number" />
+
         <label>Notes</label>
         <textarea name="notes" placeholder="Anything we should know (injuries, schedule constraints, etc.)"></textarea>
 
         <label style="margin-top:16px;">
           <input type="checkbox" id="waiver" />
-          I agree to the league waiver and code of conduct *
+          I agree to the <a href="/waiver-and-conduct" target="_blank">league waiver and code of conduct</a> *
         </label>
 
         <button class="btn" id="submitBtn" type="submit">Submit & Pay $235</button>
@@ -116,7 +122,7 @@
   </main>
 
   <script>
-    const ENDPOINT = "https://script.google.com/macros/s/AKfycbwXbq4JVsiVWyhC52XpOO3DXrqSY1eEjzTgsGbUnkFfxcvVwvNLn5fnHACveEZTjl2D/exec";
+    const ENDPOINT = "YOUR_APPS_SCRIPT_WEB_APP_URL_HERE";
 
     const form = document.getElementById("regForm");
     const btn = document.getElementById("submitBtn");
