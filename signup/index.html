@@ -1,1 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Sign Up | Baseball For Bums</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body { margin:0; font-family: Arial, Helvetica, sans-serif; background:#0d1117; color:#fff; }
+    header { padding:24px 20px; background:#161b22; display:flex; justify-content:space-between; align-items:center; }
+    a { color:#fff; text-decoration:none; opacity:.9; }
+    main { max-width:720px; margin:40px auto; padding:0 16px; }
+    .card { background:#161b22; border:1px solid #2b2f36; border-radius:10px; padding:22px; }
+    h1 { margin:0 0 8px; font-size:28px; }
+    p { margin:0 0 18px; opacity:.85; }
+    label { display:block; margin:14px 0 6px; font-size:14px; opacity:.9; }
+    input, select, textarea {
+      width:100%; padding:12px; border-radius:8px; border:1px solid #2b2f36;
+      background:#0d1117; color:#fff; outline:none;
+    }
+    textarea { min-height:90px; resize:vertical; }
+    .row { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+    .btn {
+      margin-top:18px; width:100%; padding:14px; border-radius:8px; border:none;
+      background:#c62828; color:#fff; font-weight:700; cursor:pointer;
+    }
+    .btn:disabled { opacity:.6; cursor:not-allowed; }
+    .fine { margin-top:12px; font-size:12px; opacity:.7; line-height:1.4; }
+    .msg { margin-top:14px; padding:12px; border-radius:8px; display:none; }
+    .ok { background:#0b3; color:#001; }
+    .err { background:#b00020; }
+  </style>
+</head>
+<body>
+  <header>
+    <div><a href="/">Baseball For Bums</a></div>
+    <div><a href="/">Home</a></div>
+  </header>
 
+  <main>
+    <div class="card">
+      <h1>League Registration</h1>
+      <p>Staten Island • 1 Division • 6 Teams • Season starts April 16 • Fee $235</p>
+
+      <form id="regForm">
+        <label>Full Name *</label>
+        <input name="fullName" required />
+
+        <div class="row">
+          <div>
+            <label>Email *</label>
+            <input type="email" name="email" required />
+          </div>
+          <div>
+            <label>Phone *</label>
+            <input name="phone" required />
+          </div>
+        </div>
+
+        <div class="row">
+          <div>
+            <label>Jersey Size</label>
+            <select name="jerseySize">
+              <option value="">Select</option>
+              <option>S</option><option>M</option><option>L</option><option>XL</option><option>2XL</option><option>3XL</option>
+            </select>
+          </div>
+          <div>
+            <label>Preferred Position</label>
+            <select name="position">
+              <option value="">Select</option>
+              <option>Pitcher</option><option>Catcher</option><option>1B</option><option>2B</option><option>3B</option>
+              <option>SS</option><option>LF</option><option>CF</option><option>RF</option><option>Utility</option>
+            </select>
+          </div>
+        </div>
+
+        <label>Experience</label>
+        <select name="experience">
+          <option value="">Select</option>
+          <option>Beginner</option>
+          <option>Some experience</option>
+          <option>High school</option>
+          <option>College</option>
+          <option>Adult leagues</option>
+        </select>
+
+        <div class="row">
+          <div>
+            <label>Emergency Contact Name</label>
+            <input name="emergencyName" />
+          </div>
+          <div>
+            <label>Emergency Contact Phone</label>
+            <input name="emergencyPhone" />
+          </div>
+        </div>
+
+        <label>Notes</label>
+        <textarea name="notes" placeholder="Anything we should know (injuries, schedule constraints, etc.)"></textarea>
+
+        <label style="margin-top:16px;">
+          <input type="checkbox" id="waiver" />
+          I agree to the league waiver and code of conduct *
+        </label>
+
+        <button class="btn" id="submitBtn" type="submit">Submit & Pay $235</button>
+
+        <div class="msg ok" id="okMsg"></div>
+        <div class="msg err" id="errMsg"></div>
+
+        <div class="fine">
+          After submitting, you’ll be redirected to secure checkout. If the league is full, you’ll be waitlisted automatically.
+        </div>
+      </form>
+    </div>
+  </main>
+
+  <script>
+    const ENDPOINT = "https://script.google.com/macros/s/AKfycbwXbq4JVsiVWyhC52XpOO3DXrqSY1eEjzTgsGbUnkFfxcvVwvNLn5fnHACveEZTjl2D/exec";
+
+    const form = document.getElementById("regForm");
+    const btn = document.getElementById("submitBtn");
+    const okMsg = document.getElementById("okMsg");
+    const errMsg = document.getElementById("errMsg");
+    const waiver = document.getElementById("waiver");
+
+    function show(el, text) {
+      el.style.display = "block";
+      el.textContent = text;
+    }
+    function hide(el) { el.style.display = "none"; el.textContent = ""; }
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      hide(okMsg); hide(errMsg);
+
+      if (!waiver.checked) {
+        show(errMsg, "You must accept the waiver to register.");
+        return;
+      }
+
+      btn.disabled = true;
+      btn.textContent = "Submitting...";
+
+      try {
+        const fd = new FormData(form);
+        fd.set("waiverAccepted", "yes");
+        fd.set("userAgent", navigator.userAgent);
+
+        const res = await fetch(ENDPOINT, { method: "POST", body: fd });
+        const data = await res.json();
+
+        if (!data.ok) throw new Error(data.error || "Submission failed.");
+
+        if (data.status === "WAITLIST") {
+          show(okMsg, `You’re on the WAITLIST. Registration ID: ${data.registrationId}. Check your email for confirmation.`);
+          btn.textContent = "Submitted (Waitlist)";
+          return; // do NOT redirect to payment if waitlisted (you can change this if you want)
+        }
+
+        show(okMsg, `You’re CONFIRMED. Redirecting to payment... (ID: ${data.registrationId})`);
+
+        if (data.stripePaymentUrl) {
+          // Redirect to Stripe Payment Link
+          window.location.href = data.stripePaymentUrl;
+        } else {
+          btn.textContent = "Submitted (Payment link missing)";
+        }
+
+      } catch (err) {
+        show(errMsg, err.message || "Something went wrong.");
+        btn.disabled = false;
+        btn.textContent = "Submit & Pay $235";
+      }
+    });
+  </script>
+</body>
+</html>
