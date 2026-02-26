@@ -4,163 +4,443 @@
   <meta charset="UTF-8" />
   <title>Sign Up | Baseball For Bums</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
- <style>
-body {
-  margin: 0;
-  font-family: Arial, Helvetica, sans-serif;
-  background: #0d1117;
-  color: #fff;
-}
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
 
-header {
-  padding: 24px 20px;
-  background: #161b22;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
+    :root {
+      --red: #e02020;
+      --red-dark: #b01818;
+      --navy: #0b1120;
+      --navy-mid: #111827;
+      --navy-light: #1a2235;
+      --border: #252f45;
+      --text: #e8edf5;
+      --muted: #6b7a99;
+      --accent: #e8c84a;
+    }
 
-main {
-  max-width: 1100px;
-  margin: 60px auto;
-  padding: 0 20px;
-}
+    body {
+      margin: 0;
+      font-family: 'Barlow', sans-serif;
+      background: var(--navy);
+      color: var(--text);
+      min-height: 100vh;
+    }
 
-.twoCards {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 28px;
-}
+    /* ── HEADER ── */
+    header {
+      background: var(--navy-mid);
+      border-bottom: 1px solid var(--border);
+      padding: 0 32px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
 
-.card {
-  background: #161b22;
-  border: 1px solid #2b2f36;
-  border-radius: 14px;
-  padding: 28px;
-}
+    .logo {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-size: 22px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--text);
+      text-decoration: none;
+    }
+    .logo span { color: var(--red); }
 
-h1 {
-  margin-bottom: 10px;
-  font-size: 26px;
-}
+    nav { display: flex; gap: 24px; align-items: center; }
+    nav a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      transition: color .2s;
+    }
+    nav a:hover { color: var(--text); }
 
-h2 {
-  margin-bottom: 14px;
-  font-size: 20px;
-}
+    .badge {
+      background: var(--red);
+      color: #fff;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 4px;
+    }
 
-p {
-  margin-bottom: 18px;
-  line-height: 1.5;
-  opacity: .9;
-}
+    /* ── HERO STRIP ── */
+    .hero {
+      background: linear-gradient(135deg, #0e1829 0%, #1a0a0a 100%);
+      border-bottom: 3px solid var(--red);
+      padding: 52px 32px 44px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        -45deg,
+        transparent,
+        transparent 40px,
+        rgba(255,255,255,.012) 40px,
+        rgba(255,255,255,.012) 41px
+      );
+    }
+    .hero-eyebrow {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 14px;
+    }
+    .hero h1 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-size: clamp(40px, 6vw, 68px);
+      line-height: 1;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+      margin: 0 0 18px;
+      color: #fff;
+    }
+    .hero h1 em {
+      font-style: normal;
+      color: var(--accent);
+    }
+    .hero-stats {
+      display: inline-flex;
+      gap: 0;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      margin-top: 6px;
+    }
+    .stat {
+      padding: 14px 28px;
+      text-align: center;
+      border-right: 1px solid var(--border);
+      background: rgba(255,255,255,.04);
+    }
+    .stat:last-child { border-right: none; }
+    .stat-num {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 800;
+      font-size: 26px;
+      color: #fff;
+      line-height: 1;
+    }
+    .stat-lbl {
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-top: 4px;
+    }
 
-label {
-  display: block;
-  margin-top: 16px;
-  margin-bottom: 6px;
-  font-size: 14px;
-}
+    /* ── LAYOUT ── */
+    main {
+      max-width: 1140px;
+      margin: 0 auto;
+      padding: 48px 24px 80px;
+      display: grid;
+      grid-template-columns: 1fr 420px;
+      gap: 32px;
+      align-items: start;
+    }
 
-input, select, textarea {
-  width: 100%;
-  padding: 12px;
-  border-radius: 10px;
-  border: 1px solid #2b2f36;
-  background: #0d1117;
-  color: #fff;
-}
+    /* ── CARDS ── */
+    .card {
+      background: var(--navy-mid);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+    .card-header {
+      padding: 22px 28px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .card-header h2 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 800;
+      font-size: 20px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin: 0;
+      color: #fff;
+    }
+    .card-num {
+      width: 30px; height: 30px;
+      background: var(--red);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 800;
+      font-size: 15px;
+      flex-shrink: 0;
+    }
+    .card-body { padding: 28px; }
 
-textarea {
-  min-height: 100px;
-  resize: vertical;
-}
+    /* ── FORM ── */
+    .field-group { margin-bottom: 20px; }
+    .field-group label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 7px;
+    }
+    .field-group label .req { color: var(--red); margin-left: 2px; }
+    .field-group input,
+    .field-group select,
+    .field-group textarea {
+      width: 100%;
+      padding: 11px 14px;
+      background: var(--navy);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      font-family: 'Barlow', sans-serif;
+      font-size: 15px;
+      outline: none;
+      transition: border-color .2s, box-shadow .2s;
+      -webkit-appearance: none;
+    }
+    .field-group input:focus,
+    .field-group select:focus,
+    .field-group textarea:focus {
+      border-color: var(--red);
+      box-shadow: 0 0 0 3px rgba(224,32,32,.15);
+    }
+    .field-group select option { background: #1a2235; }
+    .field-group textarea { min-height: 90px; resize: vertical; }
 
-.row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
-}
+    .row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
 
-.btn {
-  margin-top: 24px;
-  width: 100%;
-  padding: 14px;
-  border-radius: 10px;
-  border: none;
-  background: #c62828;
-  color: white;
-  font-weight: 700;
-  cursor: pointer;
-}
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin: 24px 0;
+    }
+    .section-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 18px;
+    }
 
-.btn:hover {
-  filter: brightness(1.05);
-}
+    /* Waiver */
+    .waiver-box {
+      background: var(--navy);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px;
+      margin-bottom: 22px;
+    }
+    .waiver-check {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+    .waiver-check input[type="checkbox"] {
+      width: 18px; height: 18px;
+      margin-top: 2px;
+      accent-color: var(--red);
+      flex-shrink: 0;
+      cursor: pointer;
+    }
+    .waiver-check span {
+      font-size: 14px;
+      line-height: 1.5;
+      color: var(--text);
+    }
+    .waiver-check a { color: var(--red); text-decoration: none; }
+    .waiver-check a:hover { text-decoration: underline; }
+    .waiver-fine {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 10px;
+      line-height: 1.5;
+      padding-left: 30px;
+    }
 
-.notice {
-  margin-top: 16px;
-  padding: 14px;
-  border-radius: 12px;
-  background: #0d1117;
-  border: 1px solid #2b2f36;
-  font-size: 14px;
-  line-height: 1.4;
-}
+    /* Submit button */
+    .btn-submit {
+      width: 100%;
+      padding: 15px;
+      background: var(--red);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 800;
+      font-size: 18px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background .2s, transform .1s;
+    }
+    .btn-submit:hover:not(:disabled) { background: #c41a1a; }
+    .btn-submit:active:not(:disabled) { transform: scale(.99); }
+    .btn-submit:disabled { opacity: .65; cursor: not-allowed; }
 
-ul {
-  padding-left: 18px;
-  margin-top: 10px;
-}
+    /* Messages */
+    .msg {
+      display: none;
+      margin-top: 14px;
+      padding: 14px 16px;
+      border-radius: 8px;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    .msg.ok {
+      background: rgba(34,197,94,.1);
+      border: 1px solid rgba(34,197,94,.3);
+      color: #4ade80;
+    }
+    .msg.err {
+      background: rgba(224,32,32,.1);
+      border: 1px solid rgba(224,32,32,.3);
+      color: #f87171;
+    }
 
-li {
-  margin-bottom: 8px;
-}
+    /* ── SCHEDULE CARD ── */
+    .schedule-list { list-style: none; margin: 0; padding: 0; }
+    .schedule-list li {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      padding: 11px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 15px;
+    }
+    .schedule-list li:last-child { border-bottom: none; }
+    .sched-date {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-size: 17px;
+      color: #fff;
+      min-width: 60px;
+    }
+    .sched-label {
+      font-size: 13px;
+      color: var(--muted);
+      flex: 1;
+      padding: 0 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .sched-time {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 600;
+      font-size: 15px;
+      color: var(--accent);
+    }
+    .sched-special { color: var(--red); }
 
-@media (max-width: 900px) {
-  .twoCards {
-    grid-template-columns: 1fr;
-  }
-}
-</style>
+    .info-box {
+      background: var(--navy);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 16px;
+      margin-top: 16px;
+      font-size: 13px;
+      line-height: 1.6;
+      color: var(--muted);
+    }
+    .info-box strong { color: var(--text); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 860px) {
+      main { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 600px) {
+      .row-2, .row-3 { grid-template-columns: 1fr; }
+      .hero-stats { flex-wrap: wrap; }
+      .stat { border-bottom: 1px solid var(--border); }
+    }
+  </style>
 </head>
 <body>
+
   <header>
-    <div><a href="/">Baseball For Bums</a></div>
-    <div style="display:flex; gap:14px; align-items:center;">
-      <span class="pill">Staten Island</span>
+    <a href="/" class="logo">Baseball <span>For Bums</span></a>
+    <nav>
+      <span class="badge">Staten Island</span>
       <a href="/">Home</a>
-    </div>
+    </nav>
   </header>
 
-  <main>
-    <div class="twoCards">
+  <div class="hero">
+    <div class="hero-eyebrow">⚾ Spring Season Registration</div>
+    <h1>Sign Up for the <em>League</em></h1>
+    <div class="hero-stats">
+      <div class="stat"><div class="stat-num">1</div><div class="stat-lbl">Division</div></div>
+      <div class="stat"><div class="stat-num">6</div><div class="stat-lbl">Teams</div></div>
+      <div class="stat"><div class="stat-num">$235</div><div class="stat-lbl">Entry Fee</div></div>
+      <div class="stat"><div class="stat-num">66</div><div class="stat-lbl">Player Cap</div></div>
+    </div>
+  </div>
 
-      <!-- LEFT: SIGNUP FORM -->
-      <div class="card">
-        <h1>Spring League Registration</h1>
-        <p>
-          1 Division • 6 Teams • Fee <strong>$235</strong> • Player cap <strong>66</strong><br/>
-          <strong>Important:</strong> Signing up does <strong>NOT</strong> guarantee a spot. You will receive an email confirming whether you are <strong>CONFIRMED</strong> or on the <strong>WAITLIST</strong>.
+  <main>
+
+    <!-- FORM -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-num">1</div>
+        <h2>Your Information</h2>
+      </div>
+      <div class="card-body">
+
+        <p style="font-size:14px; color:var(--muted); margin:0 0 24px; line-height:1.6;">
+          Submitting does <strong style="color:var(--text);">not</strong> guarantee a spot. You'll receive an email confirming <strong style="color:var(--text);">CONFIRMED</strong> or <strong style="color:var(--text);">WAITLIST</strong> status.
         </p>
 
         <form id="regForm">
-          <label>Full Name *</label>
-          <input name="fullName" required />
 
-          <div class="row">
-            <div>
-              <label>Email *</label>
-              <input type="email" name="email" required />
+          <div class="field-group">
+            <label>Full Name <span class="req">*</span></label>
+            <input name="fullName" required placeholder="Jane Smith" />
+          </div>
+
+          <div class="row-2">
+            <div class="field-group">
+              <label>Email <span class="req">*</span></label>
+              <input type="email" name="email" required placeholder="jane@example.com" />
             </div>
-            <div>
-              <label>Phone *</label>
-              <input name="phone" required />
+            <div class="field-group">
+              <label>Phone <span class="req">*</span></label>
+              <input name="phone" required placeholder="(917) 555-0100" />
             </div>
           </div>
 
-          <div class="row">
-            <div>
+          <div class="divider"></div>
+          <div class="section-label">Player Details</div>
+
+          <div class="row-3">
+            <div class="field-group">
               <label>Jersey Size</label>
               <select name="jerseySize">
                 <option value="">Select</option>
@@ -168,125 +448,109 @@ li {
                 <option>2XL</option><option>3XL</option><option>4XL</option><option>5XL</option>
               </select>
             </div>
-            <div>
+            <div class="field-group">
+              <label>Jersey Name <span style="font-size:10px;">(max 10)</span></label>
+              <input name="jerseyWording" placeholder="Yanky K" maxlength="10" />
+            </div>
+            <div class="field-group">
+              <label>Jersey Number <span style="font-size:10px;">(0–99)</span></label>
+              <input name="jerseyNumber" type="number" min="0" max="99" placeholder="24" />
+            </div>
+          </div>
+
+          <div class="row-2">
+            <div class="field-group">
               <label>Preferred Position</label>
               <select name="position">
                 <option value="">Select</option>
-                <option>Pitcher</option><option>Catcher</option><option>1B</option><option>2B</option><option>3B</option>
-                <option>SS</option><option>LF</option><option>CF</option><option>RF</option><option>Utility</option>
+                <option>Pitcher</option><option>Catcher</option><option>1B</option><option>2B</option>
+                <option>3B</option><option>SS</option><option>LF</option><option>CF</option>
+                <option>RF</option><option>Utility</option>
+              </select>
+            </div>
+            <div class="field-group">
+              <label>Experience Level</label>
+              <select name="experience">
+                <option value="">Select</option>
+                <option>Beginner</option>
+                <option>Some experience</option>
+                <option>High school</option>
+                <option>College</option>
+                <option>Adult leagues</option>
               </select>
             </div>
           </div>
 
-          <label>Experience</label>
-          <select name="experience">
-            <option value="">Select</option>
-            <option>Beginner</option>
-            <option>Some experience</option>
-            <option>High school</option>
-            <option>College</option>
-            <option>Adult leagues</option>
-          </select>
-
-          <div class="row">
-            <div>
-              <label>Emergency Contact Name</label>
-              <input name="emergencyName" />
-            </div>
-            <div>
-              <label>Emergency Contact Phone</label>
-              <input name="emergencyPhone" />
-            </div>
+          <div class="field-group">
+            <label>Notes</label>
+            <textarea name="notes" placeholder="Injuries, schedule conflicts, anything we should know…"></textarea>
           </div>
 
-          <div class="row">
-            <div>
-              <label>Jersey Wording (max 10 characters)</label>
-              <input name="jerseyWording" placeholder="Ex: SMOSH55" maxlength="10" />
-            </div>
-            <div>
-              <label>Jersey Number (0–99)</label>
-              <input name="jerseyNumber" type="number" min="0" max="99" placeholder="Ex: 24" />
-            </div>
-          </div>
+          <div class="divider"></div>
 
-          <label>Notes</label>
-          <textarea name="notes" placeholder="Anything we should know (injuries, schedule constraints, etc.)"></textarea>
-
-          <div class="notice">
-            <label style="margin:0;">
+          <div class="waiver-box">
+            <div class="waiver-check">
               <input type="checkbox" id="waiver" />
-              I agree to the <a href="/waiver-and-conduct" target="_blank">league waiver and code of conduct</a> *
-            </label>
-            <div class="fine">
-              By registering, you acknowledge that availability, schedule changes, and league decisions are handled by league administration.
+              <span>I agree to the <a href="/waiver-and-conduct" target="_blank">league waiver and code of conduct</a> <span class="req" style="color:var(--red);">*</span></span>
             </div>
+            <div class="waiver-fine">By registering, you acknowledge that availability, schedule changes, and league decisions are handled by league administration.</div>
           </div>
 
-          <button class="btn" id="submitBtn" type="submit">Submit Registration</button>
+          <button class="btn-submit" id="submitBtn" type="submit">Submit Registration →</button>
 
           <div class="msg ok" id="okMsg"></div>
           <div class="msg err" id="errMsg"></div>
 
-          <div class="fine">
-            After submitting, you’ll receive an email with your registration status (CONFIRMED or WAITLIST).
-          </div>
         </form>
       </div>
+    </div>
 
-      <!-- RIGHT: SCHEDULE CARD -->
+    <!-- SCHEDULE -->
+    <div>
       <div class="card">
-        <h2>Spring Schedule</h2>
-        <p class="subtle">
-          Please review before registering. Times are as listed. Some playoff/champ dates are flexible.
-        </p>
-
-       <ul>
-  <li><strong>4/18</strong> — 9:30 PM</li>
-  <li><strong>4/25</strong> — 9:30 PM</li>
-  <li><strong>5/2</strong> — 9:30 PM</li>
-  <li><strong>5/9</strong> — 9:30 PM</li>
-  <li><strong>5/16</strong> — 10:00 PM</li>
-  <li><strong>5/26</strong> — 10:00 PM or 9:30 PM</li>
-  <li><strong>5/30</strong> — 10:00 PM</li>
-  <li><strong>Playoffs</strong> — 6/6 or 6/7</li>
-  <li><strong>Championship Game</strong> — 6/13 or 6/14</li>
-  <li><strong>All-Star Game</strong> — 6/16</li>
-</ul>
-
-        <div class="notice" style="margin-top:14px;">
-          <p style="margin:0;" class="subtle">
-            <strong>Rainout policy:</strong> If a game is rained out, it will be played the following Tuesday.
-          </p>
+        <div class="card-header">
+          <div class="card-num">2</div>
+          <h2>Spring Schedule</h2>
         </div>
+        <div class="card-body">
+          <p style="font-size:13px; color:var(--muted); margin:0 0 18px; line-height:1.6;">Review before registering. Playoff and championship dates are flexible.</p>
 
-        <div class="notice" style="margin-top:14px;">
-          <p style="margin:0;" class="subtle">
-            <strong>Reminder:</strong> Signing up does <strong>NOT</strong> guarantee a spot. If the league reaches capacity, new signups will be placed on the waitlist.
-          </p>
+          <ul class="schedule-list">
+            <li><span class="sched-date">4/18</span><span class="sched-label"></span><span class="sched-time">9:30 PM</span></li>
+            <li><span class="sched-date">4/25</span><span class="sched-label"></span><span class="sched-time">9:30 PM</span></li>
+            <li><span class="sched-date">5/2</span><span class="sched-label"></span><span class="sched-time">9:30 PM</span></li>
+            <li><span class="sched-date">5/9</span><span class="sched-label"></span><span class="sched-time">9:30 PM</span></li>
+            <li><span class="sched-date">5/16</span><span class="sched-label"></span><span class="sched-time">10:00 PM</span></li>
+            <li><span class="sched-date">5/26</span><span class="sched-label"></span><span class="sched-time">10:00 / 9:30 PM</span></li>
+            <li><span class="sched-date">5/30</span><span class="sched-label"></span><span class="sched-time">10:00 PM</span></li>
+            <li><span class="sched-date">6/6–6/7</span><span class="sched-label sched-special">Playoffs</span><span class="sched-time" style="color:var(--muted);">TBD</span></li>
+            <li><span class="sched-date">6/13–6/14</span><span class="sched-label sched-special">Championship</span><span class="sched-time" style="color:var(--muted);">TBD</span></li>
+            <li><span class="sched-date">6/16</span><span class="sched-label sched-special">All-Star Game</span><span class="sched-time" style="color:var(--muted);">TBD</span></li>
+          </ul>
+
+          <div class="info-box">
+            <strong>☔ Rainout Policy:</strong> Rained-out games will be made up the following Tuesday.
+          </div>
+          <div class="info-box">
+            <strong>⚠️ Reminder:</strong> Signing up does <strong>not</strong> guarantee a spot. If the league reaches capacity, you'll be placed on the waitlist.
+          </div>
         </div>
       </div>
-
     </div>
+
   </main>
 
   <script>
-    // Google Apps Script Web App endpoint:
     const ENDPOINT = "https://script.google.com/macros/s/AKfycbwXbq4JVsiVWyhC52XpOO3DXrqSY1eEjzTgsGbUnkFfxcvVwvNLn5fnHACveEZTjl2D/exec";
-
     const form = document.getElementById("regForm");
     const btn = document.getElementById("submitBtn");
     const okMsg = document.getElementById("okMsg");
     const errMsg = document.getElementById("errMsg");
     const waiver = document.getElementById("waiver");
 
-    function show(el, text) {
-      el.style.display = "block";
-      el.textContent = text;
-    }
+    function show(el, text) { el.style.display = "block"; el.textContent = text; }
     function hide(el) { el.style.display = "none"; el.textContent = ""; }
 
-    // Extra front-end validation for jersey number: force 0-99 and max 2 digits
     function normalizeJerseyNumber(v) {
       if (v === "" || v === null || typeof v === "undefined") return "";
       const n = parseInt(String(v), 10);
@@ -305,12 +569,11 @@ li {
         return;
       }
 
-      // clamp jersey number
       const jerseyNumInput = form.querySelector('input[name="jerseyNumber"]');
       jerseyNumInput.value = normalizeJerseyNumber(jerseyNumInput.value);
 
       btn.disabled = true;
-      btn.textContent = "Submitting...";
+      btn.textContent = "Submitting…";
 
       try {
         const fd = new FormData(form);
@@ -323,18 +586,17 @@ li {
         if (!data.ok) throw new Error(data.error || "Submission failed.");
 
         if (data.status === "WAITLIST") {
-          show(okMsg, `You’re on the WAITLIST. Registration ID: ${data.registrationId}. Check your email for confirmation.`);
-          btn.textContent = "Submitted (Waitlist)";
+          show(okMsg, `You're on the WAITLIST. Registration ID: ${data.registrationId}. Check your email for confirmation.`);
+          btn.textContent = "Submitted — Waitlist";
           return;
         }
 
-        show(okMsg, `Registration received. Status: CONFIRMED. Registration ID: ${data.registrationId}. Check your email for next steps.`);
-        btn.textContent = "Submitted (Confirmed)";
-
+        show(okMsg, `Registration received! Status: CONFIRMED. Registration ID: ${data.registrationId}. Check your email for next steps.`);
+        btn.textContent = "Submitted — Confirmed ✓";
       } catch (err) {
-        show(errMsg, err.message || "Something went wrong.");
+        show(errMsg, err.message || "Something went wrong. Please try again.");
         btn.disabled = false;
-        btn.textContent = "Submit Registration";
+        btn.textContent = "Submit Registration →";
       }
     });
   </script>
