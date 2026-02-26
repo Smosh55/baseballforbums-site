@@ -8,120 +8,193 @@
     body { margin:0; font-family: Arial, Helvetica, sans-serif; background:#0d1117; color:#fff; }
     header { padding:24px 20px; background:#161b22; display:flex; justify-content:space-between; align-items:center; }
     a { color:#fff; text-decoration:none; opacity:.9; }
-    main { max-width:720px; margin:40px auto; padding:0 16px; }
-    .card { background:#161b22; border:1px solid #2b2f36; border-radius:10px; padding:22px; }
+    a:hover { opacity:1; }
+    main { max-width:820px; margin:40px auto; padding:0 16px; }
+    .card { background:#161b22; border:1px solid #2b2f36; border-radius:12px; padding:22px; }
     h1 { margin:0 0 8px; font-size:28px; }
-    p { margin:0 0 18px; opacity:.85; }
+    h2 { margin:0 0 8px; font-size:18px; }
+    p { margin:0 0 18px; opacity:.85; line-height:1.45; }
     label { display:block; margin:14px 0 6px; font-size:14px; opacity:.9; }
     input, select, textarea {
-      width:100%; padding:12px; border-radius:8px; border:1px solid #2b2f36;
+      width:100%; padding:12px; border-radius:10px; border:1px solid #2b2f36;
       background:#0d1117; color:#fff; outline:none;
     }
+    input:focus, select:focus, textarea:focus { border-color:#3b82f6; }
     textarea { min-height:90px; resize:vertical; }
     .row { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
     .btn {
-      margin-top:18px; width:100%; padding:14px; border-radius:8px; border:none;
+      margin-top:18px; width:100%; padding:14px; border-radius:10px; border:none;
       background:#c62828; color:#fff; font-weight:700; cursor:pointer;
     }
+    .btn:hover { filter: brightness(1.05); }
     .btn:disabled { opacity:.6; cursor:not-allowed; }
-    .fine { margin-top:12px; font-size:12px; opacity:.7; line-height:1.4; }
-    .msg { margin-top:14px; padding:12px; border-radius:8px; display:none; }
-    .ok { background:#0b3; color:#001; }
-    .err { background:#b00020; }
+    .fine { margin-top:12px; font-size:12px; opacity:.7; line-height:1.45; }
+    .msg { margin-top:14px; padding:12px; border-radius:10px; display:none; }
+    .ok { background:#16a34a; color:#052e12; }
+    .err { background:#b00020; color:#fff; }
+    .pill {
+      display:inline-block; font-size:12px; padding:6px 10px; border-radius:999px;
+      border:1px solid #2b2f36; background:#0d1117; opacity:.9;
+    }
+    ul { margin:10px 0 0; padding-left:18px; }
+    li { margin:6px 0; }
+    .subtle { opacity:.85; font-size:14px; line-height:1.45; }
+    .notice {
+      margin-top:10px; padding:12px; border-radius:10px;
+      background:#0d1117; border:1px solid #2b2f36;
+    }
+    .twoCards { display:grid; grid-template-columns: 1.15fr 0.85fr; gap:14px; }
+    @media (max-width: 860px) { .twoCards { grid-template-columns: 1fr; } }
   </style>
 </head>
 <body>
   <header>
     <div><a href="/">Baseball For Bums</a></div>
-    <div><a href="/">Home</a></div>
+    <div style="display:flex; gap:14px; align-items:center;">
+      <span class="pill">Staten Island</span>
+      <a href="/">Home</a>
+    </div>
   </header>
 
   <main>
-    <div class="card">
-      <h1>League Registration</h1>
-      <p>Staten Island • 1 Division • 6 Teams • Season starts April 16 • Fee $235</p>
+    <div class="twoCards">
 
-      <form id="regForm">
-        <label>Full Name *</label>
-        <input name="fullName" required />
+      <!-- LEFT: SIGNUP FORM -->
+      <div class="card">
+        <h1>Spring League Registration</h1>
+        <p>
+          1 Division • 6 Teams • Fee <strong>$235</strong> • Player cap <strong>66</strong><br/>
+          <strong>Important:</strong> Signing up does <strong>NOT</strong> guarantee a spot. You will receive an email confirming whether you are <strong>CONFIRMED</strong> or on the <strong>WAITLIST</strong>.
+        </p>
 
-        <div class="row">
-          <div>
-            <label>Email *</label>
-            <input type="email" name="email" required />
+        <form id="regForm">
+          <label>Full Name *</label>
+          <input name="fullName" required />
+
+          <div class="row">
+            <div>
+              <label>Email *</label>
+              <input type="email" name="email" required />
+            </div>
+            <div>
+              <label>Phone *</label>
+              <input name="phone" required />
+            </div>
           </div>
-          <div>
-            <label>Phone *</label>
-            <input name="phone" required />
+
+          <div class="row">
+            <div>
+              <label>Jersey Size</label>
+              <select name="jerseySize">
+                <option value="">Select</option>
+                <option>S</option><option>M</option><option>L</option><option>XL</option>
+                <option>2XL</option><option>3XL</option><option>4XL</option><option>5XL</option>
+              </select>
+            </div>
+            <div>
+              <label>Preferred Position</label>
+              <select name="position">
+                <option value="">Select</option>
+                <option>Pitcher</option><option>Catcher</option><option>1B</option><option>2B</option><option>3B</option>
+                <option>SS</option><option>LF</option><option>CF</option><option>RF</option><option>Utility</option>
+              </select>
+            </div>
           </div>
+
+          <label>Experience</label>
+          <select name="experience">
+            <option value="">Select</option>
+            <option>Beginner</option>
+            <option>Some experience</option>
+            <option>High school</option>
+            <option>College</option>
+            <option>Adult leagues</option>
+          </select>
+
+          <div class="row">
+            <div>
+              <label>Emergency Contact Name</label>
+              <input name="emergencyName" />
+            </div>
+            <div>
+              <label>Emergency Contact Phone</label>
+              <input name="emergencyPhone" />
+            </div>
+          </div>
+
+          <div class="row">
+            <div>
+              <label>Jersey Wording (max 10 characters)</label>
+              <input name="jerseyWording" placeholder="Ex: SMOSH55" maxlength="10" />
+            </div>
+            <div>
+              <label>Jersey Number (0–99)</label>
+              <input name="jerseyNumber" type="number" min="0" max="99" placeholder="Ex: 24" />
+            </div>
+          </div>
+
+          <label>Notes</label>
+          <textarea name="notes" placeholder="Anything we should know (injuries, schedule constraints, etc.)"></textarea>
+
+          <div class="notice">
+            <label style="margin:0;">
+              <input type="checkbox" id="waiver" />
+              I agree to the <a href="/waiver-and-conduct" target="_blank">league waiver and code of conduct</a> *
+            </label>
+            <div class="fine">
+              By registering, you acknowledge that availability, schedule changes, and league decisions are handled by league administration.
+            </div>
+          </div>
+
+          <button class="btn" id="submitBtn" type="submit">Submit Registration</button>
+
+          <div class="msg ok" id="okMsg"></div>
+          <div class="msg err" id="errMsg"></div>
+
+          <div class="fine">
+            After submitting, you’ll receive an email with your registration status (CONFIRMED or WAITLIST).
+          </div>
+        </form>
+      </div>
+
+      <!-- RIGHT: SCHEDULE CARD -->
+      <div class="card">
+        <h2>Spring Schedule</h2>
+        <p class="subtle">
+          Please review before registering. Times are as listed. Some playoff/champ dates are flexible.
+        </p>
+
+        <ul class="subtle">
+          <li><strong>4/18</strong> — 9:30 PM</li>
+          <li><strong>4/25</strong> — 9:30 PM</li>
+          <li><strong>5/2</strong> — 9:30 PM</li>
+          <li><strong>5/9</strong> — 9:30 PM</li>
+          <li><strong>5/16</strong> — 10:00 PM</li>
+          <li><strong>5/26</strong> — 10:00 PM <em>or</em> 9:30 PM</li>
+          <li><strong>5/30</strong> — 10:00 PM</li>
+          <li><strong>Playoffs</strong> — 6/6 <em>or</em> 6/7</li>
+          <li><strong>Championship</strong> — 6/13 <em>or</em> 6/14</li>
+          <li><strong>All-Star</strong> — 6/16</li>
+        </ul>
+
+        <div class="notice" style="margin-top:14px;">
+          <p style="margin:0;" class="subtle">
+            <strong>Rainout policy:</strong> If a game is rained out, it will be played the following Tuesday.
+          </p>
         </div>
 
-        <div class="row">
-          <div>
-            <label>Jersey Size</label>
-            <select name="jerseySize">
-              <option value="">Select</option>
-              <option>S</option><option>M</option><option>L</option><option>XL</option><option>2XL</option><option>3XL</option><option>4XL</option><option>5XL</option>
-            </select>
-          </div>
-          <div>
-            <label>Preferred Position</label>
-            <select name="position">
-              <option value="">Select</option>
-              <option>Pitcher</option><option>Catcher</option><option>1B</option><option>2B</option><option>3B</option>
-              <option>SS</option><option>LF</option><option>CF</option><option>RF</option><option>Utility</option>
-            </select>
-          </div>
+        <div class="notice" style="margin-top:14px;">
+          <p style="margin:0;" class="subtle">
+            <strong>Reminder:</strong> Signing up does <strong>NOT</strong> guarantee a spot. If the league reaches capacity, new signups will be placed on the waitlist.
+          </p>
         </div>
+      </div>
 
-        <label>Experience</label>
-        <select name="experience">
-          <option value="">Select</option>
-          <option>Beginner</option>
-          <option>Some experience</option>
-          <option>High school</option>
-          <option>College</option>
-          <option>Adult leagues</option>
-        </select>
-
-        <div class="row">
-          <div>
-            <label>Emergency Contact Name</label>
-            <input name="emergencyName" />
-          </div>
-          <div>
-            <label>Emergency Contact Phone</label>
-            <input name="emergencyPhone" />
-          </div>
-        </div>
-
-        <label>Jersey Wording (max 10 characters)</label>
-        <input name="jerseyWording" placeholder="Enter text for your jersey" maxlength="10" />
-
-        <label>Jersey Number (0-99)</label>
-        <input name="jerseyNumber" type="number" min="0" max="99" placeholder="Enter jersey number" />
-
-        <label>Notes</label>
-        <textarea name="notes" placeholder="Anything we should know (injuries, schedule constraints, etc.)"></textarea>
-
-        <label style="margin-top:16px;">
-          <input type="checkbox" id="waiver" />
-          I agree to the <a href="/waiver-and-conduct" target="_blank">league waiver and code of conduct</a> *
-        </label>
-
-        <button class="btn" id="submitBtn" type="submit">Submit & Pay $235</button>
-
-        <div class="msg ok" id="okMsg"></div>
-        <div class="msg err" id="errMsg"></div>
-
-        <div class="fine">
-          After submitting, you’ll be redirected to secure checkout. If the league is full, you’ll be waitlisted automatically.
-        </div>
-      </form>
     </div>
   </main>
 
   <script>
+    // Google Apps Script Web App endpoint:
     const ENDPOINT = "https://script.google.com/macros/s/AKfycbwXbq4JVsiVWyhC52XpOO3DXrqSY1eEjzTgsGbUnkFfxcvVwvNLn5fnHACveEZTjl2D/exec";
 
     const form = document.getElementById("regForm");
@@ -136,6 +209,16 @@
     }
     function hide(el) { el.style.display = "none"; el.textContent = ""; }
 
+    // Extra front-end validation for jersey number: force 0-99 and max 2 digits
+    function normalizeJerseyNumber(v) {
+      if (v === "" || v === null || typeof v === "undefined") return "";
+      const n = parseInt(String(v), 10);
+      if (isNaN(n)) return "";
+      if (n < 0) return "0";
+      if (n > 99) return "99";
+      return String(n);
+    }
+
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
       hide(okMsg); hide(errMsg);
@@ -144,6 +227,10 @@
         show(errMsg, "You must accept the waiver to register.");
         return;
       }
+
+      // clamp jersey number
+      const jerseyNumInput = form.querySelector('input[name="jerseyNumber"]');
+      jerseyNumInput.value = normalizeJerseyNumber(jerseyNumInput.value);
 
       btn.disabled = true;
       btn.textContent = "Submitting...";
@@ -161,22 +248,16 @@
         if (data.status === "WAITLIST") {
           show(okMsg, `You’re on the WAITLIST. Registration ID: ${data.registrationId}. Check your email for confirmation.`);
           btn.textContent = "Submitted (Waitlist)";
-          return; // do NOT redirect to payment if waitlisted (you can change this if you want)
+          return;
         }
 
-        show(okMsg, `You’re CONFIRMED. Redirecting to payment... (ID: ${data.registrationId})`);
-
-        if (data.stripePaymentUrl) {
-          // Redirect to Stripe Payment Link
-          window.location.href = data.stripePaymentUrl;
-        } else {
-          btn.textContent = "Submitted (Payment link missing)";
-        }
+        show(okMsg, `Registration received. Status: CONFIRMED. Registration ID: ${data.registrationId}. Check your email for next steps.`);
+        btn.textContent = "Submitted (Confirmed)";
 
       } catch (err) {
         show(errMsg, err.message || "Something went wrong.");
         btn.disabled = false;
-        btn.textContent = "Submit & Pay $235";
+        btn.textContent = "Submit Registration";
       }
     });
   </script>
