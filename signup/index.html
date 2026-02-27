@@ -209,15 +209,46 @@
     .waiver-block {
       background: var(--panel2); border: 1px solid var(--rule2);
       padding: 16px 18px; margin-top: 20px; margin-bottom: 20px;
+      cursor: pointer; transition: border-color 0.2s;
     }
-    .waiver-inner { display: flex; gap: 12px; align-items: flex-start; }
+    .waiver-block:hover { border-color: var(--gold); }
+    .waiver-block.is-checked { border-color: var(--gold); background: rgba(245,196,46,0.04); }
+
+    .waiver-inner { display: flex; gap: 14px; align-items: flex-start; }
+
+    /* hide native checkbox completely */
     .waiver-inner input[type="checkbox"] {
-      width: 16px; height: 16px; flex-shrink: 0; margin-top: 2px;
-      accent-color: var(--red); cursor: pointer; background: var(--bg);
+      position: absolute; opacity: 0; width: 0; height: 0; pointer-events: none;
     }
+
+    /* custom box */
+    .custom-check {
+      width: 22px; height: 22px; flex-shrink: 0; margin-top: 1px;
+      border: 2px solid var(--rule2);
+      background: var(--bg);
+      display: flex; align-items: center; justify-content: center;
+      transition: border-color 0.2s, background 0.2s;
+      position: relative;
+    }
+    .waiver-block:hover .custom-check { border-color: var(--gold); }
+    .waiver-block.is-checked .custom-check {
+      border-color: var(--gold);
+      background: var(--gold);
+    }
+
+    /* the gold arrow / checkmark */
+    .custom-check svg {
+      opacity: 0; transform: scale(0.5);
+      transition: opacity 0.15s ease, transform 0.15s ease;
+    }
+    .waiver-block.is-checked .custom-check svg {
+      opacity: 1; transform: scale(1);
+    }
+
     .waiver-text { font-size: 13px; line-height: 1.6; color: var(--text-mid); }
     .waiver-text a { color: var(--gold); text-decoration: none; font-weight: 600; }
     .waiver-text a:hover { text-decoration: underline; }
+    .waiver-block.is-checked .waiver-text { color: var(--text); }
     .waiver-sub { font-size: 12px; color: var(--text-dim); margin-top: 6px; line-height: 1.5; }
 
     /* SUBMIT */
@@ -424,11 +455,17 @@
             <textarea name="notes" placeholder="Injuries, schedule conflicts, anything we should know…"></textarea>
           </div>
 
-          <div class="waiver-block">
+          <div class="waiver-block" id="waiverBlock">
             <div class="waiver-inner">
-              <input type="checkbox" id="waiver" required>
+              <input type="checkbox" id="waiver" name="waiver" required>
+              <div class="custom-check" aria-hidden="true">
+                <!-- gold arrow checkmark -->
+                <svg width="13" height="11" viewBox="0 0 13 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M1.5 5.5L5 9L11.5 1.5" stroke="#000" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
               <div>
-                <div class="waiver-text">I agree to the <a href="/waiver-and-conduct/" target="_blank">league waiver and code of conduct</a> *</div>
+                <div class="waiver-text">I agree to the <a href="/waiver-and-conduct/" target="_blank" onclick="event.stopPropagation()">league waiver and code of conduct</a> *</div>
                 <div class="waiver-sub">By registering, you acknowledge that availability, schedule changes, and league decisions are handled by league administration.</div>
               </div>
             </div>
@@ -490,6 +527,15 @@
   </footer>
 
   <script>
+    // Custom waiver checkbox
+    const waiverBlock = document.getElementById('waiverBlock');
+    const waiverInput = document.getElementById('waiver');
+    waiverBlock.addEventListener('click', function() {
+      waiverInput.checked = !waiverInput.checked;
+      waiverBlock.classList.toggle('is-checked', waiverInput.checked);
+    });
+
+    // Form submit
     document.getElementById('regForm').addEventListener('submit', function(e) {
       e.preventDefault();
       const btn = document.getElementById('submitBtn');
