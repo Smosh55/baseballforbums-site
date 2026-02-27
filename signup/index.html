@@ -16,9 +16,9 @@
       --panel2:   #141926;
       --rule:     #1e2535;
       --rule2:    #252d40;
-      --text:     #e8eaf0;
-      --text-mid: #8892aa;
-      --text-dim: #4a5470;
+      --text:     #f0f2f8;
+      --text-mid: #b8c2d8;   /* up from #8892aa */
+      --text-dim: #6e7e9e;   /* up from #4a5470 */
       --ob-blue:  #2B6EF8;
       --ob-green: #00D97E;
     }
@@ -165,14 +165,14 @@
 
     /* ── FORM ── */
     .form-note {
-      font-size: 13px; color: var(--text-mid); line-height: 1.6; margin-bottom: 24px;
+      font-size: 15px; color: var(--text-mid); line-height: 1.65; margin-bottom: 24px;
       padding-bottom: 20px; border-bottom: 1px solid var(--rule);
     }
     .form-note strong { color: #fff; font-weight: 700; }
 
     .section-label {
       font-family: 'Barlow Condensed', sans-serif;
-      font-size: 11px; font-weight: 700; letter-spacing: 0.2em;
+      font-size: 12px; font-weight: 700; letter-spacing: 0.2em;
       text-transform: uppercase; color: var(--text-dim);
       margin: 20px 0 14px; padding-top: 20px; border-top: 1px solid var(--rule);
     }
@@ -180,20 +180,20 @@
 
     .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
     .field-row3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin-bottom: 14px; }
-    .field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
+    .field { display: flex; flex-direction: column; gap: 7px; margin-bottom: 16px; }
     .field:last-child { margin-bottom: 0; }
 
     .field label {
       font-family: 'Barlow Condensed', sans-serif;
-      font-size: 11px; font-weight: 700; letter-spacing: 0.15em;
-      text-transform: uppercase; color: var(--text-dim);
+      font-size: 12px; font-weight: 700; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--text-mid);
     }
     .field label .req { color: var(--red); }
 
     input, select, textarea {
-      width: 100%; padding: 11px 14px;
+      width: 100%; padding: 12px 14px;
       background: var(--bg); border: 1px solid var(--rule2);
-      color: var(--text); font-family: 'Barlow', sans-serif; font-size: 14px;
+      color: var(--text); font-family: 'Barlow', sans-serif; font-size: 15px;
       outline: none; transition: border-color 0.15s; border-radius: 0;
       -webkit-appearance: none; appearance: none;
     }
@@ -202,8 +202,8 @@
       background-repeat: no-repeat; background-position: right 12px center; padding-right: 32px;
     }
     input:focus, select:focus, textarea:focus { border-color: var(--gold); }
-    input::placeholder { color: var(--text-dim); }
-    textarea { min-height: 100px; resize: vertical; font-size: 13px; line-height: 1.5; }
+    input::placeholder { color: #3d4d6a; }
+    textarea { min-height: 100px; resize: vertical; font-size: 15px; line-height: 1.6; }
 
     /* WAIVER */
     .waiver-block {
@@ -245,11 +245,11 @@
       opacity: 1; transform: scale(1);
     }
 
-    .waiver-text { font-size: 13px; line-height: 1.6; color: var(--text-mid); }
-    .waiver-text a { color: var(--gold); text-decoration: none; font-weight: 600; }
+    .waiver-text { font-size: 15px; line-height: 1.65; color: var(--text-mid); font-weight: 500; }
+    .waiver-text a { color: var(--gold); text-decoration: none; font-weight: 700; }
     .waiver-text a:hover { text-decoration: underline; }
     .waiver-block.is-checked .waiver-text { color: var(--text); }
-    .waiver-sub { font-size: 12px; color: var(--text-dim); margin-top: 6px; line-height: 1.5; }
+    .waiver-sub { font-size: 13px; color: var(--text-dim); margin-top: 7px; line-height: 1.6; }
 
     /* SUBMIT */
     .submit-btn {
@@ -266,7 +266,7 @@
 
     /* ── SCHEDULE PANEL ── */
     .schedule-note {
-      font-size: 13px; color: var(--text-dim); line-height: 1.55; margin-bottom: 20px;
+      font-size: 14px; color: var(--text-mid); line-height: 1.6; margin-bottom: 20px;
       padding-bottom: 18px; border-bottom: 1px solid var(--rule);
     }
 
@@ -283,32 +283,38 @@
       font-size: 16px; font-weight: 700; color: #fff; letter-spacing: 0.02em;
       width: 70px; flex-shrink: 0;
     }
-    .s-date.playoff { color: var(--red); }
+    .s-date.playoff { color: #fff; }
 
     .s-label {
       font-family: 'Barlow Condensed', sans-serif;
-      font-size: 12px; font-weight: 700; letter-spacing: 0.1em;
-      text-transform: uppercase; color: var(--red); flex: 1; padding-left: 8px;
+      font-size: 14px; font-weight: 800; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--gold); flex: 1; padding-left: 8px;
     }
 
     .s-time {
       font-family: 'Barlow Condensed', sans-serif;
-      font-size: 15px; font-weight: 700;
+      font-size: 16px; font-weight: 700;
       color: var(--gold); text-align: right;
     }
-    .s-time.muted { color: var(--text-dim); font-weight: 600; }
+    .s-time.muted { color: var(--text-mid); font-weight: 700; font-size: 15px; }
 
     .schedule-divider {
-      height: 1px; background: var(--rule2); margin: 4px 0;
-      opacity: 0.5;
+      height: 2px; background: var(--red); margin: 6px 0; opacity: 0.5;
+    }
+
+    /* playoff rows get a warm tint */
+    .schedule-row.playoffs {
+      background: rgba(245,196,46,0.04);
+      padding-left: 6px; padding-right: 6px;
+      margin-left: -6px; margin-right: -6px;
     }
 
     .info-box {
       background: var(--panel2); border: 1px solid var(--rule2);
       padding: 14px 16px; margin-top: 16px; display: flex; gap: 10px; align-items: flex-start;
     }
-    .info-box .icon { font-size: 14px; flex-shrink: 0; margin-top: 1px; }
-    .info-box p { font-size: 13px; color: var(--text-mid); line-height: 1.55; }
+    .info-box .icon { font-size: 15px; flex-shrink: 0; margin-top: 1px; }
+    .info-box p { font-size: 14px; color: var(--text-mid); line-height: 1.6; }
     .info-box strong { color: var(--text); font-weight: 600; }
 
     /* ── FOOTER ── */
@@ -496,9 +502,9 @@
           <li class="schedule-row"><span class="s-date">5/26</span><span class="s-time">10:00 / 9:30 PM</span></li>
           <li class="schedule-row"><span class="s-date">5/30</span><span class="s-time">10:00 PM</span></li>
           <div class="schedule-divider"></div>
-          <li class="schedule-row"><span class="s-date playoff">6/6–6/7</span><span class="s-label">Playoffs</span><span class="s-time muted">TBD</span></li>
-          <li class="schedule-row"><span class="s-date playoff">6/13–6/14</span><span class="s-label">Championship</span><span class="s-time muted">TBD</span></li>
-          <li class="schedule-row"><span class="s-date playoff">6/16</span><span class="s-label">All-Star Game</span><span class="s-time muted">TBD</span></li>
+          <li class="schedule-row playoffs"><span class="s-date playoff">6/6–6/7</span><span class="s-label">Playoffs</span><span class="s-time muted">TBD</span></li>
+          <li class="schedule-row playoffs"><span class="s-date playoff">6/13–6/14</span><span class="s-label">Championship</span><span class="s-time muted">TBD</span></li>
+          <li class="schedule-row playoffs"><span class="s-date playoff">6/16</span><span class="s-label">All-Star Game</span><span class="s-time muted">TBD</span></li>
         </ul>
 
         <div class="info-box">
