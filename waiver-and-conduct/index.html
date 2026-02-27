@@ -291,6 +291,42 @@
       .fine-print { text-align: center; }
     }
 
+    /* ── WAIVER CHECKBOX ── */
+    .waiver-block {
+      background: var(--panel2); border: 1px solid var(--rule2);
+      padding: 20px 22px; margin-top: 28px;
+      cursor: pointer; transition: border-color 0.2s, background 0.2s;
+      border-top: 1px solid var(--rule2);
+    }
+    .waiver-block:hover { border-color: var(--gold); }
+    .waiver-block.is-checked { border-color: var(--gold); background: rgba(245,196,46,0.04); }
+
+    .waiver-inner { display: flex; gap: 16px; align-items: flex-start; }
+
+    .custom-check {
+      width: 24px; height: 24px; flex-shrink: 0; margin-top: 1px;
+      border: 2px solid var(--rule2); background: var(--bg);
+      display: flex; align-items: center; justify-content: center;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .waiver-block:hover .custom-check { border-color: var(--gold); }
+    .waiver-block.is-checked .custom-check { border-color: var(--gold); background: var(--gold); }
+
+    .custom-check svg {
+      opacity: 0; transform: scale(0.5);
+      transition: opacity 0.15s ease, transform 0.15s ease;
+    }
+    .waiver-block.is-checked .custom-check svg { opacity: 1; transform: scale(1); }
+
+    .waiver-text {
+      font-size: 16px; line-height: 1.65; color: var(--text-mid); font-weight: 500;
+      transition: color 0.2s;
+    }
+    .waiver-block.is-checked .waiver-text { color: var(--text); }
+    .waiver-sub {
+      font-size: 13px; color: var(--text-dim); margin-top: 6px; line-height: 1.55;
+    }
+
     @media print {
       body { background: #fff; color: #000; font-size: 13px; }
       header, .sidebar, .powered-by { display: none !important; }
@@ -401,12 +437,13 @@
           <div class="sec-divider"></div>
           <h2>Commissioner Authority &amp; Discipline</h2>
         </div>
-        <p>The League Commissioner retains full authority over all disciplinary decisions related to player conduct, rule violations, safety concerns, and behavior detrimental to the league.</p>
+        <p>The League Commissioner oversees all disciplinary matters related to player conduct, rule violations, safety concerns, and behavior detrimental to the league. For standard violations, the Commissioner may act directly. For significant or contested decisions — including multi-game suspensions, playoff ineligibility, or removal from the league — the matter will be reviewed by a <strong>League Review Committee</strong> of at least two additional league representatives before a final decision is issued.</p>
+        <p>This committee process exists to ensure fairness, reduce bias, and protect both players and the league from one-sided outcomes.</p>
         <div class="penalty-box">
           <div class="penalty-label">Automatic Penalty — Ejection</div>
           <div class="penalty-text">1-Game Suspension<br>+ Removal from Current Game</div>
         </div>
-        <p style="margin-top:20px">The Commissioner may also impose additional penalties including:</p>
+        <p style="margin-top:20px">Following committee review, additional penalties may include:</p>
         <ul>
           <li>Extended or multi-game suspensions</li>
           <li>Playoff ineligibility</li>
@@ -414,7 +451,7 @@
           <li>Permanent removal from the league</li>
         </ul>
         <div class="highlight-box" style="margin-top:20px">
-          <p>Disciplinary decisions are <strong>final and not subject to appeal.</strong> Players removed due to conduct violations will not receive a refund of league fees.</p>
+          <p>All disciplinary decisions made through the committee process are <strong>final and not subject to further appeal.</strong> Players removed due to conduct violations will not receive a refund of league fees.</p>
         </div>
       </div>
 
@@ -424,7 +461,8 @@
           <div class="sec-divider"></div>
           <h2>Scheduling &amp; Rainouts</h2>
         </div>
-        <p>Schedules may change due to field availability, weather, or operational needs. <strong>Rainout policy:</strong> Any rained-out game will be rescheduled for the following Tuesday.</p>
+        <p>Schedules may change due to field availability, weather, or operational needs. <strong>Rainout policy:</strong> Any rained-out game will be rescheduled for the following Tuesday* or the next available field date, subject to availability.</p>
+        <p style="font-size:13px; color:var(--text-dim); margin-top:10px;">* Tuesday is the default makeup date. If the field is unavailable, the league will communicate the next available slot as soon as possible.</p>
       </div>
 
       <div class="section">
@@ -462,6 +500,21 @@
     <div class="agreement">
       <h3>Agreement &amp; Acknowledgement</h3>
       <p>By registering for Baseball For Bums, I acknowledge that I have read, understood, and agree to this waiver and code of conduct in its entirety, and that I am doing so voluntarily.</p>
+
+      <div class="waiver-block" id="waiverBlock">
+        <div class="waiver-inner">
+          <div class="custom-check" id="customCheck" aria-hidden="true">
+            <svg width="13" height="11" viewBox="0 0 13 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M1.5 5.5L5 9L11.5 1.5" stroke="#000" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div>
+            <div class="waiver-text">I have read and agree to this waiver and code of conduct</div>
+            <div class="waiver-sub">By checking this box, you confirm that you understand and accept all terms outlined above.</div>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 
@@ -476,5 +529,13 @@
     </div>
   </footer>
 
+  <script>
+    var checked = false;
+    var block = document.getElementById('waiverBlock');
+    block.addEventListener('click', function() {
+      checked = !checked;
+      block.classList.toggle('is-checked', checked);
+    });
+  </script>
 </body>
 </html>
