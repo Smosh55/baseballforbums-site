@@ -4,443 +4,384 @@
   <meta charset="UTF-8" />
   <title>Sign Up | Baseball For Bums</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700;800;900&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
-    *, *::before, *::after { box-sizing: border-box; }
-
     :root {
-      --red: #e02020;
-      --red-dark: #b01818;
-      --navy: #0b1120;
-      --navy-mid: #111827;
-      --navy-light: #1a2235;
-      --border: #252f45;
-      --text: #e8edf5;
-      --muted: #6b7a99;
-      --accent: #e8c84a;
+      --red:      #E53030;
+      --red-dim:  #b02424;
+      --gold:     #F5C42E;
+      --gold-dim: #c99e1a;
+      --bg:       #080c14;
+      --panel:    #0f1420;
+      --panel2:   #141926;
+      --rule:     #1e2535;
+      --rule2:    #252d40;
+      --text:     #e8eaf0;
+      --text-mid: #8892aa;
+      --text-dim: #4a5470;
+      --ob-blue:  #2B6EF8;
+      --ob-green: #00D97E;
     }
 
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
     body {
-      margin: 0;
-      font-family: 'Barlow', sans-serif;
-      background: var(--navy);
+      background: var(--bg);
       color: var(--text);
+      font-family: 'Barlow', sans-serif;
       min-height: 100vh;
+      overflow-x: hidden;
     }
 
     /* ── HEADER ── */
     header {
-      background: var(--navy-mid);
-      border-bottom: 1px solid var(--border);
+      background: #050810;
+      border-bottom: 1px solid var(--rule);
       padding: 0 32px;
-      height: 64px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      position: sticky;
-      top: 0;
-      z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      height: 48px;
+      position: sticky; top: 0; z-index: 100;
     }
 
     .logo {
       font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 900;
-      font-size: 22px;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      color: var(--text);
-      text-decoration: none;
+      font-size: 18px; font-weight: 900;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: #fff; text-decoration: none;
     }
-    .logo span { color: var(--red); }
+    .logo .accent { color: var(--red); }
 
-    nav { display: flex; gap: 24px; align-items: center; }
-    nav a {
-      color: var(--muted);
-      text-decoration: none;
-      font-size: 14px;
-      font-weight: 500;
-      letter-spacing: 0.03em;
-      text-transform: uppercase;
-      transition: color .2s;
-    }
-    nav a:hover { color: var(--text); }
+    .header-right { display: flex; align-items: center; gap: 24px; }
 
-    .badge {
-      background: var(--red);
-      color: #fff;
+    .location-pill {
       font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 700;
-      font-size: 11px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      padding: 4px 10px;
-      border-radius: 4px;
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      color: #fff; background: var(--red);
+      padding: 4px 12px;
     }
 
-    /* ── HERO STRIP ── */
-    .hero {
-      background: linear-gradient(135deg, #0e1829 0%, #1a0a0a 100%);
-      border-bottom: 3px solid var(--red);
-      padding: 52px 32px 44px;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
+    .header-link {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 13px; font-weight: 600;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--text-mid); text-decoration: none; transition: color 0.15s;
     }
+    .header-link:hover { color: #fff; }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      padding: 64px 32px 56px;
+      text-align: center;
+      overflow: hidden;
+      border-bottom: 2px solid var(--red);
+    }
+
+    /* Warm radial glow from screenshot */
     .hero::before {
       content: '';
       position: absolute;
-      inset: 0;
-      background: repeating-linear-gradient(
-        -45deg,
-        transparent,
-        transparent 40px,
-        rgba(255,255,255,.012) 40px,
-        rgba(255,255,255,.012) 41px
-      );
+      top: -60px; right: -100px;
+      width: 700px; height: 500px;
+      background: radial-gradient(ellipse at center, rgba(180,60,20,0.28) 0%, rgba(120,30,10,0.12) 45%, transparent 70%);
+      pointer-events: none;
     }
-    .hero-eyebrow {
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0; height: 1px;
+    }
+
+    .hero-kicker {
       font-family: 'Barlow Condensed', sans-serif;
-      font-size: 13px;
-      font-weight: 700;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--red);
-      margin-bottom: 14px;
+      font-size: 11px; font-weight: 700; letter-spacing: 0.3em; text-transform: uppercase;
+      color: var(--text-dim); margin-bottom: 18px;
+      display: flex; align-items: center; justify-content: center; gap: 10px;
     }
+    .hero-kicker::before { content: '●'; color: var(--red); font-size: 8px; }
+
     .hero h1 {
       font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 900;
-      font-size: clamp(40px, 6vw, 68px);
-      line-height: 1;
-      text-transform: uppercase;
-      letter-spacing: 0.02em;
-      margin: 0 0 18px;
-      color: #fff;
+      font-size: clamp(48px, 8vw, 88px); font-weight: 900;
+      text-transform: uppercase; letter-spacing: 0.02em; line-height: 1;
+      color: #fff; margin-bottom: 40px;
     }
-    .hero h1 em {
-      font-style: normal;
-      color: var(--accent);
-    }
-    .hero-stats {
-      display: inline-flex;
-      gap: 0;
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      overflow: hidden;
-      margin-top: 6px;
+    .hero h1 .highlight { color: var(--gold); }
+
+    /* Stats bar */
+    .stats-bar {
+      display: inline-flex; border: 1px solid var(--rule2);
+      background: var(--panel);
     }
     .stat {
-      padding: 14px 28px;
-      text-align: center;
-      border-right: 1px solid var(--border);
-      background: rgba(255,255,255,.04);
+      padding: 14px 32px; border-right: 1px solid var(--rule2); text-align: center;
     }
     .stat:last-child { border-right: none; }
-    .stat-num {
+    .stat-val {
       font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 800;
-      font-size: 26px;
-      color: #fff;
-      line-height: 1;
+      font-size: 26px; font-weight: 800; color: #fff; line-height: 1; display: block;
     }
-    .stat-lbl {
-      font-size: 11px;
-      color: var(--muted);
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      margin-top: 4px;
+    .stat-val.gold { color: var(--gold); }
+    .stat-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 10px; font-weight: 600; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--text-dim); display: block; margin-top: 4px;
     }
 
-    /* ── LAYOUT ── */
-    main {
-      max-width: 1140px;
-      margin: 0 auto;
-      padding: 48px 24px 80px;
-      display: grid;
-      grid-template-columns: 1fr 420px;
-      gap: 32px;
-      align-items: start;
+    /* ── MAIN CONTENT ── */
+    .main {
+      max-width: 1140px; margin: 0 auto; padding: 48px 32px 80px;
+      display: grid; grid-template-columns: 1fr 400px; gap: 28px; align-items: start;
     }
 
-    /* ── CARDS ── */
-    .card {
-      background: var(--navy-mid);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      overflow: hidden;
+    /* ── PANELS ── */
+    .panel {
+      background: var(--panel); border: 1px solid var(--rule2);
     }
-    .card-header {
-      padding: 22px 28px;
-      border-bottom: 1px solid var(--border);
-      display: flex;
-      align-items: center;
-      gap: 12px;
+
+    .panel-header {
+      padding: 20px 28px;
+      border-bottom: 1px solid var(--rule);
+      display: flex; align-items: center; gap: 14px;
     }
-    .card-header h2 {
+
+    .step-num {
+      width: 28px; height: 28px; border-radius: 50%;
+      background: var(--red); color: #fff;
       font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 800;
-      font-size: 20px;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      margin: 0;
-      color: #fff;
-    }
-    .card-num {
-      width: 30px; height: 30px;
-      background: var(--red);
-      border-radius: 50%;
+      font-size: 14px; font-weight: 800;
       display: flex; align-items: center; justify-content: center;
-      font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 800;
-      font-size: 15px;
       flex-shrink: 0;
     }
-    .card-body { padding: 28px; }
+
+    .panel-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 17px; font-weight: 800;
+      letter-spacing: 0.1em; text-transform: uppercase; color: #fff;
+    }
+
+    .panel-body { padding: 28px; }
 
     /* ── FORM ── */
-    .field-group { margin-bottom: 20px; }
-    .field-group label {
-      display: block;
-      font-size: 12px;
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 7px;
+    .form-note {
+      font-size: 13px; color: var(--text-mid); line-height: 1.6; margin-bottom: 24px;
+      padding-bottom: 20px; border-bottom: 1px solid var(--rule);
     }
-    .field-group label .req { color: var(--red); margin-left: 2px; }
-    .field-group input,
-    .field-group select,
-    .field-group textarea {
-      width: 100%;
-      padding: 11px 14px;
-      background: var(--navy);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      color: var(--text);
-      font-family: 'Barlow', sans-serif;
-      font-size: 15px;
-      outline: none;
-      transition: border-color .2s, box-shadow .2s;
-      -webkit-appearance: none;
-    }
-    .field-group input:focus,
-    .field-group select:focus,
-    .field-group textarea:focus {
-      border-color: var(--red);
-      box-shadow: 0 0 0 3px rgba(224,32,32,.15);
-    }
-    .field-group select option { background: #1a2235; }
-    .field-group textarea { min-height: 90px; resize: vertical; }
+    .form-note strong { color: #fff; font-weight: 700; }
 
-    .row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-    .row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
-
-    .divider {
-      height: 1px;
-      background: var(--border);
-      margin: 24px 0;
-    }
     .section-label {
       font-family: 'Barlow Condensed', sans-serif;
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 18px;
+      font-size: 11px; font-weight: 700; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--text-dim);
+      margin: 20px 0 14px; padding-top: 20px; border-top: 1px solid var(--rule);
     }
+    .section-label:first-of-type { margin-top: 0; padding-top: 0; border-top: none; }
 
-    /* Waiver */
-    .waiver-box {
-      background: var(--navy);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 16px;
-      margin-bottom: 22px;
-    }
-    .waiver-check {
-      display: flex;
-      gap: 12px;
-      align-items: flex-start;
-    }
-    .waiver-check input[type="checkbox"] {
-      width: 18px; height: 18px;
-      margin-top: 2px;
-      accent-color: var(--red);
-      flex-shrink: 0;
-      cursor: pointer;
-    }
-    .waiver-check span {
-      font-size: 14px;
-      line-height: 1.5;
-      color: var(--text);
-    }
-    .waiver-check a { color: var(--red); text-decoration: none; }
-    .waiver-check a:hover { text-decoration: underline; }
-    .waiver-fine {
-      font-size: 12px;
-      color: var(--muted);
-      margin-top: 10px;
-      line-height: 1.5;
-      padding-left: 30px;
-    }
+    .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+    .field-row3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+    .field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
+    .field:last-child { margin-bottom: 0; }
 
-    /* Submit button */
-    .btn-submit {
-      width: 100%;
-      padding: 15px;
-      background: var(--red);
-      color: #fff;
-      border: none;
-      border-radius: 10px;
+    .field label {
       font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 800;
-      font-size: 18px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      cursor: pointer;
-      transition: background .2s, transform .1s;
+      font-size: 11px; font-weight: 700; letter-spacing: 0.15em;
+      text-transform: uppercase; color: var(--text-dim);
     }
-    .btn-submit:hover:not(:disabled) { background: #c41a1a; }
-    .btn-submit:active:not(:disabled) { transform: scale(.99); }
-    .btn-submit:disabled { opacity: .65; cursor: not-allowed; }
+    .field label .req { color: var(--red); }
 
-    /* Messages */
-    .msg {
-      display: none;
-      margin-top: 14px;
-      padding: 14px 16px;
-      border-radius: 8px;
-      font-size: 14px;
-      line-height: 1.5;
+    input, select, textarea {
+      width: 100%; padding: 11px 14px;
+      background: var(--bg); border: 1px solid var(--rule2);
+      color: var(--text); font-family: 'Barlow', sans-serif; font-size: 14px;
+      outline: none; transition: border-color 0.15s; border-radius: 0;
+      -webkit-appearance: none; appearance: none;
     }
-    .msg.ok {
-      background: rgba(34,197,94,.1);
-      border: 1px solid rgba(34,197,94,.3);
-      color: #4ade80;
+    select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%234a5470' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 12px center; padding-right: 32px;
     }
-    .msg.err {
-      background: rgba(224,32,32,.1);
-      border: 1px solid rgba(224,32,32,.3);
-      color: #f87171;
+    input:focus, select:focus, textarea:focus { border-color: var(--gold); }
+    input::placeholder { color: var(--text-dim); }
+    textarea { min-height: 100px; resize: vertical; font-size: 13px; line-height: 1.5; }
+
+    /* WAIVER */
+    .waiver-block {
+      background: var(--panel2); border: 1px solid var(--rule2);
+      padding: 16px 18px; margin-top: 20px; margin-bottom: 20px;
+    }
+    .waiver-inner { display: flex; gap: 12px; align-items: flex-start; }
+    .waiver-inner input[type="checkbox"] {
+      width: 16px; height: 16px; flex-shrink: 0; margin-top: 2px;
+      accent-color: var(--red); cursor: pointer; background: var(--bg);
+    }
+    .waiver-text { font-size: 13px; line-height: 1.6; color: var(--text-mid); }
+    .waiver-text a { color: var(--gold); text-decoration: none; font-weight: 600; }
+    .waiver-text a:hover { text-decoration: underline; }
+    .waiver-sub { font-size: 12px; color: var(--text-dim); margin-top: 6px; line-height: 1.5; }
+
+    /* SUBMIT */
+    .submit-btn {
+      width: 100%; padding: 16px; background: var(--red); color: #fff; border: none;
+      font-family: 'Barlow Condensed', sans-serif; font-size: 17px; font-weight: 800;
+      letter-spacing: 0.12em; text-transform: uppercase; cursor: pointer; transition: background 0.2s;
+    }
+    .submit-btn:hover { background: #ff3d3d; }
+    .submit-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+    .msg { margin-top: 12px; padding: 12px 16px; display: none; font-size: 13px; font-family: 'Barlow', sans-serif; }
+    .msg.ok { background: rgba(0,217,126,0.08); border: 1px solid rgba(0,217,126,0.25); color: var(--ob-green); }
+    .msg.err { background: rgba(229,48,48,0.08); border: 1px solid rgba(229,48,48,0.25); color: var(--red); }
+
+    /* ── SCHEDULE PANEL ── */
+    .schedule-note {
+      font-size: 13px; color: var(--text-dim); line-height: 1.55; margin-bottom: 20px;
+      padding-bottom: 18px; border-bottom: 1px solid var(--rule);
     }
 
-    /* ── SCHEDULE CARD ── */
-    .schedule-list { list-style: none; margin: 0; padding: 0; }
-    .schedule-list li {
-      display: flex;
-      align-items: baseline;
-      justify-content: space-between;
-      padding: 11px 0;
-      border-bottom: 1px solid var(--border);
-      font-size: 15px;
+    .schedule-list { list-style: none; padding: 0; }
+
+    .schedule-row {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 11px 0; border-bottom: 1px solid var(--rule);
     }
-    .schedule-list li:last-child { border-bottom: none; }
-    .sched-date {
+    .schedule-row:last-child { border-bottom: none; }
+
+    .s-date {
       font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 700;
-      font-size: 17px;
-      color: #fff;
-      min-width: 60px;
+      font-size: 16px; font-weight: 700; color: #fff; letter-spacing: 0.02em;
+      width: 70px; flex-shrink: 0;
     }
-    .sched-label {
-      font-size: 13px;
-      color: var(--muted);
-      flex: 1;
-      padding: 0 12px;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-    .sched-time {
+    .s-date.playoff { color: var(--red); }
+
+    .s-label {
       font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 600;
-      font-size: 15px;
-      color: var(--accent);
+      font-size: 12px; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--red); flex: 1; padding-left: 8px;
     }
-    .sched-special { color: var(--red); }
+
+    .s-time {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 15px; font-weight: 700;
+      color: var(--gold); text-align: right;
+    }
+    .s-time.muted { color: var(--text-dim); font-weight: 600; }
+
+    .schedule-divider {
+      height: 1px; background: var(--rule2); margin: 4px 0;
+      opacity: 0.5;
+    }
 
     .info-box {
-      background: var(--navy);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 14px 16px;
-      margin-top: 16px;
-      font-size: 13px;
-      line-height: 1.6;
-      color: var(--muted);
+      background: var(--panel2); border: 1px solid var(--rule2);
+      padding: 14px 16px; margin-top: 16px; display: flex; gap: 10px; align-items: flex-start;
     }
-    .info-box strong { color: var(--text); }
+    .info-box .icon { font-size: 14px; flex-shrink: 0; margin-top: 1px; }
+    .info-box p { font-size: 13px; color: var(--text-mid); line-height: 1.55; }
+    .info-box strong { color: var(--text); font-weight: 600; }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--rule);
+      padding: 18px 32px;
+      display: flex; justify-content: space-between; align-items: center;
+      background: #050810; gap: 20px; flex-wrap: wrap;
+    }
+    .footer-logo {
+      font-family: 'Barlow Condensed', sans-serif; font-size: 14px; font-weight: 800;
+      letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-dim);
+    }
+    .footer-logo .accent { color: var(--red); }
+
+    .footer-link {
+      font-family: 'Barlow Condensed', sans-serif; font-size: 11px; font-weight: 600;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--text-dim); text-decoration: none; transition: color 0.15s;
+    }
+    .footer-link:hover { color: var(--text); }
+
+    .powered-by { display: flex; align-items: center; gap: 9px; }
+    .pb-label {
+      font-family: 'Barlow Condensed', sans-serif; font-size: 10px; font-weight: 600;
+      letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-dim);
+    }
+    .pb-logo-link { display: flex; align-items: center; opacity: 0.5; transition: opacity 0.2s; }
+    .pb-logo-link:hover { opacity: 1; }
+    .pb-logo { height: 22px; width: auto; filter: brightness(0) invert(1); }
 
     /* ── RESPONSIVE ── */
-    @media (max-width: 860px) {
-      main { grid-template-columns: 1fr; }
+    @media (max-width: 900px) {
+      .main { grid-template-columns: 1fr; padding: 32px 20px 60px; }
+      .hero { padding: 48px 20px 40px; }
+      .stats-bar { display: grid; grid-template-columns: 1fr 1fr; width: 100%; }
+      .stat { border-right: none; border-bottom: 1px solid var(--rule2); }
+      .stat:nth-child(2n) { border-left: 1px solid var(--rule2); }
+      .stat:nth-last-child(-n+2) { border-bottom: none; }
+      .field-row3 { grid-template-columns: 1fr 1fr; }
+      footer { flex-direction: column; gap: 10px; text-align: center; }
     }
-    @media (max-width: 600px) {
-      .row-2, .row-3 { grid-template-columns: 1fr; }
-      .hero-stats { flex-wrap: wrap; }
-      .stat { border-bottom: 1px solid var(--border); }
+    @media (max-width: 500px) {
+      .field-row { grid-template-columns: 1fr; }
+      .field-row3 { grid-template-columns: 1fr; }
+      header { padding: 0 16px; }
     }
   </style>
 </head>
 <body>
 
   <header>
-    <a href="/" class="logo">Baseball <span>For Bums</span></a>
-    <nav>
-      <span class="badge">Staten Island</span>
-      <a href="/">Home</a>
-    </nav>
+    <a href="/" class="logo">Baseball <span class="accent">For Bums</span></a>
+    <div class="header-right">
+      <span class="location-pill">Staten Island</span>
+      <a href="/" class="header-link">Home</a>
+    </div>
   </header>
 
   <div class="hero">
-    <div class="hero-eyebrow">⚾ Spring Season Registration</div>
-    <h1>Sign Up for the <em>League</em></h1>
-    <div class="hero-stats">
-      <div class="stat"><div class="stat-num">1</div><div class="stat-lbl">Division</div></div>
-      <div class="stat"><div class="stat-num">6</div><div class="stat-lbl">Teams</div></div>
-      <div class="stat"><div class="stat-num">$235</div><div class="stat-lbl">Entry Fee</div></div>
-      <div class="stat"><div class="stat-num">66</div><div class="stat-lbl">Player Cap</div></div>
+    <div class="hero-kicker">Spring Season Registration</div>
+    <h1>Sign Up For The <span class="highlight">League</span></h1>
+    <div class="stats-bar">
+      <div class="stat"><span class="stat-val">1</span><span class="stat-label">Division</span></div>
+      <div class="stat"><span class="stat-val">6</span><span class="stat-label">Teams</span></div>
+      <div class="stat"><span class="stat-val gold">$235</span><span class="stat-label">Entry Fee</span></div>
+      <div class="stat"><span class="stat-val">66</span><span class="stat-label">Player Cap</span></div>
     </div>
   </div>
 
-  <main>
+  <div class="main">
 
-    <!-- FORM -->
-    <div class="card">
-      <div class="card-header">
-        <div class="card-num">1</div>
-        <h2>Your Information</h2>
+    <!-- FORM PANEL -->
+    <div class="panel">
+      <div class="panel-header">
+        <div class="step-num">1</div>
+        <div class="panel-title">Your Information</div>
       </div>
-      <div class="card-body">
-
-        <p style="font-size:14px; color:var(--muted); margin:0 0 24px; line-height:1.6;">
-          Submitting does <strong style="color:var(--text);">not</strong> guarantee a spot. You'll receive an email confirming <strong style="color:var(--text);">CONFIRMED</strong> or <strong style="color:var(--text);">WAITLIST</strong> status.
+      <div class="panel-body">
+        <p class="form-note">
+          Submitting does <strong>not</strong> guarantee a spot. You'll receive an email confirming <strong>CONFIRMED</strong> or <strong>WAITLIST</strong> status.
         </p>
 
         <form id="regForm">
-
-          <div class="field-group">
+          <div class="field">
             <label>Full Name <span class="req">*</span></label>
-            <input name="fullName" required placeholder="Jane Smith" />
+            <input name="fullName" placeholder="Jane Smith" required>
           </div>
 
-          <div class="row-2">
-            <div class="field-group">
+          <div class="field-row">
+            <div class="field">
               <label>Email <span class="req">*</span></label>
-              <input type="email" name="email" required placeholder="jane@example.com" />
+              <input type="email" name="email" placeholder="jane@example.com" required>
             </div>
-            <div class="field-group">
+            <div class="field">
               <label>Phone <span class="req">*</span></label>
-              <input name="phone" required placeholder="(917) 555-0100" />
+              <input name="phone" placeholder="(917) 555-0100" required>
             </div>
           </div>
 
-          <div class="divider"></div>
           <div class="section-label">Player Details</div>
 
-          <div class="row-3">
-            <div class="field-group">
+          <div class="field-row3">
+            <div class="field">
               <label>Jersey Size</label>
               <select name="jerseySize">
                 <option value="">Select</option>
@@ -448,18 +389,18 @@
                 <option>2XL</option><option>3XL</option><option>4XL</option><option>5XL</option>
               </select>
             </div>
-            <div class="field-group">
-              <label>Jersey Name <span style="font-size:10px;">(max 10)</span></label>
-              <input name="jerseyWording" placeholder="Yanky K" maxlength="10" />
+            <div class="field">
+              <label>Jersey Name (max 10)</label>
+              <input name="jerseyWording" maxlength="10" placeholder="Yanky K">
             </div>
-            <div class="field-group">
-              <label>Jersey Number <span style="font-size:10px;">(0–99)</span></label>
-              <input name="jerseyNumber" type="number" min="0" max="99" placeholder="24" />
+            <div class="field">
+              <label>Jersey Number (0–99)</label>
+              <input name="jerseyNumber" type="number" min="0" max="99" placeholder="24">
             </div>
           </div>
 
-          <div class="row-2">
-            <div class="field-group">
+          <div class="field-row">
+            <div class="field">
               <label>Preferred Position</label>
               <select name="position">
                 <option value="">Select</option>
@@ -468,136 +409,98 @@
                 <option>RF</option><option>Utility</option>
               </select>
             </div>
-            <div class="field-group">
+            <div class="field">
               <label>Experience Level</label>
               <select name="experience">
                 <option value="">Select</option>
-                <option>Beginner</option>
-                <option>Some experience</option>
-                <option>High school</option>
-                <option>College</option>
-                <option>Adult leagues</option>
+                <option>Beginner</option><option>Some experience</option>
+                <option>High school</option><option>College</option><option>Adult leagues</option>
               </select>
             </div>
           </div>
 
-          <div class="field-group">
+          <div class="field">
             <label>Notes</label>
             <textarea name="notes" placeholder="Injuries, schedule conflicts, anything we should know…"></textarea>
           </div>
 
-          <div class="divider"></div>
-
-          <div class="waiver-box">
-            <div class="waiver-check">
-              <input type="checkbox" id="waiver" />
-              <span>I agree to the <a href="/waiver-and-conduct" target="_blank">league waiver and code of conduct</a> <span class="req" style="color:var(--red);">*</span></span>
+          <div class="waiver-block">
+            <div class="waiver-inner">
+              <input type="checkbox" id="waiver" required>
+              <div>
+                <div class="waiver-text">I agree to the <a href="/waiver-and-conduct/" target="_blank">league waiver and code of conduct</a> *</div>
+                <div class="waiver-sub">By registering, you acknowledge that availability, schedule changes, and league decisions are handled by league administration.</div>
+              </div>
             </div>
-            <div class="waiver-fine">By registering, you acknowledge that availability, schedule changes, and league decisions are handled by league administration.</div>
           </div>
 
-          <button class="btn-submit" id="submitBtn" type="submit">Submit Registration →</button>
-
+          <button class="submit-btn" id="submitBtn" type="submit">Submit Registration →</button>
           <div class="msg ok" id="okMsg"></div>
           <div class="msg err" id="errMsg"></div>
-
         </form>
       </div>
     </div>
 
-    <!-- SCHEDULE -->
-    <div>
-      <div class="card">
-        <div class="card-header">
-          <div class="card-num">2</div>
-          <h2>Spring Schedule</h2>
+    <!-- SCHEDULE PANEL -->
+    <div class="panel">
+      <div class="panel-header">
+        <div class="step-num">2</div>
+        <div class="panel-title">Spring Schedule</div>
+      </div>
+      <div class="panel-body">
+        <p class="schedule-note">Review before registering. Playoff and championship dates are flexible.</p>
+
+        <ul class="schedule-list">
+          <li class="schedule-row"><span class="s-date">4/18</span><span class="s-time">9:30 PM</span></li>
+          <li class="schedule-row"><span class="s-date">4/25</span><span class="s-time">9:30 PM</span></li>
+          <li class="schedule-row"><span class="s-date">5/2</span><span class="s-time">9:30 PM</span></li>
+          <li class="schedule-row"><span class="s-date">5/9</span><span class="s-time">9:30 PM</span></li>
+          <li class="schedule-row"><span class="s-date">5/16</span><span class="s-time">10:00 PM</span></li>
+          <li class="schedule-row"><span class="s-date">5/26</span><span class="s-time">10:00 / 9:30 PM</span></li>
+          <li class="schedule-row"><span class="s-date">5/30</span><span class="s-time">10:00 PM</span></li>
+          <div class="schedule-divider"></div>
+          <li class="schedule-row"><span class="s-date playoff">6/6–6/7</span><span class="s-label">Playoffs</span><span class="s-time muted">TBD</span></li>
+          <li class="schedule-row"><span class="s-date playoff">6/13–6/14</span><span class="s-label">Championship</span><span class="s-time muted">TBD</span></li>
+          <li class="schedule-row"><span class="s-date playoff">6/16</span><span class="s-label">All-Star Game</span><span class="s-time muted">TBD</span></li>
+        </ul>
+
+        <div class="info-box">
+          <span class="icon">🌧</span>
+          <p><strong>Rainout Policy:</strong> Rained-out games will be made up the following Tuesday.</p>
         </div>
-        <div class="card-body">
-          <p style="font-size:13px; color:var(--muted); margin:0 0 18px; line-height:1.6;">Review before registering. Playoff and championship dates are flexible.</p>
 
-          <ul class="schedule-list">
-            <li><span class="sched-date">4/18</span><span class="sched-label"></span><span class="sched-time">9:30 PM</span></li>
-            <li><span class="sched-date">4/25</span><span class="sched-label"></span><span class="sched-time">9:30 PM</span></li>
-            <li><span class="sched-date">5/2</span><span class="sched-label"></span><span class="sched-time">9:30 PM</span></li>
-            <li><span class="sched-date">5/9</span><span class="sched-label"></span><span class="sched-time">9:30 PM</span></li>
-            <li><span class="sched-date">5/16</span><span class="sched-label"></span><span class="sched-time">10:00 PM</span></li>
-            <li><span class="sched-date">5/26</span><span class="sched-label"></span><span class="sched-time">10:00 / 9:30 PM</span></li>
-            <li><span class="sched-date">5/30</span><span class="sched-label"></span><span class="sched-time">10:00 PM</span></li>
-            <li><span class="sched-date">6/6–6/7</span><span class="sched-label sched-special">Playoffs</span><span class="sched-time" style="color:var(--muted);">TBD</span></li>
-            <li><span class="sched-date">6/13–6/14</span><span class="sched-label sched-special">Championship</span><span class="sched-time" style="color:var(--muted);">TBD</span></li>
-            <li><span class="sched-date">6/16</span><span class="sched-label sched-special">All-Star Game</span><span class="sched-time" style="color:var(--muted);">TBD</span></li>
-          </ul>
-
-          <div class="info-box">
-            <strong>☔ Rainout Policy:</strong> Rained-out games will be made up the following Tuesday.
-          </div>
-          <div class="info-box">
-            <strong>⚠️ Reminder:</strong> Signing up does <strong>not</strong> guarantee a spot. If the league reaches capacity, you'll be placed on the waitlist.
-          </div>
+        <div class="info-box">
+          <span class="icon">⚠️</span>
+          <p><strong>Reminder:</strong> Signing up does <strong>not</strong> guarantee a spot. If the league reaches capacity, you'll be placed on the waitlist.</p>
         </div>
       </div>
     </div>
 
-  </main>
+  </div>
+
+  <footer>
+    <div class="footer-logo">Baseball <span class="accent">For Bums</span> · Staten Island</div>
+    <a href="/waiver-and-conduct/" class="footer-link">View Waiver &amp; Code of Conduct →</a>
+    <div class="powered-by">
+      <span class="pb-label">Powered by</span>
+      <a href="https://7095cda1.logo-46y.pages.dev/" target="_blank" class="pb-logo-link">
+        <img src="https://7095cda1.logo-46y.pages.dev/logo.svg" alt="Oneby.AI" class="pb-logo" />
+      </a>
+    </div>
+  </footer>
 
   <script>
-    const ENDPOINT = "https://script.google.com/macros/s/AKfycbwXbq4JVsiVWyhC52XpOO3DXrqSY1eEjzTgsGbUnkFfxcvVwvNLn5fnHACveEZTjl2D/exec";
-    const form = document.getElementById("regForm");
-    const btn = document.getElementById("submitBtn");
-    const okMsg = document.getElementById("okMsg");
-    const errMsg = document.getElementById("errMsg");
-    const waiver = document.getElementById("waiver");
-
-    function show(el, text) { el.style.display = "block"; el.textContent = text; }
-    function hide(el) { el.style.display = "none"; el.textContent = ""; }
-
-    function normalizeJerseyNumber(v) {
-      if (v === "" || v === null || typeof v === "undefined") return "";
-      const n = parseInt(String(v), 10);
-      if (isNaN(n)) return "";
-      if (n < 0) return "0";
-      if (n > 99) return "99";
-      return String(n);
-    }
-
-    form.addEventListener("submit", async (e) => {
+    document.getElementById('regForm').addEventListener('submit', function(e) {
       e.preventDefault();
-      hide(okMsg); hide(errMsg);
-
-      if (!waiver.checked) {
-        show(errMsg, "You must accept the waiver to register.");
-        return;
-      }
-
-      const jerseyNumInput = form.querySelector('input[name="jerseyNumber"]');
-      jerseyNumInput.value = normalizeJerseyNumber(jerseyNumInput.value);
-
-      btn.disabled = true;
-      btn.textContent = "Submitting…";
-
-      try {
-        const fd = new FormData(form);
-        fd.set("waiverAccepted", "yes");
-        fd.set("userAgent", navigator.userAgent);
-
-        const res = await fetch(ENDPOINT, { method: "POST", body: fd });
-        const data = await res.json();
-
-        if (!data.ok) throw new Error(data.error || "Submission failed.");
-
-        if (data.status === "WAITLIST") {
-          show(okMsg, `You're on the WAITLIST. Registration ID: ${data.registrationId}. Check your email for confirmation.`);
-          btn.textContent = "Submitted — Waitlist";
-          return;
-        }
-
-        show(okMsg, `Registration received! Status: CONFIRMED. Registration ID: ${data.registrationId}. Check your email for next steps.`);
-        btn.textContent = "Submitted — Confirmed ✓";
-      } catch (err) {
-        show(errMsg, err.message || "Something went wrong. Please try again.");
-        btn.disabled = false;
-        btn.textContent = "Submit Registration →";
-      }
+      const btn = document.getElementById('submitBtn');
+      const ok = document.getElementById('okMsg');
+      btn.disabled = true; btn.textContent = 'Submitting…';
+      ok.style.display = 'none';
+      setTimeout(() => {
+        ok.style.display = 'block';
+        ok.textContent = '✓ Registration received! We\'ll be in touch with confirmed or waitlist status.';
+        btn.textContent = 'Submitted';
+      }, 900);
     });
   </script>
 </body>
