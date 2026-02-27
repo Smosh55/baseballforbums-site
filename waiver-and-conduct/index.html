@@ -4,555 +4,336 @@
   <meta charset="UTF-8" />
   <title>Waiver & Code of Conduct | Baseball For Bums</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700;800;900&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
     :root {
-      --red: #c0392b;
-      --red-bright: #e74c3c;
-      --cream: #f5f0e8;
-      --ink: #1a1410;
-      --ink-mid: #3d3530;
-      --ink-light: #6b5f58;
-      --rule: #2a2220;
-      --paper: #faf7f2;
+      --red:      #E53030;
+      --red-dim:  #b02424;
+      --gold:     #F5C42E;
+      --bg:       #080c14;
+      --panel:    #0f1420;
+      --panel2:   #141926;
+      --rule:     #1e2535;
+      --rule2:    #252d40;
+      --text:     #eceef5;
+      --text-mid: #aab2cc;  /* bumped up from #8892aa for readability */
+      --text-dim: #5a6480;
+      --ob-blue:  #2B6EF8;
+      --ob-green: #00D97E;
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      background: var(--ink);
-      color: var(--cream);
-      font-family: 'Source Serif 4', Georgia, serif;
-      min-height: 100vh;
-      overflow-x: hidden;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Barlow', sans-serif;
+      font-size: 16px; /* up from 14px */
+      line-height: 1.7;
+      min-height: 100vh; overflow-x: hidden;
     }
 
-    /* Grain overlay */
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-      pointer-events: none;
-      z-index: 999;
-      opacity: 0.4;
-    }
-
-    /* HEADER */
+    /* ── HEADER ── */
     header {
-      border-bottom: 3px solid var(--red);
-      padding: 0 40px;
-      display: flex;
-      justify-content: space-between;
-      align-items: stretch;
-      background: var(--ink);
-      position: sticky;
-      top: 0;
-      z-index: 100;
+      background: #050810; border-bottom: 1px solid var(--rule);
+      padding: 0 40px; display: flex; justify-content: space-between; align-items: center;
+      height: 52px; position: sticky; top: 0; z-index: 100;
     }
-
-    .logo-block {
-      padding: 18px 0;
-      border-right: 1px solid #2a2220;
-      padding-right: 28px;
-    }
-
     .logo {
-      font-family: 'Oswald', sans-serif;
-      font-size: 22px;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: #fff;
-      text-decoration: none;
+      font-family: 'Barlow Condensed', sans-serif; font-size: 20px; font-weight: 900;
+      letter-spacing: 0.08em; text-transform: uppercase; color: #fff; text-decoration: none;
     }
-
-    .logo span {
-      color: var(--red-bright);
+    .logo .accent { color: var(--red); }
+    .header-right { display: flex; align-items: center; gap: 24px; }
+    .location-pill {
+      font-family: 'Barlow Condensed', sans-serif; font-size: 11px; font-weight: 700;
+      letter-spacing: 0.15em; text-transform: uppercase; color: #fff;
+      background: var(--red); padding: 5px 14px;
     }
-
-    .header-right {
-      display: flex;
-      align-items: center;
-      gap: 0;
-    }
-
-    .location-tag {
-      font-family: 'Oswald', sans-serif;
-      font-size: 11px;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--red-bright);
-      padding: 0 24px;
-      border-right: 1px solid #2a2220;
-      height: 100%;
-      display: flex;
-      align-items: center;
-    }
-
     .header-link {
-      font-family: 'Oswald', sans-serif;
-      font-size: 12px;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: #fff;
-      text-decoration: none;
-      padding: 0 28px;
-      height: 100%;
-      display: flex;
-      align-items: center;
-      background: var(--red);
-      transition: background 0.2s;
+      font-family: 'Barlow Condensed', sans-serif; font-size: 13px; font-weight: 600;
+      letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-mid);
+      text-decoration: none; transition: color 0.15s;
     }
+    .header-link:hover { color: #fff; }
+    .header-link.cta { background: var(--red); color: #fff; padding: 7px 18px; }
+    .header-link.cta:hover { background: #ff3d3d; }
 
-    .header-link:hover { background: var(--red-bright); }
-
-    /* HERO */
+    /* ── HERO ── */
     .hero {
-      padding: 80px 40px 60px;
-      max-width: 1000px;
-      margin: 0 auto;
-      border-bottom: 1px solid #2a2220;
+      position: relative; padding: 72px 40px 64px; text-align: center;
+      overflow: hidden; border-bottom: 2px solid var(--red);
     }
-
-    .kicker {
-      font-family: 'Oswald', sans-serif;
-      font-size: 11px;
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
-      color: var(--red-bright);
-      margin-bottom: 20px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .kicker::after {
+    .hero::before {
       content: '';
-      flex: 1;
-      height: 1px;
-      background: var(--red);
-      opacity: 0.4;
+      position: absolute; top: -60px; right: -100px;
+      width: 700px; height: 500px;
+      background: radial-gradient(ellipse at center, rgba(180,60,20,0.28) 0%, rgba(120,30,10,0.12) 45%, transparent 70%);
+      pointer-events: none;
     }
-
+    .hero-kicker {
+      font-family: 'Barlow Condensed', sans-serif; font-size: 12px; font-weight: 700;
+      letter-spacing: 0.3em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 20px;
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+    }
+    .hero-kicker::before { content: '●'; color: var(--red); font-size: 8px; }
     .hero h1 {
-      font-family: 'Oswald', sans-serif;
-      font-size: clamp(44px, 8vw, 84px);
-      font-weight: 700;
-      line-height: 0.92;
-      text-transform: uppercase;
-      letter-spacing: -0.01em;
-      color: #fff;
-      margin-bottom: 28px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(44px, 7vw, 82px); font-weight: 900;
+      text-transform: uppercase; letter-spacing: 0.02em; line-height: 1;
+      color: #fff; margin-bottom: 20px;
     }
-
-    .hero h1 em {
-      font-style: normal;
-      color: var(--red-bright);
-      display: block;
-    }
-
+    .hero h1 .highlight { color: var(--gold); }
     .hero-sub {
-      font-size: 16px;
-      line-height: 1.65;
-      color: #b5a898;
-      max-width: 560px;
-      font-weight: 300;
-      font-style: italic;
+      font-size: 17px; color: var(--text-mid); max-width: 560px; margin: 0 auto;
+      line-height: 1.65; font-style: italic; font-weight: 300;
     }
 
-    /* ALERT BANNER */
-    .alert-banner {
-      margin: 0 40px;
-      background: var(--red);
-      padding: 16px 28px;
-      display: flex;
-      align-items: flex-start;
-      gap: 16px;
-      animation: slideIn 0.5s ease 0.2s both;
+    /* ── ALERT BAR ── */
+    .alert-bar {
+      background: var(--red); padding: 14px 40px;
+      display: flex; align-items: flex-start; justify-content: center; gap: 12px;
+    }
+    .alert-bar .icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+    .alert-bar p { font-size: 14px; color: rgba(255,255,255,0.95); line-height: 1.5; max-width: 680px; }
+    .alert-bar strong {
+      color: #fff; font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 800; letter-spacing: 0.05em; text-transform: uppercase; font-size: 15px;
     }
 
-    @keyframes slideIn {
-      from { opacity: 0; transform: translateY(-8px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .alert-icon {
-      font-size: 20px;
-      flex-shrink: 0;
-      margin-top: 2px;
-    }
-
-    .alert-banner p {
-      font-size: 14px;
-      line-height: 1.55;
-      color: #fff;
-      font-style: italic;
-    }
-
-    .alert-banner strong {
-      font-style: normal;
-      font-family: 'Oswald', sans-serif;
-      font-weight: 600;
-      letter-spacing: 0.05em;
-      font-size: 13px;
-      text-transform: uppercase;
-    }
-
-    /* CONTENT */
+    /* ── LAYOUT ── */
     .content {
-      max-width: 1000px;
-      margin: 0 auto;
-      padding: 0 40px 80px;
-      display: grid;
-      grid-template-columns: 1fr 280px;
-      gap: 0 60px;
+      max-width: 1060px; margin: 0 auto; padding: 56px 40px 90px;
+      display: grid; grid-template-columns: 1fr 280px; gap: 48px; align-items: start;
     }
 
-    /* SECTIONS */
-    .sections {
-      padding-top: 60px;
-    }
-
+    /* ── SECTIONS ── */
     .section {
-      padding: 36px 0;
-      border-bottom: 1px solid #2a2220;
-      animation: fadeUp 0.5s ease both;
+      padding: 36px 0; border-bottom: 1px solid var(--rule);
+      animation: fadeUp 0.4s ease both;
     }
+    .section:first-child { padding-top: 0; }
+    .section:last-child { border-bottom: none; padding-bottom: 0; }
 
-    .section:last-child { border-bottom: none; }
-
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(16px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .section:nth-child(1) { animation-delay: 0.1s; }
-    .section:nth-child(2) { animation-delay: 0.15s; }
-    .section:nth-child(3) { animation-delay: 0.2s; }
-    .section:nth-child(4) { animation-delay: 0.25s; }
-    .section:nth-child(5) { animation-delay: 0.3s; }
-    .section:nth-child(6) { animation-delay: 0.35s; }
-    .section:nth-child(7) { animation-delay: 0.4s; }
-    .section:nth-child(8) { animation-delay: 0.45s; }
+    @keyframes fadeUp { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
+    .section:nth-child(1) { animation-delay: 0.05s; }
+    .section:nth-child(2) { animation-delay: 0.1s; }
+    .section:nth-child(3) { animation-delay: 0.15s; }
+    .section:nth-child(4) { animation-delay: 0.2s; }
+    .section:nth-child(5) { animation-delay: 0.25s; }
+    .section:nth-child(6) { animation-delay: 0.3s; }
+    .section:nth-child(7) { animation-delay: 0.35s; }
+    .section:nth-child(8) { animation-delay: 0.4s; }
 
     .section-header {
-      display: flex;
-      align-items: baseline;
-      gap: 16px;
-      margin-bottom: 20px;
+      display: flex; align-items: center; gap: 14px; margin-bottom: 18px;
     }
-
-    .section-num {
-      font-family: 'Oswald', sans-serif;
-      font-size: 11px;
-      letter-spacing: 0.2em;
-      color: var(--red-bright);
-      text-transform: uppercase;
+    .sec-num {
+      font-family: 'Barlow Condensed', sans-serif; font-size: 12px; font-weight: 700;
+      letter-spacing: 0.2em; color: var(--gold); text-transform: uppercase; white-space: nowrap;
       flex-shrink: 0;
-      padding-top: 2px;
     }
-
+    /* subtle rule between number and title */
+    .sec-divider {
+      width: 1px; height: 18px; background: var(--rule2); flex-shrink: 0;
+    }
     .section h2 {
-      font-family: 'Oswald', sans-serif;
-      font-size: 21px;
-      font-weight: 600;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      color: #fff;
-      line-height: 1.1;
+      font-family: 'Barlow Condensed', sans-serif; font-size: 22px; font-weight: 800;
+      letter-spacing: 0.08em; text-transform: uppercase; color: #fff; line-height: 1;
     }
 
+    /* Body copy — the main readability upgrade */
     .section p {
-      font-size: 15px;
-      line-height: 1.7;
-      color: #c5b8ae;
-      font-weight: 300;
+      font-size: 15px; line-height: 1.85;
+      color: var(--text-mid);
       margin-bottom: 14px;
+      font-weight: 400; /* up from 300 — easier to read */
+      max-width: 65ch; /* optimal line length */
     }
-
     .section p:last-child { margin-bottom: 0; }
-
-    .section p strong {
-      color: #e8dfd5;
-      font-weight: 600;
-      font-style: normal;
-    }
+    .section p strong { color: var(--text); font-weight: 600; }
 
     .section ul {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
+      list-style: none; padding: 0;
+      display: flex; flex-direction: column; gap: 10px;
+      margin-top: 4px;
     }
-
     .section ul li {
-      font-size: 15px;
-      line-height: 1.6;
-      color: #c5b8ae;
-      font-weight: 300;
-      padding-left: 20px;
-      position: relative;
+      font-size: 15px; line-height: 1.7;
+      color: var(--text-mid); font-weight: 400;
+      padding-left: 22px; position: relative;
     }
-
     .section ul li::before {
-      content: '—';
-      position: absolute;
-      left: 0;
-      color: var(--red);
-      font-weight: 400;
+      content: '—'; position: absolute; left: 0;
+      color: var(--gold); font-weight: 700;
     }
 
-    /* HIGHLIGHT BLOCK */
-    .highlight {
-      background: #201a18;
-      border-left: 3px solid var(--red);
-      padding: 18px 22px;
-      margin-top: 18px;
+    /* ── CALLOUT BOXES ── */
+    .highlight-box {
+      background: var(--panel2); border-left: 3px solid var(--ob-blue);
+      padding: 18px 22px; margin-top: 20px; border-radius: 0 2px 2px 0;
     }
-
-    .highlight p {
-      margin: 0;
-      color: #d8ccC4;
-      font-size: 14px;
+    .highlight-box p {
+      margin: 0; font-size: 14px; line-height: 1.75;
+      color: var(--text-mid); max-width: none;
     }
+    .highlight-box p strong { color: var(--text); }
 
-    /* PENALTY BOX */
     .penalty-box {
-      background: var(--red);
-      padding: 22px;
-      margin-top: 18px;
+      background: var(--red); padding: 22px 26px; margin-top: 20px;
+    }
+    .penalty-label {
+      font-family: 'Barlow Condensed', sans-serif; font-size: 11px; font-weight: 700;
+      letter-spacing: 0.25em; text-transform: uppercase;
+      color: rgba(255,255,255,0.65); margin-bottom: 8px;
+    }
+    .penalty-text {
+      font-family: 'Barlow Condensed', sans-serif; font-size: 30px; font-weight: 900;
+      line-height: 1.1; color: #fff; text-transform: uppercase; letter-spacing: 0.04em;
     }
 
-    .penalty-box .penalty-label {
-      font-family: 'Oswald', sans-serif;
-      font-size: 10px;
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.7);
-      margin-bottom: 8px;
+    /* ── SIDEBAR ── */
+    .sidebar-panel {
+      background: var(--panel); border: 1px solid var(--rule2);
+      position: sticky; top: 64px;
     }
-
-    .penalty-box .penalty-text {
-      font-family: 'Oswald', sans-serif;
-      font-size: 28px;
-      font-weight: 700;
-      line-height: 1.05;
-      color: #fff;
-      text-transform: uppercase;
+    .sidebar-panel-header {
+      padding: 16px 20px; border-bottom: 1px solid var(--rule);
     }
-
-    /* SIDEBAR */
-    .sidebar {
-      padding-top: 60px;
+    .sidebar-panel-header h3 {
+      font-family: 'Barlow Condensed', sans-serif; font-size: 12px; font-weight: 800;
+      letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold);
     }
-
-    .sidebar-card {
-      background: #201a18;
-      border: 1px solid #2a2220;
-      padding: 24px;
-      margin-bottom: 20px;
-      position: sticky;
-      top: 80px;
-    }
-
-    .sidebar-card h3 {
-      font-family: 'Oswald', sans-serif;
-      font-size: 12px;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--red-bright);
-      margin-bottom: 16px;
-    }
-
     .toc-link {
-      display: block;
-      font-size: 13px;
-      color: #9a8e87;
-      text-decoration: none;
-      padding: 8px 0;
-      border-bottom: 1px solid #2a2220;
-      transition: color 0.15s;
-      font-family: 'Oswald', sans-serif;
-      font-weight: 400;
-      letter-spacing: 0.03em;
-      text-transform: uppercase;
-      font-size: 11px;
+      display: flex; align-items: center; gap: 10px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 12px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
+      color: var(--text-dim); text-decoration: none; padding: 10px 20px;
+      border-bottom: 1px solid var(--rule); transition: color 0.15s, background 0.15s;
     }
-
-    .toc-link:last-child { border-bottom: none; }
-    .toc-link:hover { color: #fff; }
+    .toc-link:last-of-type { border-bottom: none; }
+    .toc-link:hover { color: #fff; background: var(--panel2); }
+    .toc-num { color: var(--gold); opacity: 0.7; flex-shrink: 0; font-size: 10px; }
 
     .sidebar-actions {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      margin-top: 20px;
+      padding: 16px 20px; border-top: 1px solid var(--rule);
+      display: flex; flex-direction: column; gap: 10px;
     }
-
     .btn {
-      font-family: 'Oswald', sans-serif;
-      font-size: 13px;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      padding: 14px 20px;
-      border: none;
-      cursor: pointer;
-      text-align: center;
-      text-decoration: none;
-      display: block;
-      transition: all 0.2s;
+      font-family: 'Barlow Condensed', sans-serif; font-size: 14px; font-weight: 800;
+      letter-spacing: 0.1em; text-transform: uppercase; padding: 13px 18px; border: none;
+      cursor: pointer; text-align: center; text-decoration: none; display: block; transition: all 0.2s;
     }
+    .btn-primary { background: var(--red); color: #fff; }
+    .btn-primary:hover { background: #ff3d3d; }
+    .btn-ghost { background: transparent; color: var(--text-mid); border: 1px solid var(--rule2); }
+    .btn-ghost:hover { color: #fff; border-color: var(--text-dim); }
 
-    .btn-primary {
-      background: var(--red);
-      color: #fff;
-    }
-
-    .btn-primary:hover { background: var(--red-bright); }
-
-    .btn-ghost {
-      background: transparent;
-      color: #9a8e87;
-      border: 1px solid #2a2220;
-    }
-
-    .btn-ghost:hover { color: #fff; border-color: #5a504a; }
-
-    /* AGREEMENT BOX */
+    /* ── AGREEMENT ── */
+    .agreement-wrap { padding: 0 40px 48px; max-width: 1060px; margin: 0 auto; }
     .agreement {
-      background: #fff;
-      color: var(--ink);
-      padding: 36px 40px;
-      margin: 0 40px 40px;
-      position: relative;
-      overflow: hidden;
+      background: var(--panel); border: 1px solid var(--rule2);
+      border-top: 3px solid var(--gold);
+      padding: 36px 40px; position: relative; overflow: hidden;
     }
-
-    .agreement::before {
+    .agreement::after {
       content: '✓';
-      position: absolute;
-      right: -10px;
-      top: -20px;
-      font-size: 160px;
-      color: #f0ebe3;
-      font-family: 'Oswald', sans-serif;
-      pointer-events: none;
-      line-height: 1;
+      position: absolute; right: 20px; top: -10px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 140px; font-weight: 900;
+      color: rgba(245,196,46,0.05); line-height: 1; pointer-events: none;
     }
-
     .agreement h3 {
-      font-family: 'Oswald', sans-serif;
-      font-size: 18px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      color: var(--ink);
-      margin-bottom: 12px;
+      font-family: 'Barlow Condensed', sans-serif; font-size: 20px; font-weight: 900;
+      text-transform: uppercase; letter-spacing: 0.1em; color: var(--gold); margin-bottom: 12px;
     }
-
     .agreement p {
-      font-size: 14px;
-      line-height: 1.65;
-      color: var(--ink-mid);
-      position: relative;
-      z-index: 1;
+      font-size: 15px; line-height: 1.75;
+      color: var(--text-mid); position: relative; z-index: 1;
+      max-width: 70ch;
     }
 
-    /* FOOTER */
+    /* ── FOOTER ── */
     footer {
-      border-top: 3px solid var(--red);
-      padding: 24px 40px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: #0d0a09;
+      border-top: 1px solid var(--rule); padding: 20px 40px;
+      display: flex; justify-content: space-between; align-items: center;
+      background: #050810; gap: 20px; flex-wrap: wrap;
     }
-
     .footer-logo {
-      font-family: 'Oswald', sans-serif;
-      font-size: 14px;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: #5a504a;
+      font-family: 'Barlow Condensed', sans-serif; font-size: 15px; font-weight: 800;
+      letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-dim);
     }
-
+    .footer-logo .accent { color: var(--red); }
     .fine-print {
-      font-size: 11px;
-      color: #4a403a;
-      font-style: italic;
-      max-width: 480px;
-      text-align: right;
-      line-height: 1.5;
+      font-size: 12px; color: var(--text-dim); font-style: italic;
+      max-width: 360px; text-align: center; line-height: 1.55;
     }
+    .powered-by { display: flex; align-items: center; gap: 10px; }
+    .pb-label {
+      font-family: 'Barlow Condensed', sans-serif; font-size: 10px; font-weight: 600;
+      letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-dim);
+    }
+    .pb-logo-link { display: flex; align-items: center; opacity: 0.5; transition: opacity 0.2s; }
+    .pb-logo-link:hover { opacity: 1; }
+    .pb-logo { height: 22px; width: auto; filter: brightness(0) invert(1); }
 
-    /* RESPONSIVE */
-    @media (max-width: 768px) {
+    /* ── RESPONSIVE ── */
+    @media (max-width: 800px) {
       header { padding: 0 20px; }
-      .hero { padding: 50px 20px 40px; }
-      .alert-banner { margin: 0 20px; }
-      .content { 
-        grid-template-columns: 1fr;
-        padding: 0 20px 60px;
-      }
-      .sidebar { 
-        padding-top: 0;
-        order: -1;
-      }
-      .sidebar-card { position: static; }
-      .agreement { margin: 0 20px 30px; padding: 26px 24px; }
-      footer { flex-direction: column; gap: 12px; text-align: center; }
+      .hero { padding: 52px 20px 48px; }
+      .alert-bar { padding: 14px 20px; }
+      .content { grid-template-columns: 1fr; padding: 40px 20px 60px; gap: 32px; }
+      .sidebar { order: -1; }
+      .sidebar-panel { position: static; }
+      .agreement-wrap { padding: 0 20px 40px; }
+      .agreement { padding: 24px; }
+      footer { flex-direction: column; gap: 10px; text-align: center; padding: 20px; }
       .fine-print { text-align: center; }
     }
 
     @media print {
-      body { background: #fff; color: #000; }
-      body::before { display: none; }
-      header { position: static; background: #fff; border-bottom: 2px solid #000; }
-      .location-tag, .header-link { color: #000; }
-      .hero { color: #000; }
-      .hero h1 { color: #000; }
-      .hero h1 em { color: var(--red); }
-      .kicker { color: var(--red); }
-      .alert-banner { background: #eee; }
-      .sections { color: #000; }
-      .section h2 { color: #000; }
+      body { background: #fff; color: #000; font-size: 13px; }
+      header, .sidebar, .powered-by { display: none !important; }
+      .hero { background: #fff; padding: 20px 0; }
+      .hero h1 { color: #000; font-size: 36px; }
+      .hero h1 .highlight { color: #b08000; }
+      .hero-sub { color: #444; }
+      .alert-bar { background: #f0f0f0; padding: 10px 0; }
+      .alert-bar p, .alert-bar strong { color: #000; }
+      .content { grid-template-columns: 1fr; padding: 20px 0; gap: 0; }
+      .section h2 { color: #000; font-size: 16px; }
       .section p, .section ul li { color: #333; }
-      .sidebar { display: none; }
-      .content { grid-template-columns: 1fr; }
-      .agreement { border: 2px solid #000; }
-      footer { background: #fff; color: #000; }
-      .sidebar-actions, .printbar { display: none; }
+      .highlight-box { background: #f5f5f5; border-left: 3px solid #2B6EF8; }
+      .highlight-box p { color: #333; }
+      .penalty-box { background: #c0392b; }
+      .agreement-wrap { padding: 0; }
+      .agreement { background: #f9f9f9; border: 1px solid #ccc; border-top: 3px solid #b08000; }
+      .agreement h3 { color: #b08000; }
+      .agreement p { color: #333; }
+      footer { background: #fff; border-top: 1px solid #ccc; }
+      .fine-print { color: #666; }
     }
   </style>
 </head>
 <body>
 
   <header>
-    <div class="logo-block">
-      <a href="/" class="logo">Baseball <span>For Bums</span></a>
-    </div>
+    <a href="/" class="logo">Baseball <span class="accent">For Bums</span></a>
     <div class="header-right">
-      <div class="location-tag">⚾ Staten Island</div>
-      <a href="/signup/" class="header-link">Sign Up →</a>
+      <span class="location-pill">Staten Island</span>
+      <a href="/signup/" class="header-link cta">Sign Up</a>
     </div>
   </header>
 
   <div class="hero">
-    <div class="kicker">League Document · Season 2025</div>
-    <h1>Waiver &amp;<em>Code of Conduct</em></h1>
-    <p class="hero-sub">
-      By registering for Baseball For Bums, you acknowledge and agree to these terms in full.
-      Please read carefully before participating in any league activity.
-    </p>
+    <div class="hero-kicker">League Document · Season 2025</div>
+    <h1>Waiver &amp; <span class="highlight">Code of Conduct</span></h1>
+    <p class="hero-sub">By registering for Baseball For Bums, you acknowledge and agree to these terms in full. Read carefully before participating in any league activity.</p>
   </div>
 
-  <div class="alert-banner">
-    <div class="alert-icon">⚠</div>
-    <p><strong>Important:</strong> Baseball involves physical contact, hard balls &amp; bats, running, sliding, collisions, and uneven field conditions. Participation is entirely voluntary and carries real risk of injury.</p>
+  <div class="alert-bar">
+    <span class="icon">⚠</span>
+    <p><strong>Important:</strong> Baseball involves physical contact, hard balls &amp; bats, running, sliding, collisions, and uneven field conditions. Participation is voluntary and carries real risk of injury.</p>
   </div>
 
   <div class="content">
@@ -560,61 +341,45 @@
 
       <div class="section">
         <div class="section-header">
-          <span class="section-num">§ 01</span>
+          <span class="sec-num">§ 01</span>
+          <div class="sec-divider"></div>
           <h2>Assumption of Risk</h2>
         </div>
-        <p>
-          I understand that participating in Baseball For Bums league activities — including games, practices,
-          warmups, and related events — involves inherent risks including but not limited to: sprains, strains,
-          fractures, concussions, heat illness, cardiac events, collisions with players or objects, and injuries
-          caused by bats, balls, and field conditions.
-        </p>
-        <p>
-          I knowingly and voluntarily assume all such risks, whether known or unknown, foreseeable or
-          unforeseeable, arising from my participation.
-        </p>
+        <p>I understand that participating in Baseball For Bums league activities — including games, practices, warmups, and related events — involves inherent risks including but not limited to: sprains, strains, fractures, concussions, heat illness, cardiac events, collisions with players or objects, and injuries caused by bats, balls, and field conditions.</p>
+        <p>I knowingly and voluntarily assume all such risks, whether known or unknown, foreseeable or unforeseeable, arising from my participation.</p>
       </div>
 
       <div class="section">
         <div class="section-header">
-          <span class="section-num">§ 02</span>
+          <span class="sec-num">§ 02</span>
+          <div class="sec-divider"></div>
           <h2>Waiver &amp; Release of Liability</h2>
         </div>
-        <p>
-          To the fullest extent permitted by law, I release and hold harmless Baseball For Bums, the league
-          commissioner, league organizers, staff, volunteers, sponsors, partners, and field/property owners
-          from any and all claims, liabilities, damages, or causes of action arising out of or related to my
-          participation — including claims based on negligence, except to the extent prohibited by law.
-        </p>
+        <p>To the fullest extent permitted by law, I release and hold harmless Baseball For Bums, the league commissioner, league organizers, staff, volunteers, sponsors, partners, and field/property owners from any and all claims, liabilities, damages, or causes of action arising out of or related to my participation — including claims based on negligence, except to the extent prohibited by law.</p>
       </div>
 
       <div class="section">
         <div class="section-header">
-          <span class="section-num">§ 03</span>
+          <span class="sec-num">§ 03</span>
+          <div class="sec-divider"></div>
           <h2>Medical Treatment &amp; Emergency Care</h2>
         </div>
-        <p>
-          If I am injured or become ill, I authorize league organizers to seek emergency medical treatment
-          on my behalf if I am unable to do so. I understand I am solely responsible for all medical costs
-          and that the league does not provide any medical insurance coverage.
-        </p>
+        <p>If I am injured or become ill, I authorize league organizers to seek emergency medical treatment on my behalf if I am unable to do so. I understand I am solely responsible for all medical costs and that the league does not provide any medical insurance coverage.</p>
       </div>
 
       <div class="section">
         <div class="section-header">
-          <span class="section-num">§ 04</span>
+          <span class="sec-num">§ 04</span>
+          <div class="sec-divider"></div>
           <h2>Fitness to Participate</h2>
         </div>
-        <p>
-          I affirm that I am physically able to participate and will not engage in any activity for which
-          I am not medically cleared. I understand I should consult a physician if I have any medical concerns
-          prior to participation.
-        </p>
+        <p>I affirm that I am physically able to participate and will not engage in any activity for which I am not medically cleared. I should consult a physician if I have any medical concerns prior to participation.</p>
       </div>
 
       <div class="section">
         <div class="section-header">
-          <span class="section-num">§ 05</span>
+          <span class="sec-num">§ 05</span>
+          <div class="sec-divider"></div>
           <h2>Sportsmanship &amp; Code of Conduct</h2>
         </div>
         <p>All participants are expected to maintain a respectful, competitive, and safe environment at all times. The following are strictly prohibited:</p>
@@ -625,76 +390,66 @@
           <li>Alcohol or drug impairment during games</li>
           <li>Vandalism or disrespect of field property</li>
         </ul>
-
-        <div class="highlight">
-          <p><strong>Umpire Authority:</strong> Umpires have full and final authority over all on-field decisions including rules interpretations, player conduct, and game control. All decisions are final. Any arguing, abusive language, or unsportsmanlike conduct toward an umpire may result in immediate ejection.</p>
+        <div class="highlight-box">
+          <p><strong>Umpire Authority:</strong> Umpires have full and final authority over all on-field decisions. All decisions are final. Arguing, abusive language, or unsportsmanlike conduct toward an umpire may result in immediate ejection.</p>
         </div>
       </div>
 
       <div class="section">
         <div class="section-header">
-          <span class="section-num">§ 06</span>
+          <span class="sec-num">§ 06</span>
+          <div class="sec-divider"></div>
           <h2>Commissioner Authority &amp; Discipline</h2>
         </div>
-        <p>
-          The League Commissioner retains full authority over all disciplinary decisions related to player
-          conduct, rule violations, safety concerns, and behavior detrimental to the league.
-        </p>
-
+        <p>The League Commissioner retains full authority over all disciplinary decisions related to player conduct, rule violations, safety concerns, and behavior detrimental to the league.</p>
         <div class="penalty-box">
           <div class="penalty-label">Automatic Penalty — Ejection</div>
           <div class="penalty-text">1-Game Suspension<br>+ Removal from Current Game</div>
         </div>
-
-        <p style="margin-top: 18px;">The Commissioner may impose additional penalties including:</p>
+        <p style="margin-top:20px">The Commissioner may also impose additional penalties including:</p>
         <ul>
           <li>Extended or multi-game suspensions</li>
           <li>Playoff ineligibility</li>
           <li>Full season suspension</li>
           <li>Permanent removal from the league</li>
         </ul>
-        <div class="highlight" style="margin-top: 18px;">
-          <p>Disciplinary decisions are <strong>final and not subject to appeal.</strong> Players removed or suspended due to conduct violations will not receive a refund of league fees.</p>
+        <div class="highlight-box" style="margin-top:20px">
+          <p>Disciplinary decisions are <strong>final and not subject to appeal.</strong> Players removed due to conduct violations will not receive a refund of league fees.</p>
         </div>
       </div>
 
       <div class="section">
         <div class="section-header">
-          <span class="section-num">§ 07</span>
+          <span class="sec-num">§ 07</span>
+          <div class="sec-divider"></div>
           <h2>Scheduling &amp; Rainouts</h2>
         </div>
-        <p>
-          Schedules may change due to field availability, weather, or operational needs.
-          <strong>Rainout policy:</strong> Any rained-out game will be rescheduled for the following Tuesday.
-        </p>
+        <p>Schedules may change due to field availability, weather, or operational needs. <strong>Rainout policy:</strong> Any rained-out game will be rescheduled for the following Tuesday.</p>
       </div>
 
       <div class="section">
         <div class="section-header">
-          <span class="section-num">§ 08</span>
+          <span class="sec-num">§ 08</span>
+          <div class="sec-divider"></div>
           <h2>Media Release</h2>
         </div>
-        <p>
-          I grant Baseball For Bums permission to use photos and videos taken during league activities
-          for league-related promotion including social media, website, and game recaps — unless I notify
-          the league in writing to opt out.
-        </p>
+        <p>I grant Baseball For Bums permission to use photos and videos taken during league activities for league-related promotion — including social media, website, and game recaps — unless I notify the league in writing to opt out.</p>
       </div>
 
     </div>
 
+    <!-- SIDEBAR -->
     <aside class="sidebar">
-      <div class="sidebar-card">
-        <h3>Jump to Section</h3>
-        <a class="toc-link" href="#">§ 01 — Assumption of Risk</a>
-        <a class="toc-link" href="#">§ 02 — Waiver &amp; Release</a>
-        <a class="toc-link" href="#">§ 03 — Medical &amp; Emergency</a>
-        <a class="toc-link" href="#">§ 04 — Fitness to Participate</a>
-        <a class="toc-link" href="#">§ 05 — Code of Conduct</a>
-        <a class="toc-link" href="#">§ 06 — Commissioner Authority</a>
-        <a class="toc-link" href="#">§ 07 — Scheduling</a>
-        <a class="toc-link" href="#">§ 08 — Media Release</a>
-
+      <div class="sidebar-panel">
+        <div class="sidebar-panel-header"><h3>Jump to Section</h3></div>
+        <a class="toc-link" href="#s01"><span class="toc-num">01</span> Assumption of Risk</a>
+        <a class="toc-link" href="#s02"><span class="toc-num">02</span> Waiver &amp; Release</a>
+        <a class="toc-link" href="#s03"><span class="toc-num">03</span> Medical &amp; Emergency</a>
+        <a class="toc-link" href="#s04"><span class="toc-num">04</span> Fitness to Participate</a>
+        <a class="toc-link" href="#s05"><span class="toc-num">05</span> Code of Conduct</a>
+        <a class="toc-link" href="#s06"><span class="toc-num">06</span> Commissioner Authority</a>
+        <a class="toc-link" href="#s07"><span class="toc-num">07</span> Scheduling</a>
+        <a class="toc-link" href="#s08"><span class="toc-num">08</span> Media Release</a>
         <div class="sidebar-actions">
           <button class="btn btn-primary" onclick="window.print()">Print / Save PDF</button>
           <a class="btn btn-ghost" href="/signup/">← Back to Sign Up</a>
@@ -703,17 +458,21 @@
     </aside>
   </div>
 
-  <div class="agreement">
-    <h3>Agreement &amp; Acknowledgement</h3>
-    <p>
-      By registering for Baseball For Bums, I acknowledge that I have read, understood, and agree to this
-      waiver and code of conduct in its entirety, and that I am doing so voluntarily.
-    </p>
+  <div class="agreement-wrap">
+    <div class="agreement">
+      <h3>Agreement &amp; Acknowledgement</h3>
+      <p>By registering for Baseball For Bums, I acknowledge that I have read, understood, and agree to this waiver and code of conduct in its entirety, and that I am doing so voluntarily.</p>
+    </div>
   </div>
 
   <footer>
-    <div class="footer-logo">Baseball For Bums · Staten Island</div>
-    <div class="fine-print">
+    <div class="footer-logo">Baseball <span class="accent">For Bums</span> · Staten Island</div>
+    <div class="fine-print">General informational purposes only — not legal advice. Language may be updated once league entity name and primary field are confirmed.</div>
+    <div class="powered-by">
+      <span class="pb-label">Powered by</span>
+      <a href="https://7095cda1.logo-46y.pages.dev/" target="_blank" class="pb-logo-link">
+        <img src="https://7095cda1.logo-46y.pages.dev/logo.svg" alt="Oneby.AI" class="pb-logo" />
+      </a>
     </div>
   </footer>
 
