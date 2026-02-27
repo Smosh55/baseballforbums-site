@@ -4,162 +4,720 @@
   <meta charset="UTF-8" />
   <title>Waiver & Code of Conduct | Baseball For Bums</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
   <style>
-    body { margin:0; font-family: Arial, Helvetica, sans-serif; background:#0d1117; color:#fff; }
-    header { padding:24px 20px; background:#161b22; display:flex; justify-content:space-between; align-items:center; }
-    a { color:#fff; text-decoration:none; opacity:.9; }
-    a:hover { opacity:1; }
-    main { max-width:920px; margin:60px auto; padding:0 20px; }
-    .card { background:#161b22; border:1px solid #2b2f36; border-radius:14px; padding:28px; }
-    h1 { margin:0 0 6px; font-size:28px; }
-    .sub { margin:0 0 18px; opacity:.85; line-height:1.45; }
-    h2 { margin:26px 0 10px; font-size:18px; }
-    p, li { line-height:1.55; opacity:.92; }
-    ul { margin:10px 0 0; padding-left:18px; }
-    .notice { margin-top:18px; padding:14px; border-radius:12px; background:#0d1117; border:1px solid #2b2f36; }
-    .fine { font-size:12px; opacity:.75; line-height:1.45; margin-top:14px; }
-    .printbar { display:flex; gap:10px; margin-top:18px; flex-wrap:wrap; }
-    button {
-      padding:12px 14px; border-radius:10px; border:1px solid #2b2f36;
-      background:#0d1117; color:#fff; cursor:pointer;
+    :root {
+      --red: #c0392b;
+      --red-bright: #e74c3c;
+      --cream: #f5f0e8;
+      --ink: #1a1410;
+      --ink-mid: #3d3530;
+      --ink-light: #6b5f58;
+      --rule: #2a2220;
+      --paper: #faf7f2;
     }
-    button:hover { filter:brightness(1.05); }
-    .pill {
-      display:inline-block; font-size:12px; padding:6px 10px; border-radius:999px;
-      border:1px solid #2b2f36; background:#0d1117; opacity:.9;
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--ink);
+      color: var(--cream);
+      font-family: 'Source Serif 4', Georgia, serif;
+      min-height: 100vh;
+      overflow-x: hidden;
     }
+
+    /* Grain overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 999;
+      opacity: 0.4;
+    }
+
+    /* HEADER */
+    header {
+      border-bottom: 3px solid var(--red);
+      padding: 0 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: stretch;
+      background: var(--ink);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo-block {
+      padding: 18px 0;
+      border-right: 1px solid #2a2220;
+      padding-right: 28px;
+    }
+
+    .logo {
+      font-family: 'Oswald', sans-serif;
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #fff;
+      text-decoration: none;
+    }
+
+    .logo span {
+      color: var(--red-bright);
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 0;
+    }
+
+    .location-tag {
+      font-family: 'Oswald', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--red-bright);
+      padding: 0 24px;
+      border-right: 1px solid #2a2220;
+      height: 100%;
+      display: flex;
+      align-items: center;
+    }
+
+    .header-link {
+      font-family: 'Oswald', sans-serif;
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #fff;
+      text-decoration: none;
+      padding: 0 28px;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      background: var(--red);
+      transition: background 0.2s;
+    }
+
+    .header-link:hover { background: var(--red-bright); }
+
+    /* HERO */
+    .hero {
+      padding: 80px 40px 60px;
+      max-width: 1000px;
+      margin: 0 auto;
+      border-bottom: 1px solid #2a2220;
+    }
+
+    .kicker {
+      font-family: 'Oswald', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--red-bright);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .kicker::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--red);
+      opacity: 0.4;
+    }
+
+    .hero h1 {
+      font-family: 'Oswald', sans-serif;
+      font-size: clamp(44px, 8vw, 84px);
+      font-weight: 700;
+      line-height: 0.92;
+      text-transform: uppercase;
+      letter-spacing: -0.01em;
+      color: #fff;
+      margin-bottom: 28px;
+    }
+
+    .hero h1 em {
+      font-style: normal;
+      color: var(--red-bright);
+      display: block;
+    }
+
+    .hero-sub {
+      font-size: 16px;
+      line-height: 1.65;
+      color: #b5a898;
+      max-width: 560px;
+      font-weight: 300;
+      font-style: italic;
+    }
+
+    /* ALERT BANNER */
+    .alert-banner {
+      margin: 0 40px;
+      background: var(--red);
+      padding: 16px 28px;
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      animation: slideIn 0.5s ease 0.2s both;
+    }
+
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateY(-8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .alert-icon {
+      font-size: 20px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .alert-banner p {
+      font-size: 14px;
+      line-height: 1.55;
+      color: #fff;
+      font-style: italic;
+    }
+
+    .alert-banner strong {
+      font-style: normal;
+      font-family: 'Oswald', sans-serif;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      font-size: 13px;
+      text-transform: uppercase;
+    }
+
+    /* CONTENT */
+    .content {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 0 40px 80px;
+      display: grid;
+      grid-template-columns: 1fr 280px;
+      gap: 0 60px;
+    }
+
+    /* SECTIONS */
+    .sections {
+      padding-top: 60px;
+    }
+
+    .section {
+      padding: 36px 0;
+      border-bottom: 1px solid #2a2220;
+      animation: fadeUp 0.5s ease both;
+    }
+
+    .section:last-child { border-bottom: none; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .section:nth-child(1) { animation-delay: 0.1s; }
+    .section:nth-child(2) { animation-delay: 0.15s; }
+    .section:nth-child(3) { animation-delay: 0.2s; }
+    .section:nth-child(4) { animation-delay: 0.25s; }
+    .section:nth-child(5) { animation-delay: 0.3s; }
+    .section:nth-child(6) { animation-delay: 0.35s; }
+    .section:nth-child(7) { animation-delay: 0.4s; }
+    .section:nth-child(8) { animation-delay: 0.45s; }
+
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .section-num {
+      font-family: 'Oswald', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      color: var(--red-bright);
+      text-transform: uppercase;
+      flex-shrink: 0;
+      padding-top: 2px;
+    }
+
+    .section h2 {
+      font-family: 'Oswald', sans-serif;
+      font-size: 21px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: #fff;
+      line-height: 1.1;
+    }
+
+    .section p {
+      font-size: 15px;
+      line-height: 1.7;
+      color: #c5b8ae;
+      font-weight: 300;
+      margin-bottom: 14px;
+    }
+
+    .section p:last-child { margin-bottom: 0; }
+
+    .section p strong {
+      color: #e8dfd5;
+      font-weight: 600;
+      font-style: normal;
+    }
+
+    .section ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .section ul li {
+      font-size: 15px;
+      line-height: 1.6;
+      color: #c5b8ae;
+      font-weight: 300;
+      padding-left: 20px;
+      position: relative;
+    }
+
+    .section ul li::before {
+      content: '—';
+      position: absolute;
+      left: 0;
+      color: var(--red);
+      font-weight: 400;
+    }
+
+    /* HIGHLIGHT BLOCK */
+    .highlight {
+      background: #201a18;
+      border-left: 3px solid var(--red);
+      padding: 18px 22px;
+      margin-top: 18px;
+    }
+
+    .highlight p {
+      margin: 0;
+      color: #d8ccC4;
+      font-size: 14px;
+    }
+
+    /* PENALTY BOX */
+    .penalty-box {
+      background: var(--red);
+      padding: 22px;
+      margin-top: 18px;
+    }
+
+    .penalty-box .penalty-label {
+      font-family: 'Oswald', sans-serif;
+      font-size: 10px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.7);
+      margin-bottom: 8px;
+    }
+
+    .penalty-box .penalty-text {
+      font-family: 'Oswald', sans-serif;
+      font-size: 28px;
+      font-weight: 700;
+      line-height: 1.05;
+      color: #fff;
+      text-transform: uppercase;
+    }
+
+    /* SIDEBAR */
+    .sidebar {
+      padding-top: 60px;
+    }
+
+    .sidebar-card {
+      background: #201a18;
+      border: 1px solid #2a2220;
+      padding: 24px;
+      margin-bottom: 20px;
+      position: sticky;
+      top: 80px;
+    }
+
+    .sidebar-card h3 {
+      font-family: 'Oswald', sans-serif;
+      font-size: 12px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--red-bright);
+      margin-bottom: 16px;
+    }
+
+    .toc-link {
+      display: block;
+      font-size: 13px;
+      color: #9a8e87;
+      text-decoration: none;
+      padding: 8px 0;
+      border-bottom: 1px solid #2a2220;
+      transition: color 0.15s;
+      font-family: 'Oswald', sans-serif;
+      font-weight: 400;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      font-size: 11px;
+    }
+
+    .toc-link:last-child { border-bottom: none; }
+    .toc-link:hover { color: #fff; }
+
+    .sidebar-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .btn {
+      font-family: 'Oswald', sans-serif;
+      font-size: 13px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 14px 20px;
+      border: none;
+      cursor: pointer;
+      text-align: center;
+      text-decoration: none;
+      display: block;
+      transition: all 0.2s;
+    }
+
+    .btn-primary {
+      background: var(--red);
+      color: #fff;
+    }
+
+    .btn-primary:hover { background: var(--red-bright); }
+
+    .btn-ghost {
+      background: transparent;
+      color: #9a8e87;
+      border: 1px solid #2a2220;
+    }
+
+    .btn-ghost:hover { color: #fff; border-color: #5a504a; }
+
+    /* AGREEMENT BOX */
+    .agreement {
+      background: #fff;
+      color: var(--ink);
+      padding: 36px 40px;
+      margin: 0 40px 40px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .agreement::before {
+      content: '✓';
+      position: absolute;
+      right: -10px;
+      top: -20px;
+      font-size: 160px;
+      color: #f0ebe3;
+      font-family: 'Oswald', sans-serif;
+      pointer-events: none;
+      line-height: 1;
+    }
+
+    .agreement h3 {
+      font-family: 'Oswald', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--ink);
+      margin-bottom: 12px;
+    }
+
+    .agreement p {
+      font-size: 14px;
+      line-height: 1.65;
+      color: var(--ink-mid);
+      position: relative;
+      z-index: 1;
+    }
+
+    /* FOOTER */
+    footer {
+      border-top: 3px solid var(--red);
+      padding: 24px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #0d0a09;
+    }
+
+    .footer-logo {
+      font-family: 'Oswald', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #5a504a;
+    }
+
+    .fine-print {
+      font-size: 11px;
+      color: #4a403a;
+      font-style: italic;
+      max-width: 480px;
+      text-align: right;
+      line-height: 1.5;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      header { padding: 0 20px; }
+      .hero { padding: 50px 20px 40px; }
+      .alert-banner { margin: 0 20px; }
+      .content { 
+        grid-template-columns: 1fr;
+        padding: 0 20px 60px;
+      }
+      .sidebar { 
+        padding-top: 0;
+        order: -1;
+      }
+      .sidebar-card { position: static; }
+      .agreement { margin: 0 20px 30px; padding: 26px 24px; }
+      footer { flex-direction: column; gap: 12px; text-align: center; }
+      .fine-print { text-align: center; }
+    }
+
     @media print {
-      body { background:#fff; color:#000; }
-      header, .printbar { display:none !important; }
-      .card { border:none; padding:0; }
-      a { color:#000; text-decoration:underline; }
-      .notice { border:1px solid #999; }
+      body { background: #fff; color: #000; }
+      body::before { display: none; }
+      header { position: static; background: #fff; border-bottom: 2px solid #000; }
+      .location-tag, .header-link { color: #000; }
+      .hero { color: #000; }
+      .hero h1 { color: #000; }
+      .hero h1 em { color: var(--red); }
+      .kicker { color: var(--red); }
+      .alert-banner { background: #eee; }
+      .sections { color: #000; }
+      .section h2 { color: #000; }
+      .section p, .section ul li { color: #333; }
+      .sidebar { display: none; }
+      .content { grid-template-columns: 1fr; }
+      .agreement { border: 2px solid #000; }
+      footer { background: #fff; color: #000; }
+      .sidebar-actions, .printbar { display: none; }
     }
   </style>
 </head>
 <body>
+
   <header>
-    <div><a href="/">Baseball For Bums</a></div>
-    <div style="display:flex; gap:14px; align-items:center;">
-      <span class="pill">Staten Island</span>
-      <a href="/signup/">Sign Up</a>
+    <div class="logo-block">
+      <a href="/" class="logo">Baseball <span>For Bums</span></a>
+    </div>
+    <div class="header-right">
+      <div class="location-tag">⚾ Staten Island</div>
+      <a href="/signup/" class="header-link">Sign Up →</a>
     </div>
   </header>
 
-  <main>
-    <div class="card">
-      <h1>League Waiver & Code of Conduct</h1>
-      <p class="sub">
-        This page outlines the waiver, assumption of risk, and conduct expectations for all Baseball For Bums participants.
-        By registering, you acknowledge and agree to these terms.
-      </p>
+  <div class="hero">
+    <div class="kicker">League Document · Season 2025</div>
+    <h1>Waiver &amp;<em>Code of Conduct</em></h1>
+    <p class="hero-sub">
+      By registering for Baseball For Bums, you acknowledge and agree to these terms in full.
+      Please read carefully before participating in any league activity.
+    </p>
+  </div>
 
-      <div class="notice">
-        <strong>Important:</strong> Baseball involves physical contact, hard balls/bats, running, sliding, collisions, and uneven field conditions.
-        Participation is voluntary and carries risk of injury.
+  <div class="alert-banner">
+    <div class="alert-icon">⚠</div>
+    <p><strong>Important:</strong> Baseball involves physical contact, hard balls &amp; bats, running, sliding, collisions, and uneven field conditions. Participation is entirely voluntary and carries real risk of injury.</p>
+  </div>
+
+  <div class="content">
+    <div class="sections">
+
+      <div class="section">
+        <div class="section-header">
+          <span class="section-num">§ 01</span>
+          <h2>Assumption of Risk</h2>
+        </div>
+        <p>
+          I understand that participating in Baseball For Bums league activities — including games, practices,
+          warmups, and related events — involves inherent risks including but not limited to: sprains, strains,
+          fractures, concussions, heat illness, cardiac events, collisions with players or objects, and injuries
+          caused by bats, balls, and field conditions.
+        </p>
+        <p>
+          I knowingly and voluntarily assume all such risks, whether known or unknown, foreseeable or
+          unforeseeable, arising from my participation.
+        </p>
       </div>
 
-      <h2>1) Assumption of Risk</h2>
-      <p>
-        I understand that participating in Baseball For Bums league activities (games, practices, warmups, and related events)
-        involves inherent risks, including but not limited to: sprains, strains, fractures, concussions, heat illness, cardiac events,
-        collisions with players/objects, and injuries caused by bats, balls, and field conditions.
-      </p>
-      <p>
-        I knowingly and voluntarily assume all such risks, whether known or unknown, foreseeable or unforeseeable, arising from my participation.
-      </p>
-
-      <h2>2) Waiver and Release of Liability</h2>
-      <p>
-        To the fullest extent permitted by law, I release and hold harmless Baseball For Bums, the league commissioner, league organizers,
-        staff, volunteers, sponsors, partners, and field/property owners from any and all claims, liabilities, damages, or causes of action
-        arising out of or related to my participation, including claims based on negligence (except to the extent prohibited by law).
-      </p>
-
-      <h2>3) Medical Treatment & Emergency Care</h2>
-      <p>
-        If I am injured or become ill, I authorize league organizers to seek emergency medical treatment on my behalf if I am unable
-        to do so. I understand I am responsible for all medical costs and that the league does not provide medical insurance coverage.
-      </p>
-
-      <h2>4) Fitness to Participate</h2>
-      <p>
-        I affirm that I am physically able to participate and that I will not participate in any activity for which I am not medically cleared.
-        I understand I should consult a physician if I have any medical concerns.
-      </p>
-
-      <h2>5) Sportsmanship, Umpire Authority & Code of Conduct</h2>
-      <p>All participants are expected to maintain a respectful, competitive, and safe environment. This includes:</p>
-      <ul>
-        <li>No fighting, threats, harassment, discrimination, or hate speech.</li>
-        <li>No intentional attempts to injure another player.</li>
-        <li>No excessive profanity directed at any player, umpire, or spectator.</li>
-        <li>No alcohol or drug impairment during games.</li>
-        <li>Follow field rules and respect property (no vandalism).</li>
-      </ul>
-
-      <p>
-        <strong>Umpire Authority:</strong> Umpires have full and final authority over all on-field decisions, including rules interpretations,
-        player conduct, and game control. All umpire decisions are final and must be respected at all times.
-      </p>
-      <p>
-        Any arguing, abusive language, or unsportsmanlike conduct toward an umpire may result in immediate ejection.
-      </p>
-
-      <h2>6) Commissioner Authority, Ejections & Discipline</h2>
-      <p>
-        The League Commissioner retains full authority over disciplinary decisions related to player conduct, rule violations,
-        safety concerns, and behavior detrimental to the league.
-      </p>
-
-      <p>
-        Any player ejected from a game will receive an <strong>automatic one (1) game suspension</strong> in addition to removal from the current game.
-      </p>
-
-      <p>The Commissioner may impose additional penalties including, but not limited to:</p>
-      <ul>
-        <li>Extended suspensions</li>
-        <li>Multi-game suspensions</li>
-        <li>Playoff ineligibility</li>
-        <li>Season suspension</li>
-        <li>Permanent removal from the league</li>
-      </ul>
-
-      <p>
-        Disciplinary decisions are final and not subject to appeal.
-      </p>
-
-      <p>
-        Any player removed or suspended due to conduct violations will not be entitled to a refund of league fees.
-      </p>
-
-      <h2>7) Scheduling, Rainouts, and League Operations</h2>
-      <p>
-        Schedules may change due to field availability, weather, or operational needs.
-        <strong>Rainout policy:</strong> If a game is rained out, it will be played the following Tuesday.
-      </p>
-
-      <h2>8) Media Release</h2>
-      <p>
-        I grant permission for Baseball For Bums to use photos and videos taken during league activities for league-related promotion
-        (social media, website, recaps), unless I notify the league in writing that I opt out.
-      </p>
-
-      <div class="notice">
-        <strong>Agreement:</strong> By registering for Baseball For Bums, I acknowledge that I have read, understood, and agree to this waiver
-        and code of conduct, and that I am signing it voluntarily.
+      <div class="section">
+        <div class="section-header">
+          <span class="section-num">§ 02</span>
+          <h2>Waiver &amp; Release of Liability</h2>
+        </div>
+        <p>
+          To the fullest extent permitted by law, I release and hold harmless Baseball For Bums, the league
+          commissioner, league organizers, staff, volunteers, sponsors, partners, and field/property owners
+          from any and all claims, liabilities, damages, or causes of action arising out of or related to my
+          participation — including claims based on negligence, except to the extent prohibited by law.
+        </p>
       </div>
 
-      <div class="printbar">
-        <button onclick="window.print()">Print / Save as PDF</button>
-        <button onclick="location.href='/signup/'">Back to Sign Up</button>
+      <div class="section">
+        <div class="section-header">
+          <span class="section-num">§ 03</span>
+          <h2>Medical Treatment &amp; Emergency Care</h2>
+        </div>
+        <p>
+          If I am injured or become ill, I authorize league organizers to seek emergency medical treatment
+          on my behalf if I am unable to do so. I understand I am solely responsible for all medical costs
+          and that the league does not provide any medical insurance coverage.
+        </p>
       </div>
 
-      <div class="fine">
-        This document is provided for general informational purposes and does not constitute legal advice.
-        If you want, I can tighten the language further once you confirm the league entity name (if any) and primary field/location.
+      <div class="section">
+        <div class="section-header">
+          <span class="section-num">§ 04</span>
+          <h2>Fitness to Participate</h2>
+        </div>
+        <p>
+          I affirm that I am physically able to participate and will not engage in any activity for which
+          I am not medically cleared. I understand I should consult a physician if I have any medical concerns
+          prior to participation.
+        </p>
       </div>
+
+      <div class="section">
+        <div class="section-header">
+          <span class="section-num">§ 05</span>
+          <h2>Sportsmanship &amp; Code of Conduct</h2>
+        </div>
+        <p>All participants are expected to maintain a respectful, competitive, and safe environment at all times. The following are strictly prohibited:</p>
+        <ul>
+          <li>Fighting, threats, harassment, discrimination, or hate speech</li>
+          <li>Intentional attempts to injure another player</li>
+          <li>Excessive profanity directed at any player, umpire, or spectator</li>
+          <li>Alcohol or drug impairment during games</li>
+          <li>Vandalism or disrespect of field property</li>
+        </ul>
+
+        <div class="highlight">
+          <p><strong>Umpire Authority:</strong> Umpires have full and final authority over all on-field decisions including rules interpretations, player conduct, and game control. All decisions are final. Any arguing, abusive language, or unsportsmanlike conduct toward an umpire may result in immediate ejection.</p>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-header">
+          <span class="section-num">§ 06</span>
+          <h2>Commissioner Authority &amp; Discipline</h2>
+        </div>
+        <p>
+          The League Commissioner retains full authority over all disciplinary decisions related to player
+          conduct, rule violations, safety concerns, and behavior detrimental to the league.
+        </p>
+
+        <div class="penalty-box">
+          <div class="penalty-label">Automatic Penalty — Ejection</div>
+          <div class="penalty-text">1-Game Suspension<br>+ Removal from Current Game</div>
+        </div>
+
+        <p style="margin-top: 18px;">The Commissioner may impose additional penalties including:</p>
+        <ul>
+          <li>Extended or multi-game suspensions</li>
+          <li>Playoff ineligibility</li>
+          <li>Full season suspension</li>
+          <li>Permanent removal from the league</li>
+        </ul>
+        <div class="highlight" style="margin-top: 18px;">
+          <p>Disciplinary decisions are <strong>final and not subject to appeal.</strong> Players removed or suspended due to conduct violations will not receive a refund of league fees.</p>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-header">
+          <span class="section-num">§ 07</span>
+          <h2>Scheduling &amp; Rainouts</h2>
+        </div>
+        <p>
+          Schedules may change due to field availability, weather, or operational needs.
+          <strong>Rainout policy:</strong> Any rained-out game will be rescheduled for the following Tuesday.
+        </p>
+      </div>
+
+      <div class="section">
+        <div class="section-header">
+          <span class="section-num">§ 08</span>
+          <h2>Media Release</h2>
+        </div>
+        <p>
+          I grant Baseball For Bums permission to use photos and videos taken during league activities
+          for league-related promotion including social media, website, and game recaps — unless I notify
+          the league in writing to opt out.
+        </p>
+      </div>
+
     </div>
-  </main>
+
+    <aside class="sidebar">
+      <div class="sidebar-card">
+        <h3>Jump to Section</h3>
+        <a class="toc-link" href="#">§ 01 — Assumption of Risk</a>
+        <a class="toc-link" href="#">§ 02 — Waiver &amp; Release</a>
+        <a class="toc-link" href="#">§ 03 — Medical &amp; Emergency</a>
+        <a class="toc-link" href="#">§ 04 — Fitness to Participate</a>
+        <a class="toc-link" href="#">§ 05 — Code of Conduct</a>
+        <a class="toc-link" href="#">§ 06 — Commissioner Authority</a>
+        <a class="toc-link" href="#">§ 07 — Scheduling</a>
+        <a class="toc-link" href="#">§ 08 — Media Release</a>
+
+        <div class="sidebar-actions">
+          <button class="btn btn-primary" onclick="window.print()">Print / Save PDF</button>
+          <a class="btn btn-ghost" href="/signup/">← Back to Sign Up</a>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <div class="agreement">
+    <h3>Agreement &amp; Acknowledgement</h3>
+    <p>
+      By registering for Baseball For Bums, I acknowledge that I have read, understood, and agree to this
+      waiver and code of conduct in its entirety, and that I am doing so voluntarily.
+    </p>
+  </div>
+
+  <footer>
+    <div class="footer-logo">Baseball For Bums · Staten Island</div>
+    <div class="fine-print">
+      This document is for general informational purposes and does not constitute legal advice.
+      Language may be updated once league entity name and primary field/location are confirmed.
+    </div>
+  </footer>
+
 </body>
 </html>
