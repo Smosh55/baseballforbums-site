@@ -274,9 +274,25 @@
     }
     .submit-btn:hover { background: #ff3d3d; }
     .submit-btn:disabled { opacity: 0.6; cursor: not-allowed; }
-    .msg { margin-top: 12px; padding: 12px 16px; display: none; font-size: 13px; font-family: 'Barlow', sans-serif; }
-    .msg.ok { background: rgba(0,217,126,0.08); border: 1px solid rgba(0,217,126,0.25); color: var(--ob-green); }
-    .msg.err { background: rgba(229,48,48,0.08); border: 1px solid rgba(229,48,48,0.25); color: var(--red); }
+    .msg { 
+      margin-top: 16px; 
+      padding: 16px; 
+      display: none; 
+      font-size: 15px; 
+      line-height: 1.55; 
+      white-space: pre-wrap; 
+      border-radius: 8px;
+    }
+    .msg.ok { 
+      background: rgba(0,217,126,0.12); 
+      border: 1px solid rgba(0,217,126,0.35); 
+      color: #a7f3d0; 
+    }
+    .msg.err { 
+      background: rgba(229,48,48,0.08); 
+      border: 1px solid rgba(229,48,48,0.25); 
+      color: var(--red); 
+    }
     .schedule-note {
       font-size: 14px; color: var(--text-mid); line-height: 1.6; margin-bottom: 20px;
       padding-bottom: 18px; border-bottom: 1px solid var(--rule);
@@ -428,7 +444,7 @@
           <div class="field">
             <label>Preferred Position(s) <span class="req">*</span></label>
             <p style="font-size:13px; color:var(--text-dim); margin:6px 0 16px 0;">
-              Tap/click all that apply — selections are now very clear
+              Select all that apply
             </p>
             <div id="positionGroup">
               <label class="position-checkbox">
@@ -576,7 +592,7 @@
       waiverBlock.classList.toggle('is-checked', waiverInput.checked);
     });
 
-    // Form submission with position validation
+    // Form submission
     document.getElementById('regForm').addEventListener('submit', async function(e) {
       e.preventDefault();
 
@@ -589,7 +605,6 @@
       errMsg.style.display = 'none';
       positionError.style.display = 'none';
 
-      // Collect checked positions
       const selectedPositions = Array.from(
         document.querySelectorAll('input[name="position"]:checked')
       ).map(cb => cb.value);
@@ -637,19 +652,19 @@
           let successMessage = '';
 
           if (result.status === 'CONFIRMED') {
-            successMessage = `✓ You're officially confirmed for the Spring season!\n\n` +
+            successMessage = `✓ Thank you — we've received your registration!\n\n` +
                              `Registration ID: ${result.registrationId || '—'}\n\n` +
-                             `Check your email shortly for confirmation and next steps (including payment instructions).`;
+                             `Your submission has been marked as CONFIRMED (within the current player cap), and we really appreciate your interest in joining the league.\n\n` +
+                             `Please note: Signing up does **not** guarantee a final roster spot — rosters are still being finalized. We'll be in touch by email soon with next steps and confirmation of your place (including payment instructions only if/when you're officially accepted).`;
           } else if (result.status === 'WAITLIST') {
-            successMessage = `✓ Registration received — you're now on the waitlist.\n\n` +
-                             `We've reached or passed the 66-player cap.\n\n` +
-                             `If a spot opens up, we'll contact you right away.\n\n` +
+            successMessage = `✓ Thank you — we've received your registration!\n\n` +
                              `Registration ID: ${result.registrationId || '—'}\n\n` +
-                             `Thank you for your interest — we'll keep you posted!`;
+                             `We've reached or passed the 66-player cap, so your submission has been placed on the waitlist.\n\n` +
+                             `If a spot opens up, we'll contact you right away. We truly appreciate your interest and will keep you updated.`;
           } else {
-            successMessage = `✓ Registration received (Status: ${result.status})\n\n` +
+            successMessage = `✓ Thank you — we've received your registration!\n\n` +
                              `Registration ID: ${result.registrationId || '—'}\n\n` +
-                             `We'll be in touch soon via email.`;
+                             `We'll be in touch soon via email with more details.`;
           }
 
           okMsg.textContent = successMessage;
