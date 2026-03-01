@@ -499,14 +499,33 @@
         });
 
         if (!response.ok) {
-          throw new Error(`Server error: ${response.status}`);
+          throw new Error(`Server responded with status ${response.status}`);
         }
 
         const result = await response.json();
 
         if (result.ok) {
-          okMsg.textContent = `✓ Registration received! Status: ${result.status}. We'll email you shortly with confirmation or waitlist details.`;
+          let successMessage = '';
+
+          if (result.status === 'CONFIRMED') {
+            successMessage = `✓ You're officially confirmed for the Spring season!\n\n` +
+                             `Registration ID: ${result.registrationId || '—'}\n\n` +
+                             `Check your email shortly for confirmation and next steps (including payment instructions).`;
+          } else if (result.status === 'WAITLIST') {
+            successMessage = `✓ Registration received — you're now on the waitlist.\n\n` +
+                             `We've reached or passed the 66-player cap.\n\n` +
+                             `If a spot opens up, we'll contact you right away.\n\n` +
+                             `Registration ID: ${result.registrationId || '—'}\n\n` +
+                             `Thank you for your interest — we'll keep you posted!`;
+          } else {
+            successMessage = `✓ Registration received (Status: ${result.status})\n\n` +
+                             `Registration ID: ${result.registrationId || '—'}\n\n` +
+                             `We'll be in touch soon via email.`;
+          }
+
+          okMsg.textContent = successMessage;
           okMsg.style.display = 'block';
+
           this.reset();
           waiverBlock.classList.remove('is-checked');
           waiverInput.checked = false;
@@ -515,8 +534,8 @@
         }
 
       } catch (err) {
-        console.error(err);
-        errMsg.textContent = '× Error: ' + (err.message || 'Please try again or check your internet connection.');
+        console.error('Submission error:', err);
+        errMsg.textContent = '× Something went wrong: ' + (err.message || 'Please try again or check your connection.');
         errMsg.style.display = 'block';
       } finally {
         btn.disabled = false;
