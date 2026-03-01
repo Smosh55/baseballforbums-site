@@ -1,1 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>League Rules | Baseball For Bums</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Softball league rules for Baseball For Bums: philosophy, equipment, base running, conduct, standings, playoffs, and more." />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700;800;900&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --red: #E53030;
+      --red-dim: #b02424;
+      --gold: #F5C42E;
+      --gold-dim: #c99e1a;
+      --teal: #00d9c0;
+      --bg: #080c14;
+      --panel: #0f1420;
+      --panel2: #141926;
+      --rule: #1e2535;
+      --rule2: #252d40;
+      --text: #f0f2f8;
+      --text-mid: #b8c2d8;
+      --text-dim: #6e7e9e;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Barlow', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── Header ── */
+    header {
+      background: #050810;
+      border-bottom: 1px solid var(--rule);
+      padding: 0 32px;
+      display: flex; justify-content: space-between; align-items: center;
+      height: 48px;
+      position: sticky; top: 0; z-index: 100;
+    }
+    .logo {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 18px; font-weight: 900;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: #fff; text-decoration: none;
+    }
+    .logo .accent { color: var(--red); }
+    .header-right { display: flex; align-items: center; gap: 24px; }
+    .location-pill {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      color: #fff; background: var(--red);
+      padding: 4px 12px;
+    }
+    .header-link {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 13px; font-weight: 600;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--text-mid); text-decoration: none; transition: color 0.15s;
+    }
+    .header-link:hover { color: #fff; }
+    .header-link.active { color: var(--gold); }
+
+    /* ── Hero ── */
+    .hero {
+      position: relative;
+      padding: 64px 32px 56px;
+      text-align: center;
+      overflow: hidden;
+      border-bottom: 2px solid var(--red);
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -60px; left: -100px;
+      width: 700px; height: 500px;
+      background: radial-gradient(ellipse at center, rgba(180,60,20,0.22) 0%, rgba(120,30,10,0.1) 45%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      top: -40px; right: -80px;
+      width: 500px; height: 400px;
+      background: radial-gradient(ellipse at center, rgba(0,180,160,0.1) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .hero-kicker {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 11px; font-weight: 700; letter-spacing: 0.3em; text-transform: uppercase;
+      color: var(--text-dim); margin-bottom: 18px;
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+    }
+    .hero-kicker::before { content: '●'; color: var(--red); font-size: 8px; }
+    .hero h1 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(48px, 8vw, 88px); font-weight: 900;
+      text-transform: uppercase; letter-spacing: 0.02em; line-height: 1;
+      color: #fff; margin-bottom: 20px;
+    }
+    .hero h1 .highlight { color: var(--gold); }
+    .hero-sub {
+      font-size: 16px; color: var(--text-mid); max-width: 560px; margin: 0 auto;
+      line-height: 1.65;
+    }
+    .hero-sub strong { color: #fff; }
+
+    /* ── Quick pills ── */
+    .hero-pills {
+      display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;
+      margin-top: 28px;
+    }
+    .hero-pill {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase;
+      padding: 6px 14px;
+      border: 1px solid var(--rule2);
+      color: var(--text-dim);
+      background: var(--panel);
+    }
+    .hero-pill.red { border-color: rgba(229,48,48,0.4); color: #ff8080; background: rgba(229,48,48,0.08); }
+    .hero-pill.gold { border-color: rgba(245,196,46,0.4); color: var(--gold); background: rgba(245,196,46,0.06); }
+    .hero-pill.teal { border-color: rgba(0,217,192,0.4); color: var(--teal); background: rgba(0,217,192,0.06); }
+
+    /* ── Main grid ── */
+    .main {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 52px 32px 80px;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    /* ── Section divider label ── */
+    .section-divider {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 11px; font-weight: 700; letter-spacing: 0.3em; text-transform: uppercase;
+      color: var(--text-dim);
+      display: flex; align-items: center; gap: 14px;
+      margin: 40px 0 20px;
+    }
+    .section-divider::after {
+      content: ''; flex: 1; height: 1px; background: var(--rule2);
+    }
+    .section-divider:first-child { margin-top: 0; }
+
+    /* ── Rule card ── */
+    .rule-card {
+      background: var(--panel);
+      border: 1px solid var(--rule2);
+      border-left: 3px solid var(--rule2);
+      margin-bottom: 14px;
+      transition: border-color 0.2s;
+    }
+    .rule-card:hover { border-left-color: var(--gold); }
+    .rule-card.accent-red { border-left-color: var(--red); }
+    .rule-card.accent-gold { border-left-color: var(--gold); }
+    .rule-card.accent-teal { border-left-color: var(--teal); }
+
+    .rule-card-header {
+      padding: 18px 24px 16px;
+      display: flex; align-items: center; gap: 14px;
+      border-bottom: 1px solid var(--rule);
+    }
+    .rule-icon {
+      font-size: 22px; flex-shrink: 0; width: 36px; text-align: center;
+    }
+    .rule-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 18px; font-weight: 800;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: #fff;
+    }
+    .rule-card-body {
+      padding: 18px 24px 20px;
+    }
+    .rule-card-body p {
+      font-size: 15px; color: var(--text-mid); line-height: 1.7; margin-bottom: 14px;
+    }
+    .rule-card-body p:last-child { margin-bottom: 0; }
+
+    /* Rule list */
+    .rule-list {
+      list-style: none;
+      display: flex; flex-direction: column; gap: 10px;
+    }
+    .rule-list li {
+      display: flex; gap: 12px; align-items: flex-start;
+      font-size: 15px; color: var(--text-mid); line-height: 1.65;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--rule);
+    }
+    .rule-list li:last-child { border-bottom: none; padding-bottom: 0; }
+    .rule-list li::before {
+      content: '—';
+      color: var(--text-dim);
+      flex-shrink: 0;
+      font-weight: 600;
+      margin-top: 1px;
+    }
+    .rule-list li strong {
+      color: #fff; font-weight: 700;
+    }
+
+    /* Inline highlight badge */
+    .badge {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 11px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase;
+      padding: 2px 8px; display: inline-block; margin-left: 6px; vertical-align: middle;
+    }
+    .badge-red { color: #ff8080; background: rgba(229,48,48,0.12); border: 1px solid rgba(229,48,48,0.3); }
+    .badge-gold { color: var(--gold); background: rgba(245,196,46,0.08); border: 1px solid rgba(245,196,46,0.3); }
+    .badge-teal { color: var(--teal); background: rgba(0,217,192,0.08); border: 1px solid rgba(0,217,192,0.3); }
+
+    /* Spirit of the game callout */
+    .spirit-card {
+      background: linear-gradient(135deg, rgba(15,20,32,1) 0%, rgba(20,26,40,1) 100%);
+      border: 1px solid var(--rule2);
+      border-top: 3px solid var(--gold);
+      padding: 32px 28px;
+      margin-top: 14px;
+      text-align: center;
+    }
+    .spirit-headline {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 32px; font-weight: 900;
+      letter-spacing: 0.05em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 14px;
+    }
+    .spirit-text {
+      font-size: 16px; color: var(--text-mid); line-height: 1.75;
+      max-width: 640px; margin: 0 auto;
+    }
+    .spirit-text strong { color: #fff; }
+
+    /* Footer note */
+    .footer-note {
+      margin-top: 40px;
+      padding: 20px 24px;
+      background: var(--panel2);
+      border: 1px solid var(--rule2);
+      font-size: 14px; color: var(--text-dim); line-height: 1.7;
+      display: flex; gap: 14px; align-items: flex-start;
+    }
+    .footer-note::before { content: '💬'; font-size: 18px; flex-shrink: 0; }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--rule);
+      padding: 32px;
+      display: flex; flex-direction: column; align-items: center; gap: 12px;
+      text-align: center;
+    }
+    .footer-logo {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 15px; font-weight: 800;
+      letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-dim);
+    }
+    .footer-logo .accent { color: var(--red); }
+    .footer-link {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 12px; font-weight: 700;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--gold); text-decoration: none;
+    }
+    .footer-link:hover { text-decoration: underline; }
+    .powered-by { display: flex; align-items: center; gap: 8px; margin-top: 4px; }
+    .pb-label { font-size: 12px; color: var(--text-dim); }
+    .pb-logo { height: 18px; opacity: 0.6; }
+
+    /* ── Mobile ── */
+    @media (max-width: 640px) {
+      header { padding: 0 16px; }
+      .hero { padding: 48px 20px 40px; }
+      .main { padding: 36px 16px 64px; }
+      .rule-card-header { padding: 14px 16px; }
+      .rule-card-body { padding: 14px 16px; }
+      .spirit-card { padding: 24px 18px; }
+      .spirit-headline { font-size: 26px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <a href="/" class="logo">Baseball <span class="accent">For Bums</span></a>
+    <div class="header-right">
+      <span class="location-pill">Staten Island</span>
+      <a href="/" class="header-link">Home</a>
+      <a href="/signup" class="header-link">Sign Up</a>
+      <a href="/league-rules" class="header-link active">Rules</a>
+    </div>
+  </header>
+
+  <div class="hero">
+    <div class="hero-kicker">Spring Season · Official Rulebook</div>
+    <h1>League <span class="highlight">Rules</span></h1>
+    <p class="hero-sub">
+      These rules exist to keep games <strong>fun, safe, and moving</strong>.
+      Captains can agree on minor adjustments before first pitch. Umpire decisions are final.
+    </p>
+    <div class="hero-pills">
+      <span class="hero-pill teal">Fun-First</span>
+      <span class="hero-pill red">Safety-First</span>
+      <span class="hero-pill gold">Respect the Ump</span>
+      <span class="hero-pill">7 Innings</span>
+      <span class="hero-pill">Single Elimination Playoffs</span>
+    </div>
+  </div>
+
+  <div class="main">
+
+    <div class="section-divider">Philosophy &amp; Basics</div>
+
+    <!-- Philosophy -->
+    <div class="rule-card accent-gold">
+      <div class="rule-card-header">
+        <div class="rule-icon">✅</div>
+        <div class="rule-title">League Philosophy</div>
+      </div>
+      <div class="rule-card-body">
+        <p>
+          This league is designed for <strong>fun, camaraderie, exercise, and friendly competition.</strong>
+          Good sportsmanship is expected at all times. Umpire decisions are final.
+          Let's keep it light, safe, and fun!
+        </p>
+      </div>
+    </div>
+
+    <!-- Game Basics -->
+    <div class="rule-card accent-red">
+      <div class="rule-card-header">
+        <div class="rule-icon">⚾</div>
+        <div class="rule-title">Game Basics</div>
+      </div>
+      <div class="rule-card-body">
+        <ul class="rule-list">
+          <li><strong>Game Length:</strong>&nbsp;7 innings</li>
+          <li><strong>Teams:</strong>&nbsp;10 players in the field. If you have 9 or fewer, you must get a sub approved by the opposing captain.</li>
+          <li><strong>Can't get a sub?</strong>&nbsp;A kid can catch (live for foul balls and tips), but they will <strong>not</strong> bat.</li>
+          <li><strong>Batting Lineup:</strong>&nbsp;Everyone bats, even if rotating in/out on defense.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Time -->
+    <div class="rule-card">
+      <div class="rule-card-header">
+        <div class="rule-icon">⌛</div>
+        <div class="rule-title">Time</div>
+      </div>
+      <div class="rule-card-body">
+        <ul class="rule-list">
+          <li><strong>Grace Period:</strong>&nbsp;15 minutes after scheduled start.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section-divider">Equipment &amp; Fielding</div>
+
+    <!-- Equipment -->
+    <div class="rule-card accent-teal">
+      <div class="rule-card-header">
+        <div class="rule-icon">🥎</div>
+        <div class="rule-title">Equipment</div>
+      </div>
+      <div class="rule-card-body">
+        <ul class="rule-list">
+          <li><strong>Bats:</strong>&nbsp;USA or ASA approved slowpitch bats only — no baseball bats.</li>
+          <li><strong>Balls:</strong>&nbsp;12" slowpitch softballs, .52 COR / 300 compression.</li>
+          <li>
+            <strong>Cleats:</strong>&nbsp;No metal cleats.
+            <span class="badge badge-red">No metal</span>
+            Turf shoes or molded cleats only.
+          </li>
+          <li><strong>Uniforms:</strong>&nbsp;Matching shirts encouraged but not mandatory.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Fielding -->
+    <div class="rule-card">
+      <div class="rule-card-header">
+        <div class="rule-icon">🧤</div>
+        <div class="rule-title">Fielding &amp; Substitutions</div>
+      </div>
+      <div class="rule-card-body">
+        <ul class="rule-list">
+          <li>
+            <strong>Infield Fly Rule:</strong>
+            <span class="badge badge-red">Not in effect</span>
+          </li>
+          <li><strong>Shifting:</strong>&nbsp;Standard positions encouraged.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section-divider">Base Running</div>
+
+    <!-- Base Running -->
+    <div class="rule-card accent-gold">
+      <div class="rule-card-header">
+        <div class="rule-icon">🏃</div>
+        <div class="rule-title">Base Running</div>
+      </div>
+      <div class="rule-card-body">
+        <ul class="rule-list">
+          <li>
+            <strong>No leading off or stealing.</strong>
+            <span class="badge badge-red">Prohibited</span>
+          </li>
+          <li><strong>Run on swing only.</strong></li>
+          <li>
+            <strong>Courtesy Runner:</strong>&nbsp;Only if needed — please don't abuse it. Must be the <strong>last out</strong>.
+          </li>
+          <li>
+            <strong>Tagging up:</strong>&nbsp;Permitted from <strong>3rd base only</strong>.
+            <span class="badge badge-gold">3rd only</span>
+          </li>
+          <li>
+            <strong>Overthrow Rule (non-3rd bases):</strong>&nbsp;If the defense tries to get a runner out on any base other than 3rd and the ball is overthrown, the player may tag the base and advance one base.
+          </li>
+          <li>
+            <strong>Slide or Avoid Rule:</strong>&nbsp;Must slide or give up at home if there's a play.
+            <span class="badge badge-red">Safety rule</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section-divider">Conduct &amp; Game Management</div>
+
+    <!-- Umpires & Conduct -->
+    <div class="rule-card accent-red">
+      <div class="rule-card-header">
+        <div class="rule-icon">👨‍⚖️</div>
+        <div class="rule-title">Umpires &amp; Conduct</div>
+      </div>
+      <div class="rule-card-body">
+        <ul class="rule-list">
+          <li><strong>Umpires:</strong>&nbsp;1 umpire per game. All decisions are final.</li>
+          <li>
+            <strong>No arguing balls/strikes.</strong>
+            <span class="badge badge-red">Zero tolerance</span>
+          </li>
+          <li>
+            <strong>Unsportsmanlike conduct:</strong>&nbsp;Warning →
+            <span class="badge badge-red">Ejection</span>
+            →
+            <span class="badge badge-red">Suspension</span>
+          </li>
+          <li>
+            <strong>Alcohol:</strong>&nbsp;Umpire has discretion to remove you from the game. Enjoy responsibly — kids come to watch, let's set the right example.
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Tie Games -->
+    <div class="rule-card accent-teal">
+      <div class="rule-card-header">
+        <div class="rule-icon">🤝</div>
+        <div class="rule-title">Tie Games</div>
+      </div>
+      <div class="rule-card-body">
+        <ul class="rule-list">
+          <li>
+            If a game is tied after 7 innings, we place a player on <strong>second base</strong> to start the extra inning.
+            <span class="badge badge-teal">Ghost runner</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section-divider">Standings &amp; Playoffs</div>
+
+    <!-- Standings -->
+    <div class="rule-card accent-teal">
+      <div class="rule-card-header">
+        <div class="rule-icon">🏆</div>
+        <div class="rule-title">Standings &amp; Playoffs</div>
+      </div>
+      <div class="rule-card-body">
+        <ul class="rule-list">
+          <li>
+            <strong>Standings:</strong>&nbsp;Determined by Run Differential.
+            <span class="badge badge-teal">Run Diff</span>
+          </li>
+          <li>
+            <strong>Special case:</strong>&nbsp;For the team you play twice, both scores are averaged and count as one game.
+          </li>
+          <li>
+            <strong>Tiebreakers:</strong>&nbsp;
+            1) Run Differential &nbsp;·&nbsp;
+            2) Head-to-Head
+          </li>
+          <li>
+            <strong>Playoffs:</strong>&nbsp;Single-elimination format.
+            <span class="badge badge-gold">Single Elim</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Spirit of the Game -->
+    <div class="spirit-card">
+      <div class="spirit-headline">✨ Spirit of the Game</div>
+      <p class="spirit-text">
+        This is a <strong>fun-first league.</strong> Be competitive, but respectful.
+        Trash talk is fine if it's friendly and mutual.
+        <strong>No egos, no fights</strong> — just good times and close calls.
+      </p>
+    </div>
+
+    <!-- Footer note -->
+    <div class="footer-note">
+      Questions or edge cases? Captains can agree on a ruling before the game, but once play starts, the umpire has final say.
+    </div>
+
+  </div><!-- /main -->
+
+  <footer>
+    <div class="footer-logo">Baseball <span class="accent">For Bums</span> · Staten Island</div>
+    <a href="/waiver-and-conduct/" class="footer-link">View Waiver &amp; Code of Conduct →</a>
+    <div class="powered-by">
+      <span class="pb-label">Powered by</span>
+      <a href="https://onebyit.com" target="_blank" class="pb-logo-link">
+        <img src="https://7095cda1.logo-46y.pages.dev/logo.svg" alt="Oneby.AI" class="pb-logo" />
+      </a>
+    </div>
+  </footer>
+
+</body>
+</html>
 
