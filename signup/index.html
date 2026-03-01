@@ -652,10 +652,8 @@
           let successMessage = '';
 
           if (result.status === 'CONFIRMED') {
-            successMessage = `✓ Thank you — we've received your registration!\n\n` +
-                             `Registration ID: ${result.registrationId || '—'}\n\n` +
-                             `Your submission has been marked as CONFIRMED (within the current player cap), and we really appreciate your interest in joining the league.\n\n` +
-                             `Please note: Signing up does **not** guarantee a final roster spot — rosters are still being finalized. We'll be in touch by email soon with next steps and confirmation of your place (including payment instructions only if/when you're officially accepted).`;
+            successMessage = `✓ Thank you — we've received your registration!\n\n` 
+                             `Please check your email for instructions regarding league confirmation, and payment instructions.\n\n` +
           } else if (result.status === 'WAITLIST') {
             successMessage = `✓ Thank you — we've received your registration!\n\n` +
                              `Registration ID: ${result.registrationId || '—'}\n\n` +
