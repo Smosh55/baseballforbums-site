@@ -7,24 +7,22 @@
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700;800;900&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
     :root {
-      --red:      #E53030;
-      --red-dim:  #b02424;
-      --gold:     #F5C42E;
+      --red: #E53030;
+      --red-dim: #b02424;
+      --gold: #F5C42E;
       --gold-dim: #c99e1a;
-      --bg:       #080c14;
-      --panel:    #0f1420;
-      --panel2:   #141926;
-      --rule:     #1e2535;
-      --rule2:    #252d40;
-      --text:     #f0f2f8;
-      --text-mid: #b8c2d8;   /* up from #8892aa */
-      --text-dim: #6e7e9e;   /* up from #4a5470 */
-      --ob-blue:  #2B6EF8;
+      --bg: #080c14;
+      --panel: #0f1420;
+      --panel2: #141926;
+      --rule: #1e2535;
+      --rule2: #252d40;
+      --text: #f0f2f8;
+      --text-mid: #b8c2d8;
+      --text-dim: #6e7e9e;
+      --ob-blue: #2B6EF8;
       --ob-green: #00D97E;
     }
-
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     body {
       background: var(--bg);
       color: var(--text);
@@ -32,8 +30,6 @@
       min-height: 100vh;
       overflow-x: hidden;
     }
-
-    /* ── HEADER ── */
     header {
       background: #050810;
       border-bottom: 1px solid var(--rule);
@@ -42,7 +38,6 @@
       height: 48px;
       position: sticky; top: 0; z-index: 100;
     }
-
     .logo {
       font-family: 'Barlow Condensed', sans-serif;
       font-size: 18px; font-weight: 900;
@@ -50,9 +45,7 @@
       color: #fff; text-decoration: none;
     }
     .logo .accent { color: var(--red); }
-
     .header-right { display: flex; align-items: center; gap: 24px; }
-
     .location-pill {
       font-family: 'Barlow Condensed', sans-serif;
       font-size: 11px; font-weight: 700;
@@ -60,7 +53,6 @@
       color: #fff; background: var(--red);
       padding: 4px 12px;
     }
-
     .header-link {
       font-family: 'Barlow Condensed', sans-serif;
       font-size: 13px; font-weight: 600;
@@ -68,8 +60,6 @@
       color: var(--text-mid); text-decoration: none; transition: color 0.15s;
     }
     .header-link:hover { color: #fff; }
-
-    /* ── HERO ── */
     .hero {
       position: relative;
       padding: 64px 32px 56px;
@@ -77,8 +67,6 @@
       overflow: hidden;
       border-bottom: 2px solid var(--red);
     }
-
-    /* Warm radial glow from screenshot */
     .hero::before {
       content: '';
       position: absolute;
@@ -92,7 +80,6 @@
       position: absolute;
       bottom: 0; left: 0; right: 0; height: 1px;
     }
-
     .hero-kicker {
       font-family: 'Barlow Condensed', sans-serif;
       font-size: 11px; font-weight: 700; letter-spacing: 0.3em; text-transform: uppercase;
@@ -100,7 +87,6 @@
       display: flex; align-items: center; justify-content: center; gap: 10px;
     }
     .hero-kicker::before { content: '●'; color: var(--red); font-size: 8px; }
-
     .hero h1 {
       font-family: 'Barlow Condensed', sans-serif;
       font-size: clamp(48px, 8vw, 88px); font-weight: 900;
@@ -108,8 +94,6 @@
       color: #fff; margin-bottom: 40px;
     }
     .hero h1 .highlight { color: var(--gold); }
-
-    /* Stats bar */
     .stats-bar {
       display: inline-flex; border: 1px solid var(--rule2);
       background: var(--panel);
@@ -128,24 +112,18 @@
       font-size: 10px; font-weight: 600; letter-spacing: 0.2em;
       text-transform: uppercase; color: var(--text-dim); display: block; margin-top: 4px;
     }
-
-    /* ── MAIN CONTENT ── */
     .main {
       max-width: 1140px; margin: 0 auto; padding: 48px 32px 80px;
       display: grid; grid-template-columns: 1fr 400px; gap: 28px; align-items: start;
     }
-
-    /* ── PANELS ── */
     .panel {
       background: var(--panel); border: 1px solid var(--rule2);
     }
-
     .panel-header {
       padding: 20px 28px;
       border-bottom: 1px solid var(--rule);
       display: flex; align-items: center; gap: 14px;
     }
-
     .step-num {
       width: 28px; height: 28px; border-radius: 50%;
       background: var(--red); color: #fff;
@@ -154,22 +132,17 @@
       display: flex; align-items: center; justify-content: center;
       flex-shrink: 0;
     }
-
     .panel-title {
       font-family: 'Barlow Condensed', sans-serif;
       font-size: 17px; font-weight: 800;
       letter-spacing: 0.1em; text-transform: uppercase; color: #fff;
     }
-
     .panel-body { padding: 28px; }
-
-    /* ── FORM ── */
     .form-note {
       font-size: 15px; color: var(--text-mid); line-height: 1.65; margin-bottom: 24px;
       padding-bottom: 20px; border-bottom: 1px solid var(--rule);
     }
     .form-note strong { color: #fff; font-weight: 700; }
-
     .section-label {
       font-family: 'Barlow Condensed', sans-serif;
       font-size: 12px; font-weight: 700; letter-spacing: 0.2em;
@@ -177,19 +150,16 @@
       margin: 20px 0 14px; padding-top: 20px; border-top: 1px solid var(--rule);
     }
     .section-label:first-of-type { margin-top: 0; padding-top: 0; border-top: none; }
-
     .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
     .field-row3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin-bottom: 14px; }
     .field { display: flex; flex-direction: column; gap: 7px; margin-bottom: 16px; }
     .field:last-child { margin-bottom: 0; }
-
     .field label {
       font-family: 'Barlow Condensed', sans-serif;
       font-size: 12px; font-weight: 700; letter-spacing: 0.14em;
       text-transform: uppercase; color: var(--text-mid);
     }
     .field label .req { color: var(--red); }
-
     input, select, textarea {
       width: 100%; padding: 12px 14px;
       background: var(--bg); border: 1px solid var(--rule2);
@@ -204,8 +174,6 @@
     input:focus, select:focus, textarea:focus { border-color: var(--gold); }
     input::placeholder { color: #3d4d6a; }
     textarea { min-height: 100px; resize: vertical; font-size: 15px; line-height: 1.6; }
-
-    /* WAIVER */
     .waiver-block {
       background: var(--panel2); border: 1px solid var(--rule2);
       padding: 16px 18px; margin-top: 20px; margin-bottom: 20px;
@@ -213,15 +181,10 @@
     }
     .waiver-block:hover { border-color: var(--gold); }
     .waiver-block.is-checked { border-color: var(--gold); background: rgba(245,196,46,0.04); }
-
     .waiver-inner { display: flex; gap: 14px; align-items: flex-start; }
-
-    /* hide native checkbox completely */
     .waiver-inner input[type="checkbox"] {
       position: absolute; opacity: 0; width: 0; height: 0; pointer-events: none;
     }
-
-    /* custom box */
     .custom-check {
       width: 22px; height: 22px; flex-shrink: 0; margin-top: 1px;
       border: 2px solid var(--rule2);
@@ -235,8 +198,6 @@
       border-color: var(--gold);
       background: var(--gold);
     }
-
-    /* the gold arrow / checkmark */
     .custom-check svg {
       opacity: 0; transform: scale(0.5);
       transition: opacity 0.15s ease, transform 0.15s ease;
@@ -244,14 +205,11 @@
     .waiver-block.is-checked .custom-check svg {
       opacity: 1; transform: scale(1);
     }
-
     .waiver-text { font-size: 15px; line-height: 1.65; color: var(--text-mid); font-weight: 500; }
     .waiver-text a { color: var(--gold); text-decoration: none; font-weight: 700; }
     .waiver-text a:hover { text-decoration: underline; }
     .waiver-block.is-checked .waiver-text { color: var(--text); }
     .waiver-sub { font-size: 13px; color: var(--text-dim); margin-top: 7px; line-height: 1.6; }
-
-    /* SUBMIT */
     .submit-btn {
       width: 100%; padding: 16px; background: var(--red); color: #fff; border: none;
       font-family: 'Barlow Condensed', sans-serif; font-size: 17px; font-weight: 800;
@@ -259,56 +217,44 @@
     }
     .submit-btn:hover { background: #ff3d3d; }
     .submit-btn:disabled { opacity: 0.6; cursor: not-allowed; }
-
     .msg { margin-top: 12px; padding: 12px 16px; display: none; font-size: 13px; font-family: 'Barlow', sans-serif; }
     .msg.ok { background: rgba(0,217,126,0.08); border: 1px solid rgba(0,217,126,0.25); color: var(--ob-green); }
     .msg.err { background: rgba(229,48,48,0.08); border: 1px solid rgba(229,48,48,0.25); color: var(--red); }
-
-    /* ── SCHEDULE PANEL ── */
     .schedule-note {
       font-size: 14px; color: var(--text-mid); line-height: 1.6; margin-bottom: 20px;
       padding-bottom: 18px; border-bottom: 1px solid var(--rule);
     }
-
     .schedule-list { list-style: none; padding: 0; }
-
     .schedule-row {
       display: flex; align-items: center; justify-content: space-between;
       padding: 11px 0; border-bottom: 1px solid var(--rule);
     }
     .schedule-row:last-child { border-bottom: none; }
-
     .s-date {
       font-family: 'Barlow Condensed', sans-serif;
       font-size: 16px; font-weight: 700; color: #fff; letter-spacing: 0.02em;
       width: 70px; flex-shrink: 0;
     }
     .s-date.playoff { color: #fff; }
-
     .s-label {
       font-family: 'Barlow Condensed', sans-serif;
       font-size: 14px; font-weight: 800; letter-spacing: 0.1em;
       text-transform: uppercase; color: var(--gold); flex: 1; padding-left: 8px;
     }
-
     .s-time {
       font-family: 'Barlow Condensed', sans-serif;
       font-size: 16px; font-weight: 700;
       color: var(--gold); text-align: right;
     }
     .s-time.muted { color: var(--text-mid); font-weight: 700; font-size: 15px; }
-
     .schedule-divider {
       height: 2px; background: var(--red); margin: 6px 0; opacity: 0.5;
     }
-
-    /* playoff rows get a warm tint */
     .schedule-row.playoffs {
       background: rgba(245,196,46,0.04);
       padding-left: 6px; padding-right: 6px;
       margin-left: -6px; margin-right: -6px;
     }
-
     .info-box {
       background: var(--panel2); border: 1px solid var(--rule2);
       padding: 14px 16px; margin-top: 16px; display: flex; gap: 10px; align-items: flex-start;
@@ -316,8 +262,6 @@
     .info-box .icon { font-size: 15px; flex-shrink: 0; margin-top: 1px; }
     .info-box p { font-size: 14px; color: var(--text-mid); line-height: 1.6; }
     .info-box strong { color: var(--text); font-weight: 600; }
-
-    /* ── FOOTER ── */
     footer {
       border-top: 1px solid var(--rule);
       padding: 18px 32px;
@@ -329,14 +273,12 @@
       letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-dim);
     }
     .footer-logo .accent { color: var(--red); }
-
     .footer-link {
       font-family: 'Barlow Condensed', sans-serif; font-size: 11px; font-weight: 600;
       letter-spacing: 0.1em; text-transform: uppercase;
       color: var(--text-dim); text-decoration: none; transition: color 0.15s;
     }
     .footer-link:hover { color: var(--text); }
-
     .powered-by { display: flex; align-items: center; gap: 9px; }
     .pb-label {
       font-family: 'Barlow Condensed', sans-serif; font-size: 10px; font-weight: 600;
@@ -345,8 +287,6 @@
     .pb-logo-link { display: flex; align-items: center; opacity: 0.5; transition: opacity 0.2s; }
     .pb-logo-link:hover { opacity: 1; }
     .pb-logo { height: 22px; width: auto; filter: brightness(0) invert(1); }
-
-    /* ── RESPONSIVE ── */
     @media (max-width: 900px) {
       .main { grid-template-columns: 1fr; padding: 32px 20px 60px; }
       .hero { padding: 48px 20px 40px; }
@@ -365,7 +305,6 @@
   </style>
 </head>
 <body>
-
   <header>
     <a href="/" class="logo">Baseball <span class="accent">For Bums</span></a>
     <div class="header-right">
@@ -373,7 +312,6 @@
       <a href="/" class="header-link">Home</a>
     </div>
   </header>
-
   <div class="hero">
     <div class="hero-kicker">Spring Season Registration</div>
     <h1>Sign Up For The <span class="highlight">League</span></h1>
@@ -384,10 +322,7 @@
       <div class="stat"><span class="stat-val">66</span><span class="stat-label">Player Cap</span></div>
     </div>
   </div>
-
   <div class="main">
-
-    <!-- FORM PANEL -->
     <div class="panel">
       <div class="panel-header">
         <div class="step-num">1</div>
@@ -397,13 +332,11 @@
         <p class="form-note">
           Submitting does <strong>not</strong> guarantee a spot. You'll receive an email confirming <strong>CONFIRMED</strong> or <strong>WAITLIST</strong> status.
         </p>
-
         <form id="regForm">
           <div class="field">
             <label>Full Name <span class="req">*</span></label>
             <input name="fullName" placeholder="Jane Smith" required>
           </div>
-
           <div class="field-row">
             <div class="field">
               <label>Email <span class="req">*</span></label>
@@ -414,9 +347,7 @@
               <input name="phone" placeholder="(917) 555-0100" required>
             </div>
           </div>
-
           <div class="section-label">Player Details</div>
-
           <div class="field-row3">
             <div class="field">
               <label>Jersey Size</label>
@@ -435,7 +366,6 @@
               <input name="jerseyNumber" type="number" min="0" max="99" placeholder="24">
             </div>
           </div>
-
           <div class="field-row">
             <div class="field">
               <label>Preferred Position</label>
@@ -455,17 +385,14 @@
               </select>
             </div>
           </div>
-
           <div class="field">
             <label>Notes</label>
             <textarea name="notes" placeholder="Injuries, schedule conflicts, anything we should know…"></textarea>
           </div>
-
           <div class="waiver-block" id="waiverBlock">
             <div class="waiver-inner">
               <input type="checkbox" id="waiver" name="waiver" required>
               <div class="custom-check" aria-hidden="true">
-                <!-- gold arrow checkmark -->
                 <svg width="13" height="11" viewBox="0 0 13 11" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M1.5 5.5L5 9L11.5 1.5" stroke="#000" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
@@ -476,15 +403,12 @@
               </div>
             </div>
           </div>
-
           <button class="submit-btn" id="submitBtn" type="submit">Submit Registration →</button>
           <div class="msg ok" id="okMsg"></div>
           <div class="msg err" id="errMsg"></div>
         </form>
       </div>
     </div>
-
-    <!-- SCHEDULE PANEL -->
     <div class="panel">
       <div class="panel-header">
         <div class="step-num">2</div>
@@ -492,7 +416,6 @@
       </div>
       <div class="panel-body">
         <p class="schedule-note">Review before registering. Playoff and championship dates are flexible.</p>
-
         <ul class="schedule-list">
           <li class="schedule-row"><span class="s-date">4/18</span><span class="s-time">9:30 PM</span></li>
           <li class="schedule-row"><span class="s-date">4/25</span><span class="s-time">9:30 PM</span></li>
@@ -506,27 +429,23 @@
           <li class="schedule-row playoffs"><span class="s-date playoff">6/13–6/14</span><span class="s-label">Championship</span><span class="s-time muted">TBD</span></li>
           <li class="schedule-row playoffs"><span class="s-date playoff">6/16</span><span class="s-label">All-Star Game</span><span class="s-time muted">TBD</span></li>
         </ul>
-
         <div class="info-box">
           <span class="icon">🌧</span>
           <p><strong>Rainout Policy:</strong> Rained-out games will be made up the following Tuesday.</p>
         </div>
-
         <div class="info-box">
           <span class="icon">⚠️</span>
           <p><strong>Reminder:</strong> Signing up does <strong>not</strong> guarantee a spot. If the league reaches capacity, you'll be placed on the waitlist.</p>
         </div>
       </div>
     </div>
-
   </div>
-
   <footer>
     <div class="footer-logo">Baseball <span class="accent">For Bums</span> · Staten Island</div>
     <a href="/waiver-and-conduct/" class="footer-link">View Waiver &amp; Code of Conduct →</a>
     <div class="powered-by">
       <span class="pb-label">Powered by</span>
-      <a href="https://7095cda1.logo-46y.pages.dev/" target="_blank" class="pb-logo-link">
+      <a href="https://onebyit.com" target="_blank" class="pb-logo-link">
         <img src="https://7095cda1.logo-46y.pages.dev/logo.svg" alt="Oneby.AI" class="pb-logo" />
       </a>
     </div>
@@ -536,23 +455,73 @@
     // Custom waiver checkbox
     const waiverBlock = document.getElementById('waiverBlock');
     const waiverInput = document.getElementById('waiver');
-    waiverBlock.addEventListener('click', function() {
+
+    waiverBlock.addEventListener('click', function(e) {
+      if (e.target.tagName === 'A') return; // don't toggle if clicking the link
       waiverInput.checked = !waiverInput.checked;
       waiverBlock.classList.toggle('is-checked', waiverInput.checked);
     });
 
-    // Form submit
-    document.getElementById('regForm').addEventListener('submit', function(e) {
+    // Form submission
+    document.getElementById('regForm').addEventListener('submit', async function(e) {
       e.preventDefault();
+
       const btn = document.getElementById('submitBtn');
-      const ok = document.getElementById('okMsg');
-      btn.disabled = true; btn.textContent = 'Submitting…';
-      ok.style.display = 'none';
-      setTimeout(() => {
-        ok.style.display = 'block';
-        ok.textContent = '✓ Registration received! We\'ll be in touch with confirmed or waitlist status.';
-        btn.textContent = 'Submitted';
-      }, 900);
+      const okMsg = document.getElementById('okMsg');
+      const errMsg = document.getElementById('errMsg');
+
+      okMsg.style.display = 'none';
+      errMsg.style.display = 'none';
+
+      btn.disabled = true;
+      btn.textContent = 'Submitting…';
+
+      try {
+        const formData = new FormData(this);
+        const data = {};
+
+        for (const [key, value] of formData.entries()) {
+          data[key] = value.trim();
+        }
+
+        data.waiverAccepted = waiverInput.checked;
+        data.userAgent = navigator.userAgent;
+
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbze6uynBhtPrdaNw2XHg77KOn4pCb4t0TlSqdpEkYVta2z11fSMbwTHhqFVLvHG_vnB/exec';
+
+        const response = await fetch(SCRIPT_URL, {
+          method: 'POST',
+          mode: 'cors',
+          headers: {
+            'Content-Type': 'text/plain; charset=utf-8'
+          },
+          body: JSON.stringify(data)
+        });
+
+        if (!response.ok) {
+          throw new Error(`Server error: ${response.status}`);
+        }
+
+        const result = await response.json();
+
+        if (result.ok) {
+          okMsg.textContent = `✓ Registration received! Status: ${result.status}. We'll email you shortly with confirmation or waitlist details.`;
+          okMsg.style.display = 'block';
+          this.reset();
+          waiverBlock.classList.remove('is-checked');
+          waiverInput.checked = false;
+        } else {
+          throw new Error(result.error || 'Registration failed');
+        }
+
+      } catch (err) {
+        console.error(err);
+        errMsg.textContent = '× Error: ' + (err.message || 'Please try again or check your internet connection.');
+        errMsg.style.display = 'block';
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Submit Registration →';
+      }
     });
   </script>
 </body>
