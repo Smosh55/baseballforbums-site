@@ -75,11 +75,6 @@
       background: radial-gradient(ellipse at center, rgba(180,60,20,0.28) 0%, rgba(120,30,10,0.12) 45%, transparent 70%);
       pointer-events: none;
     }
-    .hero::after {
-      content: '';
-      position: absolute;
-      bottom: 0; left: 0; right: 0; height: 1px;
-    }
     .hero-kicker {
       font-family: 'Barlow Condensed', sans-serif;
       font-size: 11px; font-weight: 700; letter-spacing: 0.3em; text-transform: uppercase;
@@ -323,6 +318,7 @@
     </div>
   </div>
   <div class="main">
+    <!-- FORM PANEL -->
     <div class="panel">
       <div class="panel-header">
         <div class="step-num">1</div>
@@ -366,16 +362,51 @@
               <input name="jerseyNumber" type="number" min="0" max="99" placeholder="24">
             </div>
           </div>
-          <div class="field-row">
-            <div class="field">
-              <label>Preferred Position</label>
-              <select name="position">
-                <option value="">Select</option>
-                <option>Pitcher</option><option>Catcher</option><option>1B</option><option>2B</option>
-                <option>3B</option><option>SS</option><option>LF</option><option>CF</option>
-                <option>RF</option><option>Utility</option>
-              </select>
+
+          <!-- Positions: Checkboxes -->
+          <div class="field">
+            <label>Preferred Position(s) <span class="req">*</span></label>
+            <p style="font-size:13px; color:var(--text-dim); margin:6px 0 12px 0;">
+              Select all that apply
+            </p>
+            <div id="positionGroup" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap:12px; margin-bottom:8px;">
+              <label style="display:flex; align-items:center; gap:8px; cursor:pointer; font-size:15px;">
+                <input type="checkbox" name="position" value="Pitcher"> Pitcher
+              </label>
+              <label style="display:flex; align-items:center; gap:8px; cursor:pointer; font-size:15px;">
+                <input type="checkbox" name="position" value="Catcher"> Catcher
+              </label>
+              <label style="display:flex; align-items:center; gap:8px; cursor:pointer; font-size:15px;">
+                <input type="checkbox" name="position" value="1B"> 1B
+              </label>
+              <label style="display:flex; align-items:center; gap:8px; cursor:pointer; font-size:15px;">
+                <input type="checkbox" name="position" value="2B"> 2B
+              </label>
+              <label style="display:flex; align-items:center; gap:8px; cursor:pointer; font-size:15px;">
+                <input type="checkbox" name="position" value="3B"> 3B
+              </label>
+              <label style="display:flex; align-items:center; gap:8px; cursor:pointer; font-size:15px;">
+                <input type="checkbox" name="position" value="SS"> SS
+              </label>
+              <label style="display:flex; align-items:center; gap:8px; cursor:pointer; font-size:15px;">
+                <input type="checkbox" name="position" value="LF"> LF
+              </label>
+              <label style="display:flex; align-items:center; gap:8px; cursor:pointer; font-size:15px;">
+                <input type="checkbox" name="position" value="CF"> CF
+              </label>
+              <label style="display:flex; align-items:center; gap:8px; cursor:pointer; font-size:15px;">
+                <input type="checkbox" name="position" value="RF"> RF
+              </label>
+              <label style="display:flex; align-items:center; gap:8px; cursor:pointer; font-size:15px;">
+                <input type="checkbox" name="position" value="Utility"> Utility
+              </label>
             </div>
+            <div id="positionError" class="msg err" style="margin-top:8px; display:none;">
+              Please select at least one position
+            </div>
+          </div>
+
+          <div class="field-row">
             <div class="field">
               <label>Experience Level</label>
               <select name="experience">
@@ -409,6 +440,8 @@
         </form>
       </div>
     </div>
+
+    <!-- SCHEDULE PANEL (unchanged) -->
     <div class="panel">
       <div class="panel-header">
         <div class="step-num">2</div>
@@ -440,6 +473,7 @@
       </div>
     </div>
   </div>
+
   <footer>
     <div class="footer-logo">Baseball <span class="accent">For Bums</span> · Staten Island</div>
     <a href="/waiver-and-conduct/" class="footer-link">View Waiver &amp; Code of Conduct →</a>
@@ -452,12 +486,12 @@
   </footer>
 
   <script>
-    // Custom waiver checkbox
+    // Waiver checkbox toggle
     const waiverBlock = document.getElementById('waiverBlock');
     const waiverInput = document.getElementById('waiver');
 
     waiverBlock.addEventListener('click', function(e) {
-      if (e.target.tagName === 'A') return; // don't toggle if clicking the link
+      if (e.target.tagName === 'A') return;
       waiverInput.checked = !waiverInput.checked;
       waiverBlock.classList.toggle('is-checked', waiverInput.checked);
     });
@@ -469,9 +503,22 @@
       const btn = document.getElementById('submitBtn');
       const okMsg = document.getElementById('okMsg');
       const errMsg = document.getElementById('errMsg');
+      const positionError = document.getElementById('positionError');
 
+      // Reset messages & errors
       okMsg.style.display = 'none';
       errMsg.style.display = 'none';
+      positionError.style.display = 'none';
+
+      // Validate positions
+      const selectedPositions = Array.from(document.querySelectorAll('input[name="position"]:checked'))
+        .map(cb => cb.value);
+
+      if (selectedPositions.length === 0) {
+        positionError.style.display = 'block';
+        positionError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        return;
+      }
 
       btn.disabled = true;
       btn.textContent = 'Submitting…';
@@ -481,8 +528,12 @@
         const data = {};
 
         for (const [key, value] of formData.entries()) {
+          if (key === 'position') continue; // handled separately
           data[key] = value.trim();
         }
+
+        // Add positions as comma-separated string
+        data.position = selectedPositions.join(', ');
 
         data.waiverAccepted = waiverInput.checked;
         data.userAgent = navigator.userAgent;
