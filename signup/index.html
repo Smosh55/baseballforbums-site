@@ -90,7 +90,7 @@
     }
     .hero h1 .highlight { color: var(--gold); }
 
-    /* Stats Bar */
+    /* ── Stats Bar ── */
     .stats-bar {
       display: flex;
       flex-wrap: wrap;
@@ -325,7 +325,7 @@
       color: var(--red); 
     }
 
-    /* Mobile adjustments */
+    /* ── Mobile adjustments ── */
     @media (max-width: 900px) {
       .main {
         display: flex;
@@ -333,7 +333,7 @@
         gap: 48px;
       }
       .main > .panel:nth-child(2) {
-        order: -1;
+        order: -1; /* schedule before form on mobile */
       }
       .submit-btn {
         margin: 32px 0 16px 0;
@@ -347,6 +347,8 @@
       .field-row, .field-row3 {
         grid-template-columns: 1fr;
       }
+
+      /* Stats bar mobile fix */
       .stats-bar {
         flex-direction: row;
         flex-wrap: wrap;
@@ -357,6 +359,9 @@
         padding: 12px 16px;
         border-right: none;
         border-bottom: 1px solid var(--rule2);
+      }
+      .stat:nth-child(2n) {
+        border-left: none;
       }
       .stat:last-child {
         border-bottom: none;
@@ -439,8 +444,8 @@
               </select>
             </div>
             <div class="field">
-              <label>Jersey Name (max 14)</label>
-              <input name="jerseyWording" maxlength="14" placeholder="Max 14 chars">
+              <label>Jersey Name (max 10)</label>
+              <input name="jerseyWording" maxlength="10" placeholder="Yanky K">
             </div>
             <div class="field">
               <label>Jersey Number (0–99)</label>
