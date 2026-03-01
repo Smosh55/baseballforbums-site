@@ -108,8 +108,13 @@
       text-transform: uppercase; color: var(--text-dim); display: block; margin-top: 4px;
     }
     .main {
-      max-width: 1140px; margin: 0 auto; padding: 48px 32px 80px;
-      display: grid; grid-template-columns: 1fr 400px; gap: 28px; align-items: start;
+      display: grid;
+      grid-template-columns: 1fr 400px;
+      gap: 28px;
+      align-items: start;
+      max-width: 1140px;
+      margin: 0 auto;
+      padding: 48px 32px 80px;
     }
     .panel {
       background: var(--panel); border: 1px solid var(--rule2);
@@ -170,7 +175,7 @@
     input::placeholder { color: #3d4d6a; }
     textarea { min-height: 100px; resize: vertical; font-size: 15px; line-height: 1.6; }
 
-    /* ── Styled Checkboxes for Positions ── */
+    /* Styled Checkboxes */
     .position-checkbox {
       position: relative;
       display: flex;
@@ -360,21 +365,29 @@
     .pb-logo-link { display: flex; align-items: center; opacity: 0.5; transition: opacity 0.2s; }
     .pb-logo-link:hover { opacity: 1; }
     .pb-logo { height: 22px; width: auto; filter: brightness(0) invert(1); }
+
+    /* ── Mobile adjustments ── */
     @media (max-width: 900px) {
-      .main { grid-template-columns: 1fr; padding: 32px 20px 60px; }
-      .hero { padding: 48px 20px 40px; }
-      .stats-bar { display: grid; grid-template-columns: 1fr 1fr; width: 100%; }
-      .stat { border-right: none; border-bottom: 1px solid var(--rule2); }
-      .stat:nth-child(2n) { border-left: 1px solid var(--rule2); }
-      .stat:nth-last-child(-n+2) { border-bottom: none; }
-      .field-row3 { grid-template-columns: 1fr 1fr; }
-      footer { flex-direction: column; gap: 10px; text-align: center; }
-    }
-    @media (max-width: 500px) {
-      .field-row { grid-template-columns: 1fr; }
-      .field-row3 { grid-template-columns: 1fr; }
-      header { padding: 0 16px; }
-      #positionGroup { grid-template-columns: 1fr; }
+      .main {
+        display: flex;
+        flex-direction: column;
+        gap: 48px;
+      }
+      .main > .panel:nth-child(2) {
+        order: -1; /* schedule appears before form on mobile */
+      }
+      .submit-btn {
+        margin: 32px 0 16px 0;
+      }
+      .panel-body {
+        padding: 24px 16px;
+      }
+      #positionGroup {
+        grid-template-columns: 1fr;
+      }
+      .field-row, .field-row3 {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
@@ -652,17 +665,18 @@
           let successMessage = '';
 
           if (result.status === 'CONFIRMED') {
-            successMessage = `✓ Thank you — we've received your registration!\n\n` 
-                             `Please check your email for instructions regarding league confirmation, and payment instructions.\n\n` +
+            successMessage = `✓ Thank you — we've received your submission!\n\n` +
+                             `Registration ID: ${result.registrationId || '—'}\n\n` +
+                             `More details will follow via email soon.`;
           } else if (result.status === 'WAITLIST') {
-            successMessage = `✓ Thank you — we've received your registration!\n\n` +
+            successMessage = `✓ Thank you — we've received your submission!\n\n` +
                              `Registration ID: ${result.registrationId || '—'}\n\n` +
-                             `We've reached or passed the 66-player cap, so your submission has been placed on the waitlist.\n\n` +
-                             `If a spot opens up, we'll contact you right away. We truly appreciate your interest and will keep you updated.`;
+                             `We've reached or passed the 66-player cap, so your entry has been placed on the waitlist.\n\n` +
+                             `If a spot opens up, we'll contact you right away.`;
           } else {
-            successMessage = `✓ Thank you — we've received your registration!\n\n` +
+            successMessage = `✓ Thank you — we've received your submission!\n\n` +
                              `Registration ID: ${result.registrationId || '—'}\n\n` +
-                             `We'll be in touch soon via email with more details.`;
+                             `More details will follow via email soon.`;
           }
 
           okMsg.textContent = successMessage;
