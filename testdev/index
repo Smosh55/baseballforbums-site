@@ -1,1 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oneby Signup</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <style>
+        /* Custom Oneby styles - assuming primary color #007BFF (blue), secondary #F3F4F6 (gray) */
+        .oneby-primary { background-color: #007BFF; }
+        .oneby-text-primary { color: #007BFF; }
+        .oneby-border-primary { border-color: #007BFF; }
+    </style>
+</head>
+<body class="bg-gray-100 font-sans antialiased">
+    <div class="min-h-screen flex items-center justify-center p-4">
+        <div x-data="signupApp" class="bg-white rounded-lg shadow-xl max-w-2xl w-full p-8">
+            <!-- Logo -->
+            <div class="text-center mb-8">
+                <img src="https://placeholder.com/logo/oneby.png" alt="Oneby Logo" class="mx-auto h-12">
+                <h1 class="text-2xl font-bold mt-4">Welcome to Oneby Signup</h1>
+            </div>
 
+            <!-- Progress Bar -->
+            <div class="mb-8" x-show="flowType">
+                <div class="flex justify-between">
+                    <template x-for="(step, index) in getSteps()" :key="index">
+                        <div class="flex-1 text-center">
+                            <div class="w-full h-1 bg-gray-200" :class="{ 'bg-blue-500': currentStep > index + 1, 'oneby-primary': currentStep === index + 1 }"></div>
+                            <span class="text-sm" :class="{ 'text-blue-500 font-bold': currentStep >= index + 1 }">Step :index+1</span>
+                        </div>
+                    </template>
+                </div>
+            </div>
+
+            <!-- Step 0: Product Selection -->
+            <div x-show="!flowType">
+                <h2 class="text-xl font-semibold mb-4">Select Your Product</h2>
+                <div class="grid grid-cols-2 gap-4">
+                    <button @click="selectProduct('business')" class="p-4 border rounded-lg hover:bg-gray-50">
+                        <h3 class="font-bold">Business Phone System</h3>
+                        <p>Multi-user setup for teams</p>
+                    </button>
+                    <button @click="selectProduct('home')" class="p-4 border rounded-lg hover:bg-gray-50">
+                        <h3 class="font-bold">Home Phone Service</h3>
+                        <p>Simple setup for households</p>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Business Flow Steps -->
+            <template x-if="flowType === 'business'">
+
+                <!-- Step 1: Company Info -->
+                <div x-show="currentStep === 1">
+                    <h2 class="text-xl font-semibold mb-4">Company Information</h2>
+                    <form @submit.prevent>
+                        <div class="mb-4">
+                            <label class="block text-sm mb-1">Company Name *</label>
+                            <input x-model="companyName" type="text" required class="w-full p-2 border rounded">
+                        </div>
+                        <div class="mb-4">
+                            <label class="block text-sm mb-1">Legal Business Name *</label>
+                            <input x-model="legalName" type="text" required class="w-full p-2 border rounded">
+                        </div>
+                        <div class="mb-4">
+                            <label class="block text-sm mb-1">Admin Name *</label>
+                            <input x-model="adminName" type="text" required class="w-full p-2 border rounded">
+                        </div>
+                        <div class="mb-4">
+                            <label class="block text-sm mb-1">Admin Email *</label>
+                            <input x-model="adminEmail" type="email" required class="w-full p-2 border rounded">
+                        </div>
+                        <div class="mb-4">
+                            <label class="block text-sm mb-1">Admin Phone *</label>
+                            <input x-model="adminPhone" type="tel" required class="w-full p-2 border rounded" @change="validateAdminPhone">
+                            <p x-show="adminPhoneError" class="text-red-500 text-sm">Admin phone cannot match any system DID.</p>
+                        </div>
+                        <div class="mb-4">
+                            <label class="block text-sm mb-1">Billing Email (Optional)</label>
+                            <input x-model="billingEmail" type="email" class="w-full p-2 border rounded">
+                        </div>
+                        <div class="flex justify-end">
+                            <button @click="nextStep" class="px-4 py-2 bg-blue-500 text-white rounded">Next</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Step 2: Simple vs Advanced Setup -->
+                <div x-show="currentStep === 2">
+                    <h2 class="text-xl font-semibold mb-4">Setup Type</h2>
+                    <div class="grid grid-cols-2 gap-4">
+                        <button @click="selectSetup('simple')" class="p-4 border rounded-lg" :class="{ 'oneby-border-primary': !isAdvanced }">
+                            <h3 class="font-bold">Simple Setup</h3>
+                            <p>Defaults applied for quick start</p>
+                        </button>
+                        <button @click="selectSetup('advanced')" class="p-4 border rounded-lg" :class="{ 'oneby-border-primary': isAdvanced }">
+                            <h3 class="font-bold">Advanced Setup</h3>
+                            <p>Customize bulk DIDs, directory, IVR, etc.</p>
+                        </button>
+                    </div>
+                    <div class="flex justify-between mt-8">
+                        <button @click="prevStep" class="px-4 py-2 border rounded">Back</button>
+                        <button @click="nextStep" class="px-4 py-2 bg-blue-500 text-white rounded">Next</button>
+                    </div>
+                </div>
+
+                <!-- Step 3: Users / Extensions -->
+                <div x-show="currentStep === 3">
+                    <h2 class="text-xl font-semibold mb-4">Add Users / Extensions</h2>
+                    <p class="mb-4">Max 50 users. Softphone included for all.</p>
+                    <div x-show="isAdvanced" class="mb-4">
+                        <label class="block text-sm mb-1">Starting Extension</label>
+                        <input x-model="startingExtension" type="number" min="100" class="w-32 p-2 border rounded">
+                    </div>
+                    <button @click="addUser" class="mb-4 px-4 py-2 bg-green-500 text-white rounded" x-show="users.length < 50">Add User</button>
+                    <p x-show="users.length >= 50" class="text-red-500">Maximum users reached.</p>
+                    <table class="w-full border-collapse">
+                        <thead>
+                            <tr class="bg-gray-100">
+                                <th class="p-2">First Name</th>
+                                <th class="p-2">Last Name</th>
+                                <th class="p-2">Extension</th>
+                                <th class="p-2">Desk Phone ($5/mo)</th>
+                                <th class="p-2">Voicemail</th>
+                                <th class="p-2">Call Recording ($3/mo)</th>
+                                <th class="p-2">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <template x-for="(user, index) in users" :key="index">
+                                <tr>
+                                    <td class="p-2"><input x-model="user.firstName" type="text" class="w-full border rounded p-1"></td>
+                                    <td class="p-2"><input x-model="user.lastName" type="text" class="w-full border rounded p-1"></td>
+                                    <td class="p-2" x-text="user.extension"></td>
+                                    <td class="p-2"><input x-model="user.deskPhone" type="checkbox"></td>
+                                    <td class="p-2"><input x-model="user.voicemail" type="checkbox"></td>
+                                    <td class="p-2"><input x-model="user.callRecording" type="checkbox"></td>
+                                    <td class="p-2"><button @click="removeUser(index)" class="text-red-500">Remove</button></td>
+                                </tr>
+                            </template>
+                        </tbody>
+                    </table>
+                    <div class="flex justify-between mt-8">
+                        <button @click="prevStep" class="px-4 py-2 border rounded">Back</button>
+                        <button @click="nextStep" class="px-4 py-2 bg-blue-500 text-white rounded" :disabled="users.length === 0">Next</button>
+                    </div>
+                </div>
+
+                <!-- Step 4: Phone Numbers -->
+                <div x-show="currentStep === 4">
+                    <h2 class="text-xl font-semibold mb-4">Phone Numbers</h2>
+                    <p>Main DID auto-assigned. Additional DIDs optional in Advanced.</p>
+                    <div class="mb-4">
+                        <label class="block text-sm mb-1">Main DID (Placeholder - Auto Assigned)</label>
+                        <input x-model="mainDID" type="text" placeholder="(123) 456-7890" class="w-full p-2 border rounded" disabled>
+                    </div>
+                    <div x-show="isAdvanced">
+                        <button @click="addAdditionalDID" class="mb-4 px-4 py-2 bg-green-500 text-white rounded">Add Additional DID ($3/mo)</button>
+                        <template x-for="(did, index) in additionalDIDs" :key="index">
+                            <div class="flex mb-2">
+                                <input x-model="additionalDIDs[index]" type="text" placeholder="Enter DID" class="flex-1 p-2 border rounded">
+                                <button @click="removeAdditionalDID(index)" class="ml-2 text-red-500">Remove</button>
+                            </div>
+                        </template>
+                    </div>
+                    <p class="text-sm text-gray-500">Vanity numbers available via support. Replacements if unavailable.</p>
+                    <div class="flex justify-between mt-8">
+                        <button @click="prevStep" class="px-4 py-2 border rounded">Back</button>
+                        <button @click="nextStep" class="px-4 py-2 bg-blue-500 text-white rounded">Next</button>
+                    </div>
+                </div>
+
+                <!-- Step 5: Business Hours & After-Hours -->
+                <div x-show="currentStep === 5">
+                    <h2 class="text-xl font-semibold mb-4">Business Hours & After-Hours</h2>
+                    <div class="mb-4">
+                        <label class="block text-sm mb-1">Business Hours (e.g., 9AM-5PM Mon-Fri)</label>
+                        <input x-model="businessHours" type="text" class="w-full p-2 border rounded">
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-sm mb-1">After-Hours Handling</label>
+                        <select x-model="afterHours" class="w-full p-2 border rounded">
+                            <option value="voicemail">Voicemail</option>
+                            <option value="ring">Ring Same Users</option>
+                            <option value="custom" x-show="isAdvanced">Custom Routing</option>
+                        </select>
+                        <div x-show="afterHours === 'custom' && isAdvanced">
+                            <input type="text" placeholder="Custom Routing Details" class="w-full p-2 border rounded mt-2">
+                        </div>
+                    </div>
+                    <div class="flex justify-between mt-8">
+                        <button @click="prevStep" class="px-4 py-2 border rounded">Back</button>
+                        <button @click="nextStep" class="px-4 py-2 bg-blue-500 text-white rounded">Next</button>
+                    </div>
+                </div>
+
+                <!-- Step 6: Optional Add-Ons -->
+                <div x-show="currentStep === 6">
+                    <h2 class="text-xl font-semibold mb-4">Optional Add-Ons</h2>
+                    <div class="space-y-4">
+                        <label class="flex items-center">
+                            <input x-model="addOns.e911" type="checkbox">
+                            <span class="ml-2">E911 ($5/mo)</span>
+                        </label>
+                        <label class="flex items-center">
+                            <input x-model="addOns.efax" type="checkbox">
+                            <span class="ml-2">Standard eFax ($15/mo)</span>
+                        </label>
+                        <label class="flex items-center">
+                            <input x-model="addOns.hipaaFax" type="checkbox">
+                            <span class="ml-2">HIPAA eFax ($35/mo)</span>
+                        </label>
+                        <label class="flex items-center" x-show="isAdvanced">
+                            <input x-model="addOns.directory" type="checkbox">
+                            <span class="ml-2">Directory (Advanced Only)</span>
+                        </label>
+                        <p>Music-on-hold included by default.</p>
+                    </div>
+                    <div class="flex justify-between mt-8">
+                        <button @click="prevStep" class="px-4 py-2 border rounded">Back</button>
+                        <button @click="nextStep" class="px-4 py-2 bg-blue-500 text-white rounded">Next</button>
+                    </div>
+                </div>
+
+                <!-- Step 7: Review -->
+                <div x-show="currentStep === 7">
+                    <h2 class="text-xl font-semibold mb-4">Review Your Setup</h2>
+                    <div class="space-y-4">
+                        <div>
+                            <h3 class="font-bold">Company Info</h3>
+                            <p x-text="`Company: ${companyName}, Legal: ${legalName}, Admin: ${adminName}`"></p>
+                            <button @click="currentStep = 1" class="text-blue-500 text-sm">Edit</button>
+                        </div>
+                        <div>
+                            <h3 class="font-bold">Setup Type</h3>
+                            <p x-text="isAdvanced ? 'Advanced' : 'Simple'"></p>
+                            <button @click="currentStep = 2" class="text-blue-500 text-sm">Edit</button>
+                        </div>
+                        <div>
+                            <h3 class="font-bold">Users (x-text=`${users.length}`)</h3>
+                            <button @click="currentStep = 3" class="text-blue-500 text-sm">Edit</button>
+                        </div>
+                        <div>
+                            <h3 class="font-bold">Phone Numbers</h3>
+                            <p>Main: <span x-text="mainDID"></span>, Additional: <span x-text="additionalDIDs.length"></span></p>
+                            <button @click="currentStep = 4" class="text-blue-500 text-sm">Edit</button>
+                        </div>
+                        <div>
+                            <h3 class="font-bold">Business Hours</h3>
+                            <p x-text="businessHours"></p>
+                            <button @click="currentStep = 5" class="text-blue-500 text-sm">Edit</button>
+                        </div>
+                        <div>
+                            <h3 class="font-bold">Add-Ons</h3>
+                            <p x-text="Object.keys(addOns).filter(k => addOns[k]).join(', ') || 'None'"></p>
+                            <button @click="currentStep = 6" class="text-blue-500 text-sm">Edit</button>
+                        </div>
+                        <div class="border-t pt-4">
+                            <h3 class="font-bold">Total Monthly Cost: $<span x-text="calculateTotal()"></span></h3>
+                        </div>
+                        <p x-show="users.length >= 50" class="text-red-500">Max users reached.</p>
+                    </div>
+                    <div class="flex justify-between mt-8">
+                        <button @click="prevStep" class="px-4 py-2 border rounded">Back</button>
+                        <button @click="nextStep" class="px-4 py-2 bg-blue-500 text-white rounded">Next</button>
+                    </div>
+                </div>
+
+                <!-- Step 8: Contract -->
+                <div x-show="currentStep === 8">
+                    <h2 class="text-xl font-semibold mb-4">Contract & E-Signature</h2>
+                    <div class="border p-4 mb-4 max-h-40 overflow-y-auto">
+                        <p>Month-to-month service. Equipment lease 60 months. Acceptable Use Policy included. Equipment return required upon cancellation.</p>
+                        <!-- Full contract text placeholder -->
+                    </div>
+                    <label class="flex items-center mb-4">
+                        <input type="checkbox" x-model="agreeContract" required>
+                        <span class="ml-2">I agree to the terms</span>
+                    </label>
+                    <div class="mb-4">
+                        <label class="block text-sm mb-1">E-Signature (Type Your Name) *</label>
+                        <input x-model="eSignature" type="text" required class="w-full p-2 border rounded">
+                    </div>
+                    <div class="flex justify-between mt-8">
+                        <button @click="prevStep" class="px-4 py-2 border rounded">Back</button>
+                        <button @click="nextStep" class="px-4 py-2 bg-blue-500 text-white rounded" :disabled="!agreeContract || !eSignature">Next</button>
+                    </div>
+                </div>
+
+                <!-- Step 9: Payment -->
+                <div x-show="currentStep === 9">
+                    <h2 class="text-xl font-semibold mb-4">Payment</h2>
+                    <p>Total: $<span x-text="calculateTotal()"></span>/mo</p>
+                    <form @submit.prevent="completeSignup">
+                        <!-- Cardknox Integration Placeholder -->
+                        <div class="mb-4">
+                            <label class="block text-sm mb-1">Card Number</label>
+                            <input type="text" placeholder="**** **** **** ****" class="w-full p-2 border rounded">
+                        </div>
+                        <div class="grid grid-cols-2 gap-4 mb-4">
+                            <div>
+                                <label class="block text-sm mb-1">Expiry</label>
+                                <input type="text" placeholder="MM/YY" class="w-full p-2 border rounded">
+                            </div>
+                            <div>
+                                <label class="block text-sm mb-1">CVV</label>
+                                <input type="text" placeholder="***" class="w-full p-2 border rounded">
+                            </div>
+                        </div>
+                        <button type="submit" class="w-full px-4 py-2 bg-blue-500 text-white rounded">Pay & Activate</button>
+                    </form>
+                    <div class="flex justify-start mt-4">
+                        <button @click="prevStep" class="px-4 py-2 border rounded">Back</button>
+                    </div>
+                </div>
+
+            </template>
+
+            <!-- Home Flow Steps -->
+            <template x-if="flowType === 'home'">
+
+                <!-- Step 1: Customer Info -->
+                <div x-show="currentStep === 1">
+                    <h2 class="text-xl font-semibold mb-4">Customer Information</h2>
+                    <form @submit.prevent>
+                        <div class="mb-4">
+                            <label class="block text-sm mb-1">Name *</label>
+                            <input x-model="customerName" type="text" required class="w-full p-2 border rounded">
+                        </div>
+                        <div class="mb-4">
+                            <label class="block text-sm mb-1">Email *</label>
+                            <input x-model="customerEmail" type="email" required class="w-full p-2 border rounded">
+                        </div>
+                        <div class="mb-4">
+                            <label class="block text-sm mb-1">Phone *</label>
+                            <input x-model="customerPhone" type="tel" required class="w-full p-2 border rounded">
+                        </div>
+                        <div class="flex justify-end">
+                            <button @click="nextStep" class="px-4 py-2 bg-blue-500 text-white rounded">Next</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Step 2: Number Selection -->
+                <div x-show="currentStep === 2">
+                    <h2 class="text-xl font-semibold mb-4">Number Selection</h2>
+                    <div class="mb-4">
+                        <label class="block text-sm mb-1">City/State Search (Placeholder)</label>
+                        <input type="text" placeholder="Enter city/state" class="w-full p-2 border rounded">
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-sm mb-1">Selected Number</label>
+                        <input x-model="homeDID" type="text" placeholder="(123) 456-7890" class="w-full p-2 border rounded">
+                    </div>
+                    <div class="flex justify-between mt-8">
+                        <button @click="prevStep" class="px-4 py-2 border rounded">Back</button>
+                        <button @click="nextStep" class="px-4 py-2 bg-blue-500 text-white rounded">Next</button>
+                    </div>
+                </div>
+
+                <!-- Step 3: Cordless Phone Kit -->
+                <div x-show="currentStep === 3">
+                    <h2 class="text-xl font-semibold mb-4">Cordless Phone Kit</h2>
+                    <div class="space-y-4">
+                        <label class="flex items-center">
+                            <input type="radio" x-model="cordlessKit" value="none">
+                            <span class="ml-2">None</span>
+                        </label>
+                        <label class="flex items-center">
+                            <input type="radio" x-model="cordlessKit" value="1base1">
+                            <span class="ml-2">1 Base + 1 Handset ($5/mo)</span>
+                        </label>
+                        <label class="flex items-center">
+                            <input type="radio" x-model="cordlessKit" value="1base3">
+                            <span class="ml-2">1 Base + 3 Handsets ($7/mo)</span>
+                        </label>
+                    </div>
+                    <div class="flex justify-between mt-8">
+                        <button @click="prevStep" class="px-4 py-2 border rounded">Back</button>
+                        <button @click="nextStep" class="px-4 py-2 bg-blue-500 text-white rounded">Next</button>
+                    </div>
+                </div>
+
+                <!-- Step 4: Optional E911 -->
+                <div x-show="currentStep === 4">
+                    <h2 class="text-xl font-semibold mb-4">Optional E911</h2>
+                    <label class="flex items-center">
+                        <input x-model="homeE911" type="checkbox">
+                        <span class="ml-2">Add E911 ($5/mo)</span>
+                    </label>
+                    <div class="flex justify-between mt-8">
+                        <button @click="prevStep" class="px-4 py-2 border rounded">Back</button>
+                        <button @click="nextStep" class="px-4 py-2 bg-blue-500 text-white rounded">Next</button>
+                    </div>
+                </div>
+
+                <!-- Step 5: Shipping -->
+                <div x-show="currentStep === 5">
+                    <h2 class="text-xl font-semibold mb-4">Shipping Address</h2>
+                    <div class="mb-4">
+                        <label class="block text-sm mb-1">Address *</label>
+                        <textarea x-model="shippingAddress" required class="w-full p-2 border rounded"></textarea>
+                    </div>
+                    <p class="text-sm text-gray-500">Shipping handled manually.</p>
+                    <div class="flex justify-between mt-8">
+                        <button @click="prevStep" class="px-4 py-2 border rounded">Back</button>
+                        <button @click="nextStep" class="px-4 py-2 bg-blue-500 text-white rounded">Next</button>
+                    </div>
+                </div>
+
+                <!-- Step 6: Contract + Payment -->
+                <div x-show="currentStep === 6">
+                    <h2 class="text-xl font-semibold mb-4">Contract & Payment</h2>
+                    <div class="border p-4 mb-4 max-h-40 overflow-y-auto">
+                        <p>Month-to-month service. Unlimited U.S. calling. Equipment lease 60 months if applicable.</p>
+                        <!-- Full contract text placeholder -->
+                    </div>
+                    <label class="flex items-center mb-4">
+                        <input type="checkbox" x-model="agreeContract" required>
+                        <span class="ml-2">I agree to the terms</span>
+                    </label>
+                    <div class="mb-4">
+                        <label class="block text-sm mb-1">E-Signature (Type Your Name) *</label>
+                        <input x-model="eSignature" type="text" required class="w-full p-2 border rounded">
+                    </div>
+                    <p>Total: $<span x-text="calculateTotal()"></span>/mo</p>
+                    <form @submit.prevent="completeSignup">
+                        <!-- Cardknox Integration Placeholder -->
+                        <div class="mb-4">
+                            <label class="block text-sm mb-1">Card Number</label>
+                            <input type="text" placeholder="**** **** **** ****" class="w-full p-2 border rounded">
+                        </div>
+                        <div class="grid grid-cols-2 gap-4 mb-4">
+                            <div>
+                                <label class="block text-sm mb-1">Expiry</label>
+                                <input type="text" placeholder="MM/YY" class="w-full p-2 border rounded">
+                            </div>
+                            <div>
+                                <label class="block text-sm mb-1">CVV</label>
+                                <input type="text" placeholder="***" class="w-full p-2 border rounded">
+                            </div>
+                        </div>
+                        <button type="submit" class="w-full px-4 py-2 bg-blue-500 text-white rounded">Pay & Activate</button>
+                    </form>
+                    <div class="flex justify-start mt-4">
+                        <button @click="prevStep" class="px-4 py-2 border rounded">Back</button>
+                    </div>
+                </div>
+
+            </template>
+
+            <!-- Completion Screen -->
+            <div x-show="isCompleted">
+                <h2 class="text-xl font-semibold mb-4">Congratulations!</h2>
+                <p>Your signup is complete. Order ID: <span x-text="orderID"></span></p>
+                <p>Confirmation email sent (simulated). CSVs generated internally.</p>
+                <button @click="downloadCSVs" class="px-4 py-2 bg-blue-500 text-white rounded mt-4">Download CSVs (Simulation)</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function signupApp() {
+            return {
+                // Common State
+                flowType: null, // 'business' or 'home'
+                currentStep: 0,
+                isCompleted: false,
+                orderID: 'OB-' + Math.random().toString(36).substring(2, 7).toUpperCase(),
+                agreeContract: false,
+                eSignature: '',
+                productType: '',
+
+                // Business State
+                companyName: '',
+                legalName: '',
+                adminName: '',
+                adminEmail: '',
+                adminPhone: '',
+                billingEmail: '',
+                adminPhoneError: false,
+                isAdvanced: false,
+                startingExtension: 101,
+                users: [],
+                mainDID: '(Auto) Main DID',
+                additionalDIDs: [],
+                businessHours: '',
+                afterHours: 'voicemail',
+                addOns: { e911: false, efax: false, hipaaFax: false, directory: false },
+
+                // Home State
+                customerName: '',
+                customerEmail: '',
+                customerPhone: '',
+                homeDID: '',
+                cordlessKit: 'none',
+                homeE911: false,
+                shippingAddress: '',
+
+                selectProduct(type) {
+                    this.flowType = type;
+                    this.productType = type.charAt(0).toUpperCase() + type.slice(1);
+                    this.currentStep = 1;
+                },
+
+                selectSetup(type) {
+                    this.isAdvanced = (type === 'advanced');
+                },
+
+                addUser() {
+                    if (this.users.length >= 50) return;
+                    const ext = this.startingExtension + this.users.length;
+                    this.users.push({
+                        firstName: '',
+                        lastName: '',
+                        extension: ext,
+                        deskPhone: false,
+                        voicemail: true,
+                        callRecording: false
+                    });
+                },
+
+                removeUser(index) {
+                    this.users.splice(index, 1);
+                    this.renumberExtensions();
+                },
+
+                renumberExtensions() {
+                    this.users.forEach((user, i) => {
+                        user.extension = this.startingExtension + i;
+                    });
+                },
+
+                addAdditionalDID() {
+                    this.additionalDIDs.push('');
+                },
+
+                removeAdditionalDID(index) {
+                    this.additionalDIDs.splice(index, 1);
+                },
+
+                validateAdminPhone() {
+                    // Placeholder: Check against DIDs
+                    this.adminPhoneError = [this.mainDID, ...this.additionalDIDs].includes(this.adminPhone);
+                },
+
+                calculateTotal() {
+                    let total = 0;
+                    if (this.flowType === 'business') {
+                        total += this.users.length * 15; // Extensions
+                        total += this.users.filter(u => u.deskPhone).length * 5;
+                        total += this.users.filter(u => u.callRecording).length * 3;
+                        total += this.additionalDIDs.length * 3;
+                        total += 5; // CNAM default
+                        if (this.addOns.e911) total += 5;
+                        if (this.addOns.efax) total += 15;
+                        if (this.addOns.hipaaFax) total += 35;
+                    } else if (this.flowType === 'home') {
+                        total += 15; // Service
+                        if (this.cordlessKit === '1base1') total += 5;
+                        if (this.cordlessKit === '1base3') total += 7;
+                        if (this.homeE911) total += 5;
+                    }
+                    return total;
+                },
+
+                getSteps() {
+                    if (this.flowType === 'business') return Array(9).fill('');
+                    if (this.flowType === 'home') return Array(6).fill('');
+                    return [];
+                },
+
+                nextStep() {
+                    // Basic validation placeholder
+                    if (this.currentStep < this.getSteps().length) this.currentStep++;
+                },
+
+                prevStep() {
+                    if (this.currentStep > 1) this.currentStep--;
+                },
+
+                completeSignup() {
+                    // Simulate payment, activation, email
+                    console.log('Payment processed via Cardknox (placeholder)');
+                    console.log('Activation: Telnyx/PBX API placeholder');
+                    console.log('Sending confirmation email (simulated)');
+                    this.generateCSVs();
+                    this.isCompleted = true;
+                },
+
+                generateCSVs() {
+                    // Generate CSV strings
+                    let extensionsCSV = 'first_name,last_name,extension,DID,desk_phone,softphone,voicemail,call_recording,MAC,serial\n';
+                    this.users.forEach(u => {
+                        extensionsCSV += `${u.firstName},${u.lastName},${u.extension},${this.mainDID},${u.deskPhone ? 'yes' : 'no'},yes,${u.voicemail ? 'yes' : 'no'},${u.callRecording ? 'yes' : 'no'},,,\n`;
+                    });
+
+                    let ringGroupsCSV = 'TeamID,Name,Extensions,Timeout,AfterTimeout\n';
+                    ringGroupsCSV += `500,Main,${this.users.map(u => u.extension).join(',')},45,voicemail 101\n`;
+
+                    let ivrCSV = 'Press,Destination,Business Hours Routing\n';
+                    // Placeholder for IVR if advanced
+
+                    let orderSummaryCSV = 'Product,Quantity,Monthly Cost,Shipping\n';
+                    orderSummaryCSV += `Extensions,${this.users.length},${this.calculateTotal()},${this.shippingAddress || ''}\n`;
+                    // Add more rows
+
+                    let customerInfoCSV = 'Company Name,Legal Name,Admin Name,Admin Email,Admin Phone,Billing Email,Order ID,Product Type,Location\n';
+                    customerInfoCSV += `${this.companyName || this.customerName},${this.legalName || ''},${this.adminName || this.customerName},${this.adminEmail || this.customerEmail},${this.adminPhone || this.customerPhone},${this.billingEmail},${this.orderID},${this.productType},single\n`;
+
+                    // Simulate internal email: console.log CSVs
+                    console.log('extensions.csv:', extensionsCSV);
+                    console.log('ring-groups.csv:', ringGroupsCSV);
+                    console.log('ivr.csv:', ivrCSV);
+                    console.log('order-summary.csv:', orderSummaryCSV);
+                    console.log('customer-info.csv:', customerInfoCSV);
+                },
+
+                downloadCSVs() {
+                    // Placeholder for download - in real, create blobs and links
+                    alert('CSVs downloaded (simulated). Check console for content.');
+                }
+            }
+        }
+    </script>
+</body>
+</html>
