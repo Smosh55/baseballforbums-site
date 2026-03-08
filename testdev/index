@@ -7,7 +7,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <style>
-        /* Custom Oneby styles - assuming primary color #007BFF (blue), secondary #F3F4F6 (gray) */
+        /* Custom Oneby styles - primary blue */
         .oneby-primary { background-color: #007BFF; }
         .oneby-text-primary { color: #007BFF; }
         .oneby-border-primary { border-color: #007BFF; }
@@ -18,7 +18,7 @@
         <div x-data="signupApp" class="bg-white rounded-lg shadow-xl max-w-2xl w-full p-8">
             <!-- Logo -->
             <div class="text-center mb-8">
-                <img src="https://placeholder.com/logo/oneby.png" alt="Oneby Logo" class="mx-auto h-12">
+                <img src="https://7095cda1.logo-46y.pages.dev/logo.svg" alt="Oneby Logo" class="mx-auto h-12">
                 <h1 class="text-2xl font-bold mt-4">Welcome to Oneby Signup</h1>
             </div>
 
@@ -27,8 +27,13 @@
                 <div class="flex justify-between">
                     <template x-for="(step, index) in getSteps()" :key="index">
                         <div class="flex-1 text-center">
-                            <div class="w-full h-1 bg-gray-200" :class="{ 'bg-blue-500': currentStep > index + 1, 'oneby-primary': currentStep === index + 1 }"></div>
-                            <span class="text-sm" :class="{ 'text-blue-500 font-bold': currentStep >= index + 1 }">Step :index+1</span>
+                            <div class="w-full h-1 bg-gray-200" 
+                                 :class="{ 'bg-blue-500': currentStep > index + 1, 'oneby-primary': currentStep === index + 1 }">
+                            </div>
+                            <span class="text-sm" 
+                                  :class="{ 'text-blue-500 font-bold': currentStep >= index + 1 }"
+                                  x-text="`Step ${index + 1}`">
+                            </span>
                         </div>
                     </template>
                 </div>
@@ -239,7 +244,7 @@
                             <button @click="currentStep = 2" class="text-blue-500 text-sm">Edit</button>
                         </div>
                         <div>
-                            <h3 class="font-bold">Users (x-text=`${users.length}`)</h3>
+                            <h3 class="font-bold">Users (<span x-text="users.length"></span>)</h3>
                             <button @click="currentStep = 3" class="text-blue-500 text-sm">Edit</button>
                         </div>
                         <div>
@@ -573,7 +578,7 @@
                 },
 
                 nextStep() {
-                    // Basic validation placeholder
+                    // Basic validation placeholder - add more as needed
                     if (this.currentStep < this.getSteps().length) this.currentStep++;
                 },
 
@@ -591,7 +596,7 @@
                 },
 
                 generateCSVs() {
-                    // Generate CSV strings
+                    // Generate CSV strings (console log for simulation)
                     let extensionsCSV = 'first_name,last_name,extension,DID,desk_phone,softphone,voicemail,call_recording,MAC,serial\n';
                     this.users.forEach(u => {
                         extensionsCSV += `${u.firstName},${u.lastName},${u.extension},${this.mainDID},${u.deskPhone ? 'yes' : 'no'},yes,${u.voicemail ? 'yes' : 'no'},${u.callRecording ? 'yes' : 'no'},,,\n`;
@@ -605,22 +610,19 @@
 
                     let orderSummaryCSV = 'Product,Quantity,Monthly Cost,Shipping\n';
                     orderSummaryCSV += `Extensions,${this.users.length},${this.calculateTotal()},${this.shippingAddress || ''}\n`;
-                    // Add more rows
 
                     let customerInfoCSV = 'Company Name,Legal Name,Admin Name,Admin Email,Admin Phone,Billing Email,Order ID,Product Type,Location\n';
                     customerInfoCSV += `${this.companyName || this.customerName},${this.legalName || ''},${this.adminName || this.customerName},${this.adminEmail || this.customerEmail},${this.adminPhone || this.customerPhone},${this.billingEmail},${this.orderID},${this.productType},single\n`;
 
-                    // Simulate internal email: console.log CSVs
-                    console.log('extensions.csv:', extensionsCSV);
-                    console.log('ring-groups.csv:', ringGroupsCSV);
-                    console.log('ivr.csv:', ivrCSV);
-                    console.log('order-summary.csv:', orderSummaryCSV);
-                    console.log('customer-info.csv:', customerInfoCSV);
+                    console.log('extensions.csv:\n' + extensionsCSV);
+                    console.log('ring-groups.csv:\n' + ringGroupsCSV);
+                    console.log('ivr.csv:\n' + ivrCSV);
+                    console.log('order-summary.csv:\n' + orderSummaryCSV);
+                    console.log('customer-info.csv:\n' + customerInfoCSV);
                 },
 
                 downloadCSVs() {
-                    // Placeholder for download - in real, create blobs and links
-                    alert('CSVs downloaded (simulated). Check console for content.');
+                    alert('CSVs downloaded (simulation only). Check browser console for content.');
                 }
             }
         }
