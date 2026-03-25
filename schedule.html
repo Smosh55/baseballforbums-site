@@ -5,6 +5,163 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>League Schedule</title>
   <link rel="stylesheet" href="./app.css">
+  <style>
+    .schedule-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 300px;
+      gap: 24px;
+      align-items: start;
+    }
+
+    .schedule-groups {
+      display: grid;
+      gap: 22px;
+    }
+
+    .date-card,
+    .side-panel {
+      background: rgba(17,26,43,0.88);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 18px;
+      box-shadow: 0 18px 45px rgba(0,0,0,0.28);
+      backdrop-filter: blur(10px);
+      overflow: hidden;
+    }
+
+    .date-card-header {
+      padding: 18px 20px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.03);
+    }
+
+    .date-card-header h2 {
+      margin: 0 0 4px;
+      font-size: 1.2rem;
+      color: var(--text, #eef4ff);
+    }
+
+    .date-card-header p {
+      margin: 0;
+      color: var(--muted, #b8c4da);
+      font-size: 0.95rem;
+    }
+
+    .games-list {
+      padding: 10px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .game-item {
+      display: grid;
+      grid-template-columns: 110px minmax(0, 1fr) 140px 90px;
+      gap: 14px;
+      align-items: center;
+      padding: 14px;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .game-time {
+      color: var(--text, #eef4ff);
+      font-weight: 700;
+      font-size: 0.98rem;
+    }
+
+    .game-matchup {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .game-matchup strong {
+      font-size: 1rem;
+      color: var(--text, #eef4ff);
+    }
+
+    .game-field,
+    .game-status,
+    .game-score {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+    }
+
+    .game-score {
+      font-weight: 700;
+      color: var(--text, #eef4ff);
+    }
+
+    .side-panel {
+      padding: 20px;
+      position: sticky;
+      top: 20px;
+    }
+
+    .side-panel h2 {
+      margin: 0 0 14px;
+      font-size: 1.1rem;
+      color: var(--accent-2, #7cc4ff);
+      letter-spacing: -0.02em;
+    }
+
+    .legend-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .legend-item {
+      padding: 12px 14px;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .legend-item .badge {
+      margin-bottom: 8px;
+    }
+
+    .legend-label {
+      color: var(--text, #eef4ff);
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .legend-desc {
+      color: var(--muted, #b8c4da);
+      font-size: 0.95rem;
+      line-height: 1.45;
+    }
+
+    .empty-state {
+      padding: 22px;
+      color: var(--muted, #b8c4da);
+    }
+
+    @media (max-width: 980px) {
+      .schedule-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .side-panel {
+        position: static;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .game-item {
+        grid-template-columns: 1fr;
+        gap: 10px;
+      }
+
+      .game-field,
+      .game-status,
+      .game-score {
+        justify-content: flex-start;
+      }
+    }
+  </style>
 </head>
 <body>
 <header>
@@ -15,20 +172,31 @@
 <main>
   <div class="note">Live schedule powered by the league database.</div>
 
-  <div class="table-wrap">
-    <table>
-      <thead>
-        <tr>
-          <th>Date</th>
-          <th>Time</th>
-          <th>Field</th>
-          <th>Matchup</th>
-          <th>Status</th>
-          <th>Score</th>
-        </tr>
-      </thead>
-      <tbody id="rows"></tbody>
-    </table>
+  <div class="schedule-layout">
+    <section class="schedule-groups" id="schedule-groups"></section>
+
+    <aside class="side-panel">
+      <h2>Field Guide</h2>
+      <div class="legend-list">
+        <div class="legend-item">
+          <div><span class="badge">Field 1</span></div>
+          <div class="legend-label">Left Field</div>
+          <div class="legend-desc">Games scheduled on Field 1 are played on the left field side.</div>
+        </div>
+
+        <div class="legend-item">
+          <div><span class="badge">Field 2</span></div>
+          <div class="legend-label">Right Field</div>
+          <div class="legend-desc">Games scheduled on Field 2 are played on the right field side.</div>
+        </div>
+
+        <div class="legend-item">
+          <div><span class="badge">Field 3</span></div>
+          <div class="legend-label">Small Field</div>
+          <div class="legend-desc">Games scheduled on Field 3 are played on the small field.</div>
+        </div>
+      </div>
+    </aside>
   </div>
 </main>
 
@@ -36,24 +204,79 @@
 
 <script src="./shared.js"></script>
 <script>
+function formatDateLabel(value) {
+  if (!value) return "TBD";
+
+  const parsed = new Date(value);
+  if (!Number.isNaN(parsed.getTime())) {
+    return parsed.toLocaleDateString("en-US", {
+      weekday: "long",
+      month: "long",
+      day: "numeric",
+      year: "numeric"
+    });
+  }
+
+  return value;
+}
+
+function groupGamesByDate(games) {
+  const groups = {};
+  games.forEach(game => {
+    const key = game.display_date || game.game_date || game.date || "TBD";
+    if (!groups[key]) groups[key] = [];
+    groups[key].push(game);
+  });
+  return groups;
+}
+
 async function init() {
   const games = await loadData("Web_Schedule", "../data/schedule.json");
-  const rows = document.getElementById("rows");
+  const container = document.getElementById("schedule-groups");
 
-  rows.innerHTML = games.map(game => `
-    <tr>
-      <td>${game.display_date || game.game_date || game.date || "-"}</td>
-      <td>${game.game_time || game.time || "-"}</td>
-      <td><span class="badge">${game.field || "-"}</span></td>
-      <td><strong>${game.away_team || "-"}</strong> vs <strong>${game.home_team || "-"}</strong></td>
-      <td><span class="badge">${game.status || "Scheduled"}</span></td>
-      <td><strong>${(game.home_score ?? "") !== "" && (game.away_score ?? "") !== "" ? `${game.home_score} - ${game.away_score}` : "-"}</strong></td>
-    </tr>
+  if (!games || !games.length) {
+    container.innerHTML = `<div class="date-card"><div class="empty-state">No schedule has been posted yet.</div></div>`;
+    return;
+  }
+
+  const grouped = groupGamesByDate(games);
+
+  container.innerHTML = Object.entries(grouped).map(([date, dateGames]) => `
+    <article class="date-card">
+      <div class="date-card-header">
+        <h2>${formatDateLabel(date)}</h2>
+        <p>${dateGames.length} game${dateGames.length === 1 ? "" : "s"} scheduled</p>
+      </div>
+
+      <div class="games-list">
+        ${dateGames.map(game => `
+          <div class="game-item">
+            <div class="game-time">${game.game_time || game.time || "TBD"}</div>
+
+            <div class="game-matchup">
+              <strong>${game.away_team || "-" } vs ${game.home_team || "-"}</strong>
+            </div>
+
+            <div class="game-field">
+              <span class="badge">${game.field || "-"}</span>
+            </div>
+
+            <div class="game-status">
+              <span class="badge">${game.status || "Scheduled"}</span>
+            </div>
+          </div>
+        `).join("")}
+      </div>
+    </article>
   `).join("");
 }
 
 init().catch(err => {
-  document.getElementById("rows").innerHTML = `<tr><td colspan="6"><strong>Error:</strong> ${err.message}</td></tr>`;
+  document.getElementById("schedule-groups").innerHTML = `
+    <div class="date-card">
+      <div class="empty-state"><strong>Error:</strong> ${err.message}</div>
+    </div>
+  `;
 });
 </script>
 </body>
