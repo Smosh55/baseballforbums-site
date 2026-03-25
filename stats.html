@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Player Stats</title>
+  <link rel="stylesheet" href="./app.css">
+</head>
+<body>
+<header>
+  <h1>Player Stats</h1>
+  <p>This page is ready for a JSON feed from your <strong>Web_Player_Stats</strong> tab.</p>
+</header>
+<main>
+  <div class="toolbar">
+    <input id="search" type="search" placeholder="Search player or team">
+    <select id="sort">
+      <option value="ops">Sort by OPS</option>
+      <option value="avg">Sort by AVG</option>
+      <option value="hr">Sort by HR</option>
+      <option value="rbi">Sort by RBI</option>
+      <option value="sb">Sort by SB</option>
+    </select>
+  </div>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Player</th>
+          <th>Team</th>
+          <th>GP</th>
+          <th>AB</th>
+          <th>H</th>
+          <th>HR</th>
+          <th>RBI</th>
+          <th>SB</th>
+          <th>AVG</th>
+          <th>OBP</th>
+          <th>SLG</th>
+          <th>OPS</th>
+        </tr>
+      </thead>
+      <tbody id="rows"></tbody>
+    </table>
+  </div>
+</main>
+<footer>Starter page for Cloudflare Pages / static HTML</footer>
+<script src="./shared.js"></script>
+<script>
+async function init() {
+  const rowsEl = document.getElementById("rows");
+  const search = document.getElementById("search");
+  const sort = document.getElementById("sort");
+  const stats = await loadData("Web_Player_Stats", "../data/player_stats.json");
+
+  function fmt(v, digits=3) {
+    const num = Number(v || 0);
+    return num.toFixed(digits);
+  }
+  function render() {
+    const q = search.value.trim().toLowerCase();
+    const sortKey = sort.value;
+    const filtered = stats.filter(row =>
+      !q ||
+      (row.player_name || "").toLowerCase().includes(q) ||
+      (row.team || row.team_name || "").toLowerCase().includes(q)
+    ).sort((a,b) => Number(b[sortKey] || 0) - Number(a[sortKey] || 0));
+
+    rowsEl.innerHTML = filtered.map(row => `
+      <tr>
+        <td>${row.player_name || row.full_name}</td>
+        <td>${row.team || row.team_name}</td>
+        <td>${row.gp || 0}</td>
+        <td>${row.ab || 0}</td>
+        <td>${row.h || 0}</td>
+        <td>${row.hr || 0}</td>
+        <td>${row.rbi || 0}</td>
+        <td>${row.sb || 0}</td>
+        <td>${fmt(row.avg)}</td>
+        <td>${fmt(row.obp)}</td>
+        <td>${fmt(row.slg)}</td>
+        <td>${fmt(row.ops)}</td>
+      </tr>
+    `).join("");
+  }
+
+  search.addEventListener("input", render);
+  sort.addEventListener("change", render);
+  render();
+}
+init().catch(err => {
+  document.getElementById("rows").innerHTML = `<tr><td colspan="12"><strong>Error:</strong> ${err.message}</td></tr>`;
+});
+</script>
+</body>
+</html>

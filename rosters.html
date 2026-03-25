@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>League Rosters</title>
+  <link rel="stylesheet" href="./app.css">
+</head>
+<body>
+<header>
+  <h1>League Rosters</h1>
+  <p>This page can read from local JSON files now, or from your Google Sheets / Apps Script endpoint later.</p>
+</header>
+<main>
+  <div class="toolbar">
+    <input id="search" type="search" placeholder="Search player or team">
+  </div>
+  <div id="teams" class="grid"></div>
+</main>
+<footer>Starter page for Cloudflare Pages / static HTML</footer>
+<script src="./shared.js"></script>
+<script>
+async function init() {
+  const teams = await loadData("Web_Rosters", "../data/teams.json");
+  const search = document.getElementById("search");
+  const wrap = document.getElementById("teams");
+
+  function render() {
+    const q = search.value.trim().toLowerCase();
+    const filtered = teams
+      .map(team => ({
+        ...team,
+        players: team.players.filter(p =>
+          !q ||
+          team.team_name.toLowerCase().includes(q) ||
+          p.full_name.toLowerCase().includes(q)
+        )
+      }))
+      .filter(team => team.players.length || !q);
+
+    wrap.innerHTML = filtered.map(team => `
+      <section class="card">
+        <h3>${team.team_name}</h3>
+        <div class="meta">${team.players.length} players${team.colors ? ` • ${team.colors}` : ""}</div>
+        <ul class="roster">
+          ${team.players.map(player => `
+            <li>
+              <span>${player.full_name}</span>
+              <span class="small">${player.player_id}</span>
+            </li>
+          `).join("")}
+        </ul>
+      </section>
+    `).join("");
+  }
+
+  search.addEventListener("input", render);
+  render();
+}
+init().catch(err => {
+  document.getElementById("teams").innerHTML = `<div class="card"><strong>Error:</strong> ${err.message}</div>`;
+});
+</script>
+</body>
+</html>

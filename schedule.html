@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>League Schedule</title>
+  <link rel="stylesheet" href="./app.css">
+</head>
+<body>
+<header>
+  <h1>League Schedule</h1>
+  <p>Single round-robin schedule: every team plays every other team once.</p>
+</header>
+<main>
+  <div class="note">This starter page uses local JSON by default. If you add your Apps Script endpoint to <code>window.GOOGLE_SHEETS_ENDPOINT</code>, it can read from Google Sheets instead.</div>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Time</th>
+          <th>Field</th>
+          <th>Matchup</th>
+          <th>Status</th>
+          <th>Score</th>
+        </tr>
+      </thead>
+      <tbody id="rows"></tbody>
+    </table>
+  </div>
+</main>
+<footer>Starter page for Cloudflare Pages / static HTML</footer>
+<script src="./shared.js"></script>
+<script>
+async function init() {
+  const games = await loadData("Web_Schedule", "../data/schedule.json");
+  const rows = document.getElementById("rows");
+  rows.innerHTML = games.map(game => `
+    <tr>
+      <td>${game.display_date || game.game_date || game.date}</td>
+      <td>${game.game_time || game.time}</td>
+      <td><span class="badge">${game.field}</span></td>
+      <td>${game.home_team} vs ${game.away_team}</td>
+      <td>${game.status}</td>
+      <td>${(game.home_score ?? "") !== "" && (game.away_score ?? "") !== "" ? `${game.home_score} - ${game.away_score}` : "-"}</td>
+    </tr>
+  `).join("");
+}
+init().catch(err => {
+  document.getElementById("rows").innerHTML = `<tr><td colspan="6"><strong>Error:</strong> ${err.message}</td></tr>`;
+});
+</script>
+</body>
+</html>
