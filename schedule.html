@@ -9,10 +9,12 @@
 <body>
 <header>
   <h1>League Schedule</h1>
-  <p>Single round-robin schedule: every team plays every other team once.</p>
+  <p>Official league schedule for the season.</p>
 </header>
+
 <main>
-  <div class="note">This starter page uses local JSON by default. If you add your Apps Script endpoint to <code>window.GOOGLE_SHEETS_ENDPOINT</code>, it can read from Google Sheets instead.</div>
+  <div class="note">Live schedule powered by the league database.</div>
+
   <div class="table-wrap">
     <table>
       <thead>
@@ -29,23 +31,27 @@
     </table>
   </div>
 </main>
-<footer>Starter page for Cloudflare Pages / static HTML</footer>
+
+<footer>Updated automatically from the league backend.</footer>
+
 <script src="./shared.js"></script>
 <script>
 async function init() {
   const games = await loadData("Web_Schedule", "../data/schedule.json");
   const rows = document.getElementById("rows");
+
   rows.innerHTML = games.map(game => `
     <tr>
-      <td>${game.display_date || game.game_date || game.date}</td>
-      <td>${game.game_time || game.time}</td>
-      <td><span class="badge">${game.field}</span></td>
-      <td>${game.home_team} vs ${game.away_team}</td>
-      <td>${game.status}</td>
-      <td>${(game.home_score ?? "") !== "" && (game.away_score ?? "") !== "" ? `${game.home_score} - ${game.away_score}` : "-"}</td>
+      <td>${game.display_date || game.game_date || game.date || "-"}</td>
+      <td>${game.game_time || game.time || "-"}</td>
+      <td><span class="badge">${game.field || "-"}</span></td>
+      <td><strong>${game.away_team || "-"}</strong> vs <strong>${game.home_team || "-"}</strong></td>
+      <td><span class="badge">${game.status || "Scheduled"}</span></td>
+      <td><strong>${(game.home_score ?? "") !== "" && (game.away_score ?? "") !== "" ? `${game.home_score} - ${game.away_score}` : "-"}</strong></td>
     </tr>
   `).join("");
 }
+
 init().catch(err => {
   document.getElementById("rows").innerHTML = `<tr><td colspan="6"><strong>Error:</strong> ${err.message}</td></tr>`;
 });
