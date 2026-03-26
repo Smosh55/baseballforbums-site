@@ -5,7 +5,499 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>League Schedule | Baseball For Bums</title>
 
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
+
   <link rel="stylesheet" href="./app.css?v=5">
+
+  <style>
+    /* ---- TYPOGRAPHY OVERRIDE ---- */
+    body {
+      font-family: 'Barlow', sans-serif;
+    }
+
+    header h1 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-size: clamp(2.4rem, 5vw, 3.6rem);
+      letter-spacing: -0.02em;
+      background: linear-gradient(135deg, #eef4ff 30%, #ffcc66 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* ---- PAGE HEADER ---- */
+    header {
+      padding: 40px 0 20px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      margin-bottom: 28px;
+      position: relative;
+    }
+
+    header::before {
+      content: "";
+      position: absolute;
+      bottom: -1px;
+      left: 0;
+      width: 80px;
+      height: 2px;
+      background: var(--accent);
+      border-radius: 999px;
+    }
+
+    /* ---- FILTER BAR ---- */
+    .filter-bar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 24px;
+    }
+
+    .filter-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    .filter-pills {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .filter-pill {
+      display: inline-flex;
+      align-items: center;
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      font-family: 'Barlow Condensed', sans-serif;
+      letter-spacing: 0.04em;
+      cursor: pointer;
+      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.04);
+      color: var(--muted);
+      transition: all 0.15s ease;
+      user-select: none;
+    }
+
+    .filter-pill:hover {
+      border-color: rgba(255,255,255,0.2);
+      color: var(--text);
+      background: rgba(255,255,255,0.07);
+    }
+
+    .filter-pill.active {
+      background: rgba(214,64,69,0.15);
+      border-color: rgba(214,64,69,0.5);
+      color: #ffd5d6;
+    }
+
+    /* ---- DATE CARD ---- */
+    .date-card {
+      background: rgba(15,22,38,0.9);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 20px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+      overflow: hidden;
+      animation: cardIn 0.4s ease both;
+    }
+
+    .date-card-header {
+      padding: 20px 24px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      background: rgba(255,255,255,0.02);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .date-card-header-left {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .date-accent-bar {
+      width: 4px;
+      height: 36px;
+      border-radius: 999px;
+      background: linear-gradient(180deg, var(--accent) 0%, rgba(214,64,69,0.3) 100%);
+      flex-shrink: 0;
+    }
+
+    .date-card-header h2 {
+      margin: 0;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.35rem;
+      font-weight: 800;
+      letter-spacing: 0.01em;
+      color: var(--text);
+    }
+
+    .date-game-count {
+      display: inline-flex;
+      align-items: center;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(214,64,69,0.12);
+      border: 1px solid rgba(214,64,69,0.25);
+      color: #ffb3b5;
+      font-size: 0.72rem;
+      font-weight: 800;
+      font-family: 'Barlow Condensed', sans-serif;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    /* ---- GAMES LIST ---- */
+    .games-list {
+      padding: 14px;
+      display: grid;
+      gap: 10px;
+    }
+
+    /* ---- GAME ITEM ---- */
+    .game-item {
+      display: grid;
+      grid-template-columns: 80px 1fr auto auto;
+      gap: 0;
+      align-items: stretch;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.025);
+      border: 1px solid rgba(255,255,255,0.06);
+      overflow: hidden;
+      transition: border-color 0.15s ease, background 0.15s ease;
+    }
+
+    .game-item:hover {
+      background: rgba(255,255,255,0.045);
+      border-color: rgba(255,255,255,0.12);
+    }
+
+    /* Field-color left border via box-shadow */
+    .game-item[data-field="Field 1"] { border-left: 3px solid #4da3ff; }
+    .game-item[data-field="Field 2"] { border-left: 3px solid #ffb347; }
+    .game-item[data-field="Field 3"] { border-left: 3px solid #4bcf82; }
+
+    /* ---- TIME CELL ---- */
+    .game-time-cell {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 16px 10px;
+      border-right: 1px solid rgba(255,255,255,0.05);
+      gap: 2px;
+    }
+
+    .game-time-value {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--accent-2);
+      line-height: 1;
+    }
+
+    .game-time-ampm {
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+    }
+
+    /* ---- MATCHUP CELL ---- */
+    .game-matchup-cell {
+      display: flex;
+      align-items: center;
+      padding: 14px 20px;
+      gap: 14px;
+      min-width: 0;
+    }
+
+    .team-name {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 800;
+      letter-spacing: 0.01em;
+      color: var(--text);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 160px;
+    }
+
+    .vs-divider {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 900;
+      letter-spacing: 0.05em;
+      color: var(--muted);
+      flex-shrink: 0;
+      transform: rotate(0deg);
+    }
+
+    .team-role {
+      font-size: 0.62rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: rgba(184,196,218,0.5);
+      margin-top: 2px;
+    }
+
+    .team-block {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+
+    /* ---- FIELD CELL ---- */
+    .game-field-cell {
+      display: flex;
+      align-items: center;
+      padding: 14px 18px;
+      border-left: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .field-chip {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+    }
+
+    .field-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .field-badge.f1 {
+      background: rgba(77,163,255,0.14);
+      border: 1px solid rgba(77,163,255,0.35);
+      color: #9dd4ff;
+    }
+
+    .field-badge.f2 {
+      background: rgba(255,179,71,0.14);
+      border: 1px solid rgba(255,179,71,0.35);
+      color: #ffd499;
+    }
+
+    .field-badge.f3 {
+      background: rgba(75,207,130,0.14);
+      border: 1px solid rgba(75,207,130,0.35);
+      color: #8eeaaf;
+    }
+
+    .field-subname {
+      font-size: 0.68rem;
+      font-weight: 600;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    /* ---- STATUS CELL ---- */
+    .game-status-cell {
+      display: flex;
+      align-items: center;
+      padding: 14px 18px;
+      border-left: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 5px 11px;
+      border-radius: 6px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .status-badge.scheduled {
+      background: rgba(77,163,255,0.1);
+      border: 1px solid rgba(77,163,255,0.25);
+      color: #9dd4ff;
+    }
+
+    .status-badge.live {
+      background: rgba(46,204,113,0.12);
+      border: 1px solid rgba(46,204,113,0.3);
+      color: #6de6a0;
+    }
+
+    .status-badge.live::before {
+      content: "";
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #2ecc71;
+      animation: pulse 1.2s ease-in-out infinite;
+      flex-shrink: 0;
+    }
+
+    .status-badge.final {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: var(--muted);
+    }
+
+    .status-badge.postponed {
+      background: rgba(214,64,69,0.1);
+      border: 1px solid rgba(214,64,69,0.25);
+      color: #ffb3b5;
+    }
+
+    /* ---- SIDE PANEL ---- */
+    .side-panel h2 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 800;
+      letter-spacing: 0.03em;
+    }
+
+    .legend-item {
+      padding: 14px 16px;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .legend-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 3px;
+    }
+
+    .legend-desc {
+      font-size: 0.82rem;
+      color: rgba(184,196,218,0.7);
+    }
+
+    /* ---- ANIMATIONS ---- */
+    @keyframes cardIn {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%       { opacity: 0.5; transform: scale(0.75); }
+    }
+
+    .date-card:nth-child(1) { animation-delay: 0.05s; }
+    .date-card:nth-child(2) { animation-delay: 0.12s; }
+    .date-card:nth-child(3) { animation-delay: 0.19s; }
+    .date-card:nth-child(4) { animation-delay: 0.26s; }
+    .date-card:nth-child(5) { animation-delay: 0.33s; }
+    .date-card:nth-child(6) { animation-delay: 0.40s; }
+
+    /* ---- EMPTY / ERROR ---- */
+    .empty-state {
+      padding: 40px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 1rem;
+    }
+
+    /* ---- HIDDEN (filter) ---- */
+    .game-item.hidden {
+      display: none;
+    }
+
+    .date-card.all-hidden .date-card-header {
+      opacity: 0.4;
+    }
+
+    /* ---- RESPONSIVE ---- */
+    @media (max-width: 700px) {
+      .game-item {
+        grid-template-columns: 1fr;
+      }
+
+      .game-time-cell {
+        flex-direction: row;
+        gap: 6px;
+        padding: 12px 16px;
+        border-right: none;
+        border-bottom: 1px solid rgba(255,255,255,0.05);
+        justify-content: flex-start;
+      }
+
+      .game-time-value {
+        font-size: 0.9rem;
+      }
+
+      .game-field-cell,
+      .game-status-cell {
+        border-left: none;
+        border-top: 1px solid rgba(255,255,255,0.05);
+        padding: 10px 16px;
+      }
+
+      .game-matchup-cell {
+        padding: 14px 16px;
+      }
+
+      .team-name {
+        max-width: 120px;
+        font-size: 1rem;
+      }
+    }
+
+    @media (max-width: 500px) {
+      .game-field-cell,
+      .game-status-cell {
+        display: inline-flex;
+        width: 50%;
+      }
+
+      .game-item {
+        display: flex;
+        flex-wrap: wrap;
+      }
+
+      .game-matchup-cell {
+        width: 100%;
+      }
+
+      .game-time-cell {
+        width: 100%;
+      }
+    }
+  </style>
 </head>
 
 <body>
@@ -13,15 +505,26 @@
 <div id="site-header"></div>
 
 <header>
-  <h1>League Schedule</h1>
-  <p>Official league schedule for the season.</p>
+  <div style="width:min(1140px,calc(100% - 32px));margin:0 auto;">
+    <h1>League Schedule</h1>
+    <p style="color:var(--muted);margin:6px 0 0;font-size:1rem;">Spring 2026 season · All times local</p>
+  </div>
 </header>
 
-<main>
+<main style="width:min(1140px,calc(100% - 32px));margin:0 auto;">
+
   <div class="brand-bar">
     <div class="brand-chip">
       <span>Powered by</span>
-      <img src="https://7095cda1.logo-46y.pages.dev/logo.svg">
+      <img src="https://7095cda1.logo-46y.pages.dev/logo.svg" alt="Oneby.AI">
+    </div>
+  </div>
+
+  <!-- Filter bar -->
+  <div class="filter-bar" id="filter-bar">
+    <span class="filter-label">Filter:</span>
+    <div class="filter-pills" id="filter-pills">
+      <span class="filter-pill active" data-team="all">All Games</span>
     </div>
   </div>
 
@@ -33,19 +536,19 @@
 
       <div class="legend-list">
         <div class="legend-item">
-          <span class="badge">Field 1</span>
+          <span class="field-badge f1" style="margin-bottom:6px;">Field 1</span>
           <div class="legend-label">Left Field</div>
           <div class="legend-desc">Games on Field 1 are played on the left side.</div>
         </div>
 
         <div class="legend-item">
-          <span class="badge">Field 2</span>
+          <span class="field-badge f2" style="margin-bottom:6px;">Field 2</span>
           <div class="legend-label">Right Field</div>
           <div class="legend-desc">Games on Field 2 are played on the right side.</div>
         </div>
 
         <div class="legend-item">
-          <span class="badge">Field 3</span>
+          <span class="field-badge f3" style="margin-bottom:6px;">Field 3</span>
           <div class="legend-label">Small Field</div>
           <div class="legend-desc">Games on Field 3 are played on the small field.</div>
         </div>
@@ -54,7 +557,7 @@
   </div>
 </main>
 
-<footer>
+<footer style="width:min(1140px,calc(100% - 32px));margin:0 auto;">
   Updated automatically from the league backend.
 </footer>
 
@@ -64,31 +567,38 @@
 <script>
 function formatDateLabel(value) {
   if (!value) return "TBD";
-
   const parsed = new Date(value);
   if (isNaN(parsed.getTime())) return value;
 
   const weekday = parsed.toLocaleDateString("en-US", { weekday: "long" });
-  const rest = parsed.toLocaleDateString("en-US", {
-    month: "long",
-    day: "numeric",
-    year: "numeric"
-  });
+  const rest    = parsed.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" });
 
-  if (weekday === "Saturday") {
-    return `Motzei Shabbos, ${rest}`;
-  }
-
-  return `${weekday}, ${rest}`;
+  return weekday === "Saturday" ? `Motzei Shabbos, ${rest}` : `${weekday}, ${rest}`;
 }
 
-function getFieldDisplay(field) {
-  const map = {
-    "Field 1": "Left Field",
-    "Field 2": "Right Field",
-    "Field 3": "Small Field"
-  };
-  return map[field] || field || "TBD";
+const FIELD_META = {
+  "Field 1": { cls: "f1", label: "Left Field" },
+  "Field 2": { cls: "f2", label: "Right Field" },
+  "Field 3": { cls: "f3", label: "Small Field" },
+};
+
+function getFieldMeta(field) {
+  return FIELD_META[field] || { cls: "f1", label: field || "TBD" };
+}
+
+function getStatusClass(status) {
+  const s = (status || "").toLowerCase();
+  if (s.includes("live") || s.includes("progress")) return "live";
+  if (s.includes("final") || s.includes("complete")) return "final";
+  if (s.includes("postpone") || s.includes("cancel")) return "postponed";
+  return "scheduled";
+}
+
+function splitTime(raw) {
+  if (!raw) return { value: "TBD", ampm: "" };
+  const m = raw.match(/^(\d+:\d+)\s*(am|pm)?$/i);
+  if (m) return { value: m[1], ampm: (m[2] || "").toUpperCase() };
+  return { value: raw, ampm: "" };
 }
 
 function groupGamesByDate(games) {
@@ -101,56 +611,120 @@ function groupGamesByDate(games) {
   return groups;
 }
 
+function buildFilterPills(games) {
+  const teams = new Set();
+  games.forEach(g => {
+    if (g.away_team) teams.add(g.away_team);
+    if (g.home_team) teams.add(g.home_team);
+  });
+
+  const container = document.getElementById("filter-pills");
+  [...teams].sort().forEach(team => {
+    const pill = document.createElement("span");
+    pill.className = "filter-pill";
+    pill.dataset.team = team;
+    pill.textContent = team;
+    container.appendChild(pill);
+  });
+
+  container.addEventListener("click", e => {
+    const pill = e.target.closest(".filter-pill");
+    if (!pill) return;
+
+    container.querySelectorAll(".filter-pill").forEach(p => p.classList.remove("active"));
+    pill.classList.add("active");
+
+    const selected = pill.dataset.team;
+    document.querySelectorAll(".game-item").forEach(item => {
+      if (selected === "all") {
+        item.classList.remove("hidden");
+      } else {
+        const teams = (item.dataset.teams || "").split("|");
+        item.classList.toggle("hidden", !teams.includes(selected));
+      }
+    });
+
+    // hide date cards where all games hidden
+    document.querySelectorAll(".date-card").forEach(card => {
+      const items = card.querySelectorAll(".game-item");
+      const allHidden = [...items].every(i => i.classList.contains("hidden"));
+      card.style.display = allHidden ? "none" : "";
+    });
+  });
+}
+
 async function init() {
   const games = await loadData("Web_Schedule");
   const container = document.getElementById("schedule-groups");
 
   if (!Array.isArray(games) || !games.length) {
-    container.innerHTML = `<div class="date-card"><div class="empty-state">No schedule posted.</div></div>`;
+    container.innerHTML = `<div class="date-card"><div class="empty-state">No schedule posted yet.</div></div>`;
     return;
   }
 
+  buildFilterPills(games);
+
   const grouped = groupGamesByDate(games);
 
-  container.innerHTML = Object.entries(grouped).map(([date, list]) => `
+  container.innerHTML = Object.entries(grouped).map(([date, list]) => {
+    const count = list.length;
+    return `
     <article class="date-card">
       <div class="date-card-header">
-        <h2>${formatDateLabel(date)}</h2>
-        <p>${list.length} game${list.length === 1 ? "" : "s"}</p>
+        <div class="date-card-header-left">
+          <div class="date-accent-bar"></div>
+          <h2>${formatDateLabel(date)}</h2>
+        </div>
+        <span class="date-game-count">${count} game${count === 1 ? "" : "s"}</span>
       </div>
 
       <div class="games-list">
-        ${list.map(game => `
-          <div class="game-item">
-            <div class="game-time">${game.game_time || "TBD"}</div>
+        ${list.map(game => {
+          const { value: timeVal, ampm } = splitTime(game.game_time);
+          const fm   = getFieldMeta(game.field);
+          const sCls = getStatusClass(game.status);
+          const teams = [game.away_team, game.home_team].filter(Boolean).join("|");
+          return `
+          <div class="game-item" data-field="${game.field || ""}" data-teams="${teams}">
 
-            <div class="game-matchup">
-              <strong>${game.away_team} vs ${game.home_team}</strong>
+            <div class="game-time-cell">
+              <span class="game-time-value">${timeVal}</span>
+              ${ampm ? `<span class="game-time-ampm">${ampm}</span>` : ""}
             </div>
 
-            <div class="game-field">
-              <div class="meta-label">Field</div>
-              <span class="badge">${game.field}</span>
-              <div class="field-name">${getFieldDisplay(game.field)}</div>
+            <div class="game-matchup-cell">
+              <div class="team-block">
+                <span class="team-name">${game.away_team || "TBD"}</span>
+                <span class="team-role">Away</span>
+              </div>
+              <span class="vs-divider">VS</span>
+              <div class="team-block">
+                <span class="team-name">${game.home_team || "TBD"}</span>
+                <span class="team-role">Home</span>
+              </div>
             </div>
 
-            <div class="game-status">
-              <div class="meta-label">Status</div>
-              <span class="badge">${game.status || "Scheduled"}</span>
+            <div class="game-field-cell">
+              <div class="field-chip">
+                <span class="field-badge ${fm.cls}">${game.field || "TBD"}</span>
+                <span class="field-subname">${fm.label}</span>
+              </div>
             </div>
-          </div>
-        `).join("")}
+
+            <div class="game-status-cell">
+              <span class="status-badge ${sCls}">${game.status || "Scheduled"}</span>
+            </div>
+
+          </div>`;
+        }).join("")}
       </div>
-    </article>
-  `).join("");
+    </article>`;
+  }).join("");
 }
 
-init().catch(err => {
+init().catch(() => {
   document.getElementById("schedule-groups").innerHTML = `
-    <div class="date-card">
-      <div class="empty-state">Error loading schedule</div>
-    </div>
-  `;
+    <div class="date-card"><div class="empty-state">Error loading schedule.</div></div>`;
 });
 </script>
 
