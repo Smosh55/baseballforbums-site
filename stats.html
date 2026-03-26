@@ -442,13 +442,16 @@
       Leaderboards
     </div>
 
-    <!-- 10 quick-select tabs -->
+    <!-- 12 quick-select tabs -->
     <div class="lb-tabs" id="lb-tabs">
       <button class="lb-tab active" data-lb="ops">  <span class="lb-tab-icon">💥</span> OPS</button>
       <button class="lb-tab" data-lb="avg">         <span class="lb-tab-icon">🎯</span> AVG</button>
       <button class="lb-tab" data-lb="obp">         <span class="lb-tab-icon">👁️</span> OBP</button>
       <button class="lb-tab" data-lb="slg">         <span class="lb-tab-icon">⚡</span> SLG</button>
       <button class="lb-tab" data-lb="hr">          <span class="lb-tab-icon">🚀</span> Home Runs</button>
+      <button class="lb-tab" data-lb="1b">          <span class="lb-tab-icon">✅</span> Singles</button>
+      <button class="lb-tab" data-lb="2b">          <span class="lb-tab-icon">🔥</span> Doubles</button>
+      <button class="lb-tab" data-lb="3b">          <span class="lb-tab-icon">⚡</span> Triples</button>
       <button class="lb-tab" data-lb="rbi">         <span class="lb-tab-icon">🏠</span> RBI</button>
       <button class="lb-tab" data-lb="sb">          <span class="lb-tab-icon">💨</span> Stolen Bases</button>
       <button class="lb-tab" data-lb="h">           <span class="lb-tab-icon">🏏</span> Hits</button>
@@ -482,6 +485,9 @@
           <option value="obp">Sort: OBP</option>
           <option value="slg">Sort: SLG</option>
           <option value="hr">Sort: HR</option>
+          <option value="1b">Sort: 1B</option>
+          <option value="2b">Sort: 2B</option>
+          <option value="3b">Sort: 3B</option>
           <option value="rbi">Sort: RBI</option>
           <option value="sb">Sort: SB</option>
           <option value="h">Sort: Hits</option>
@@ -502,6 +508,9 @@
             <th data-col="gp"  class="th-num">GP</th>
             <th data-col="ab"  class="th-num">AB</th>
             <th data-col="h"   class="th-num">H</th>
+            <th data-col="1b"  class="th-num">1B</th>
+            <th data-col="2b"  class="th-num">2B</th>
+            <th data-col="3b"  class="th-num">3B</th>
             <th data-col="hr"  class="th-num">HR</th>
             <th data-col="rbi" class="th-num">RBI</th>
             <th data-col="sb"  class="th-num">SB</th>
@@ -552,6 +561,9 @@ const LB_CONFIG = [
   { key: "obp",  label: "On-Base %",             desc: "Reaching base per PA",     icon: "👁️", fmt: v => fmt(v,3), higher: true },
   { key: "slg",  label: "Slugging %",            desc: "Total bases per AB",       icon: "⚡", fmt: v => fmt(v,3), higher: true },
   { key: "hr",   label: "Home Runs",             desc: "Balls hit over the fence", icon: "🚀", fmt: v => fmtInt(v), higher: true },
+  { key: "1b",   label: "Singles",               desc: "One-base hits",            icon: "✅", fmt: v => fmtInt(v), higher: true },
+  { key: "2b",   label: "Doubles",               desc: "Two-base hits",            icon: "🔥", fmt: v => fmtInt(v), higher: true },
+  { key: "3b",   label: "Triples",               desc: "Three-base hits",          icon: "⚡", fmt: v => fmtInt(v), higher: true },
   { key: "rbi",  label: "Runs Batted In",        desc: "RBI this season",          icon: "🏠", fmt: v => fmtInt(v), higher: true },
   { key: "sb",   label: "Stolen Bases",          desc: "Speed on the base paths",  icon: "💨", fmt: v => fmtInt(v), higher: true },
   { key: "h",    label: "Hits",                  desc: "Total base hits",          icon: "🏏", fmt: v => fmtInt(v), higher: true },
@@ -655,6 +667,9 @@ function renderTable(stats, query, sortCol) {
         <td class="td-num">${fmtInt(r.gp)}</td>
         <td class="td-num">${fmtInt(r.ab)}</td>
         <td class="td-num">${fmtInt(r.h)}</td>
+        <td class="td-num">${fmtInt(r["1b"] != null ? r["1b"] : (r.h||0) - (r["2b"]||0) - (r["3b"]||0) - (r.hr||0))}</td>
+        <td class="td-num">${fmtInt(r["2b"])}</td>
+        <td class="td-num">${fmtInt(r["3b"])}</td>
         <td class="td-num">${fmtInt(r.hr)}</td>
         <td class="td-num">${fmtInt(r.rbi)}</td>
         <td class="td-num">${fmtInt(r.sb)}</td>
@@ -664,7 +679,7 @@ function renderTable(stats, query, sortCol) {
         <td class="td-avg">${fmt(r.ops)}</td>
       </tr>
     `;
-  }).join("") || `<tr><td colspan="12" style="padding:28px;text-align:center;color:var(--muted);">No players found.</td></tr>`;
+  }).join("") || `<tr><td colspan="14" style="padding:28px;text-align:center;color:var(--muted);">No players found.</td></tr>`;
 }
 
 /* ----------------------------------------------------------------
@@ -675,9 +690,16 @@ async function init() {
 
   if (!Array.isArray(stats) || !stats.length) {
     document.getElementById("rows").innerHTML =
-      `<tr><td colspan="12" style="padding:28px;text-align:center;color:var(--muted);">No stats data available yet.</td></tr>`;
+      `<tr><td colspan="14" style="padding:28px;text-align:center;color:var(--muted);">No stats data available yet.</td></tr>`;
     return;
   }
+
+  // Compute 1b if the sheet doesn't provide it
+  stats.forEach(r => {
+    if (r["1b"] == null) {
+      r["1b"] = Math.max(0, (Number(r.h)||0) - (Number(r["2b"])||0) - (Number(r["3b"])||0) - (Number(r.hr)||0));
+    }
+  });
 
   /* build leaderboards */
   buildLeaderboardCards(stats);
@@ -703,7 +725,7 @@ async function init() {
 
 init().catch(err => {
   document.getElementById("rows").innerHTML =
-    `<tr><td colspan="12" style="padding:28px;text-align:center;color:var(--muted);">Error loading stats: ${err.message}</td></tr>`;
+    `<tr><td colspan="14" style="padding:28px;text-align:center;color:var(--muted);">Error loading stats: ${err.message}</td></tr>`;
 });
 </script>
 
