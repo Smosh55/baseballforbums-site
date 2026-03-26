@@ -3,472 +3,529 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Sign Up | Baseball For Bums</title>
+  <title>Baseball For Bums — Staten Island</title>
+  <meta name="description" content="Baseball For Bums — Staten Island's competitive adult baseball league. Register for Spring League.">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="../app.css?v=5">
+  <link rel="stylesheet" href="./app.css?v=5">
 
   <style>
     body { font-family: 'Barlow', sans-serif; }
 
-    /* ---- PAGE HEADER ---- */
-    header {
-      padding: 40px 0 24px;
+    /* ================================================================
+       HERO
+    ================================================================ */
+    .hero {
+      padding: 72px 0 64px;
       border-bottom: 1px solid rgba(255,255,255,0.06);
-      margin-bottom: 0;
       position: relative;
+      overflow: hidden;
     }
-    header::before {
+
+    /* subtle radial glow behind hero */
+    .hero::before {
       content: "";
       position: absolute;
-      bottom: -1px; left: 0;
-      width: 80px; height: 2px;
-      background: var(--accent);
-      border-radius: 999px;
+      top: -100px; left: 50%;
+      transform: translateX(-50%);
+      width: 900px; height: 600px;
+      background: radial-gradient(ellipse at center,
+        rgba(214,64,69,0.16) 0%,
+        rgba(214,64,69,0.06) 40%,
+        transparent 70%);
+      pointer-events: none;
     }
-    header h1 {
+
+    .hero-inner {
+      width: min(1140px, calc(100% - 32px));
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 60px;
+      align-items: center;
+      position: relative;
+    }
+
+    /* ---- LEFT: text ---- */
+    .hero-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: #8fa4c4;
+      margin-bottom: 18px;
+    }
+    .hero-kicker::before {
+      content: "";
+      display: inline-block;
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      flex-shrink: 0;
+    }
+
+    .hero-headline {
       font-family: 'Barlow Condensed', sans-serif;
       font-weight: 900;
-      font-size: clamp(2.4rem, 5vw, 3.6rem);
-      letter-spacing: -0.02em;
-      margin: 0 0 6px;
-      background: linear-gradient(135deg, #eef4ff 30%, #ffcc66 100%);
+      font-size: clamp(3.2rem, 7vw, 5.4rem);
+      line-height: 0.95;
+      letter-spacing: -0.01em;
+      text-transform: uppercase;
+      color: var(--text);
+      margin-bottom: 20px;
+    }
+    .hero-headline .line2 {
+      display: block;
+      background: linear-gradient(135deg, #ffcc66 20%, #ffaa33 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
     }
-    header p { color: var(--muted); margin: 0; font-size: 1rem; }
 
-    /* ---- STATS BAR ---- */
-    .stats-bar {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin: 24px 0 0;
+    .hero-tagline {
+      font-size: 1.15rem;
+      font-weight: 500;
+      color: #c8d6ee;
+      line-height: 1.65;
+      margin-bottom: 32px;
+      max-width: 44ch;
     }
 
-    .stat-chip {
+    .hero-ctas {
       display: flex;
-      flex-direction: column;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 28px;
+    }
+
+    .btn-hero-primary {
+      display: inline-flex;
       align-items: center;
-      padding: 14px 24px;
-      border-radius: 14px;
+      justify-content: center;
+      min-height: 52px;
+      padding: 0 30px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #d64045 0%, #f05b4f 100%);
+      color: #fff8f2;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-size: 1rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border: none;
+      box-shadow: 0 14px 32px rgba(214,64,69,0.32);
+      transition: 0.18s ease;
+    }
+    .btn-hero-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 18px 38px rgba(214,64,69,0.4);
+    }
+
+    .btn-hero-secondary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 52px;
+      padding: 0 28px;
+      border-radius: 999px;
+      background: transparent;
+      color: var(--muted);
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 800;
+      font-size: 1rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border: 1px solid rgba(255,255,255,0.12);
+      transition: 0.18s ease;
+    }
+    .btn-hero-secondary:hover {
+      color: var(--text);
+      border-color: rgba(255,255,255,0.25);
+      background: rgba(255,255,255,0.04);
+    }
+
+    .waitlist-notice {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      background: rgba(214,64,69,0.07);
+      border: 1px solid rgba(214,64,69,0.22);
+      border-radius: 12px;
+      padding: 12px 16px;
+      max-width: 420px;
+    }
+    .waitlist-notice-icon { font-size: 0.9rem; flex-shrink: 0; margin-top: 2px; }
+    .waitlist-notice p {
+      font-size: 0.83rem;
+      color: #ffd5d6;
+      line-height: 1.55;
+      margin: 0;
+    }
+    .waitlist-notice p strong { color: #ffb3b5; font-weight: 700; }
+
+    /* ---- RIGHT: league card ---- */
+    .league-card {
+      background: rgba(15,22,38,0.92);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 22px;
+      overflow: hidden;
+      box-shadow: 0 24px 60px rgba(0,0,0,0.4);
+    }
+
+    .league-card-header {
+      padding: 15px 20px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      background: rgba(255,255,255,0.02);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .league-card-header-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.68rem;
+      font-weight: 800;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--accent-2);
+    }
+    .league-card-header-season {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(184,196,218,0.45);
+    }
+
+    /* Teams section */
+    .league-teams-section {
+      padding: 16px 20px 14px;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .league-section-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.62rem;
+      font-weight: 800;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(184,196,218,0.45);
+      margin-bottom: 10px;
+    }
+    .teams-list {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+    }
+    .team-chip {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 10px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 8px;
+    }
+    .team-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .team-chip-name {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 800;
+      letter-spacing: 0.03em;
+      color: var(--text);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* Standings / leaderboard */
+    .league-standings-section {
+      padding: 14px 20px 18px;
+    }
+    .standings-table {
+      width: 100%;
+    }
+    .standings-thead {
+      display: grid;
+      grid-template-columns: 18px 1fr 34px 34px 48px;
+      gap: 6px;
+      padding: 0 6px 8px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      margin-bottom: 4px;
+    }
+    .standings-th {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.6rem;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(184,196,218,0.4);
+      text-align: right;
+    }
+    .standings-th:nth-child(2) { text-align: left; }
+    .standings-row {
+      display: grid;
+      grid-template-columns: 18px 1fr 34px 34px 48px;
+      gap: 6px;
+      padding: 7px 6px;
+      border-radius: 7px;
+      transition: background 0.12s;
+    }
+    .standings-row:hover { background: rgba(255,255,255,0.03); }
+    .standings-rank {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: rgba(184,196,218,0.35);
+      text-align: center;
+      align-self: center;
+    }
+    .standings-row:nth-child(1) .standings-rank { color: #f5c542; }
+    .standings-row:nth-child(2) .standings-rank { color: #c8cfd9; }
+    .standings-row:nth-child(3) .standings-rank { color: #d9956a; }
+    .standings-team-name {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.88rem;
+      font-weight: 800;
+      color: var(--text);
+      align-self: center;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .standings-num {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: #c8d6ee;
+      text-align: right;
+      align-self: center;
+    }
+    .standings-rd {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.88rem;
+      font-weight: 800;
+      text-align: right;
+      align-self: center;
+    }
+    .standings-rd.pos { color: #5ee8d8; }
+    .standings-rd.neg { color: #ff9090; }
+    .standings-rd.zero { color: #8fa4c4; }
+
+    .standings-empty {
+      padding: 14px 0 6px;
+      text-align: center;
+    }
+    .standings-empty-icon { font-size: 1.4rem; margin-bottom: 6px; }
+    .standings-empty-text {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      color: rgba(184,196,218,0.4);
+    }
+    .standings-empty-date {
+      font-size: 0.75rem;
+      color: var(--accent-2);
+      margin-top: 3px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+    }
+
+    /* ================================================================
+       FEATURE CARDS
+    ================================================================ */
+    .features-section {
+      padding: 56px 0 64px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .features-inner {
+      width: min(1140px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .features-heading {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: #8fa4c4;
+      margin-bottom: 22px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .features-heading::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: rgba(255,255,255,0.06);
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .feat-card {
       background: rgba(15,22,38,0.9);
       border: 1px solid rgba(255,255,255,0.07);
-      box-shadow: 0 10px 28px rgba(0,0,0,0.25);
-      min-width: 100px;
+      border-top: 3px solid rgba(255,255,255,0.07);
+      border-radius: 18px;
+      padding: 26px 24px;
+      text-decoration: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.2);
+      transition: border-top-color 0.18s, transform 0.18s, box-shadow 0.18s;
+      animation: cardIn 0.4s ease both;
     }
+    .feat-card:nth-child(1) { animation-delay: 0.05s; }
+    .feat-card:nth-child(2) { animation-delay: 0.12s; }
+    .feat-card:nth-child(3) { animation-delay: 0.19s; }
 
-    .stat-val {
+    .feat-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 20px 44px rgba(0,0,0,0.3);
+      border-top-color: var(--accent-2);
+    }
+    .feat-card.red:hover  { border-top-color: var(--accent); }
+    .feat-card.teal:hover { border-top-color: #5ee8d8; }
+
+    .feat-icon { font-size: 1.6rem; margin-bottom: 2px; }
+
+    .feat-title {
       font-family: 'Barlow Condensed', sans-serif;
-      font-size: 1.9rem;
+      font-size: 1.25rem;
       font-weight: 900;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
       color: var(--text);
       line-height: 1;
     }
-    .stat-val.gold { color: var(--accent-2); }
 
-    .stat-label {
+    .feat-desc {
+      font-size: 0.92rem;
+      color: #c8d6ee;
+      line-height: 1.75;
+      flex: 1;
+    }
+
+    .feat-arrow {
       font-family: 'Barlow Condensed', sans-serif;
-      font-size: 0.68rem;
-      font-weight: 700;
-      letter-spacing: 0.18em;
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
-      color: var(--muted);
-      margin-top: 5px;
+      color: var(--accent-2);
+      margin-top: 6px;
     }
+    .feat-card.red  .feat-arrow { color: #ff9090; }
+    .feat-card.teal .feat-arrow { color: #5ee8d8; }
 
-    /* ---- MAIN LAYOUT ---- */
-    .signup-layout {
+    /* ================================================================
+       INFO STRIP
+    ================================================================ */
+    .info-strip {
+      padding: 48px 0 56px;
+    }
+    .info-strip-inner {
+      width: min(1140px, calc(100% - 32px));
+      margin: 0 auto;
       display: grid;
-      grid-template-columns: minmax(0,1fr) 320px;
-      gap: 28px;
-      align-items: start;
-      padding: 28px 0 60px;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
     }
 
-    /* ---- PANEL CARD ---- */
-    .panel-card {
+    .info-card {
       background: rgba(15,22,38,0.9);
       border: 1px solid rgba(255,255,255,0.07);
-      border-radius: 20px;
-      overflow: hidden;
-      box-shadow: 0 20px 50px rgba(0,0,0,0.3);
-      animation: cardIn 0.4s ease both;
-    }
-    .panel-card:nth-child(1) { animation-delay: 0.05s; }
-    .panel-card:nth-child(2) { animation-delay: 0.12s; }
-
-    .panel-header {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 18px 24px;
-      border-bottom: 1px solid rgba(255,255,255,0.06);
-      background: rgba(255,255,255,0.02);
+      border-radius: 16px;
+      padding: 22px 22px;
+      box-shadow: 0 10px 28px rgba(0,0,0,0.18);
     }
 
-    .step-badge {
-      width: 28px; height: 28px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #d64045, #f05b4f);
-      color: #fff;
+    .info-card-label {
       font-family: 'Barlow Condensed', sans-serif;
-      font-size: 0.85rem;
-      font-weight: 900;
-      display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0;
-      box-shadow: 0 6px 14px rgba(214,64,69,0.3);
-    }
-
-    .panel-title {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 1.05rem;
-      font-weight: 800;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--text);
-    }
-
-    .panel-body { padding: 26px; }
-
-    /* ---- FORM NOTE ---- */
-    .form-note {
-      font-size: 0.88rem;
-      color: var(--muted);
-      line-height: 1.65;
-      margin-bottom: 22px;
-      padding-bottom: 18px;
-      border-bottom: 1px solid rgba(255,255,255,0.06);
-    }
-    .form-note strong { color: var(--text); font-weight: 700; }
-
-    /* ---- SECTION LABEL ---- */
-    .section-label {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 0.7rem;
+      font-size: 0.65rem;
       font-weight: 800;
       letter-spacing: 0.2em;
       text-transform: uppercase;
       color: var(--accent-2);
-      margin: 22px 0 14px;
-      padding-top: 20px;
-      border-top: 1px solid rgba(255,255,255,0.06);
-    }
-    .section-label:first-of-type { margin-top: 0; padding-top: 0; border-top: none; }
-
-    /* ---- FIELD LAYOUTS ---- */
-    .field-row  { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-    .field-row3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
-    .field {
-      display: flex; flex-direction: column; gap: 7px;
-      margin-bottom: 16px;
-    }
-    .field:last-child { margin-bottom: 0; }
-
-    .field label {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 0.72rem;
-      font-weight: 700;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
-    .field label .req { color: var(--accent); }
-
-    /* ---- INPUTS ---- */
-    input[type="text"],
-    input[type="email"],
-    input[type="search"],
-    input[type="number"],
-    input:not([type="checkbox"]):not([type="radio"]),
-    select,
-    textarea {
-      width: 100%;
-      padding: 11px 14px;
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.09);
-      border-radius: 10px;
-      color: var(--text);
-      font-family: 'Barlow', sans-serif;
-      font-size: 0.92rem;
-      outline: none;
-      transition: border-color 0.15s, box-shadow 0.15s;
-      -webkit-appearance: none;
-      appearance: none;
-    }
-    input:focus, select:focus, textarea:focus {
-      border-color: rgba(214,64,69,0.5);
-      box-shadow: 0 0 0 3px rgba(214,64,69,0.1);
-    }
-    input::placeholder { color: rgba(184,196,218,0.3); }
-    textarea { min-height: 96px; resize: vertical; line-height: 1.6; }
-
-    select {
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%235a6480' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
-      background-repeat: no-repeat;
-      background-position: right 12px center;
-      padding-right: 32px;
-      cursor: pointer;
-    }
-
-    /* ---- POSITION CHECKBOXES ---- */
-    .field-hint {
-      font-size: 0.75rem;
-      color: rgba(184,196,218,0.45);
-      margin: -4px 0 12px;
-    }
-
-    #positionGroup {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-      gap: 8px;
-    }
-
-    .position-checkbox {
-      position: relative;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 11px 14px;
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 10px;
-      background: rgba(255,255,255,0.025);
-      cursor: pointer;
-      transition: border-color 0.15s, background 0.15s;
-      user-select: none;
-      font-size: 0.92rem;
-      font-weight: 500;
-      color: var(--muted);
-    }
-    .position-checkbox:hover {
-      border-color: rgba(255,204,102,0.35);
-      background: rgba(255,204,102,0.05);
-      color: var(--text);
-    }
-    .position-checkbox input[type="checkbox"] {
-      position: absolute; opacity: 0; width: 0; height: 0;
-    }
-    .custom-box {
-      width: 20px; height: 20px;
-      border: 2px solid rgba(255,255,255,0.15);
-      border-radius: 5px;
-      background: rgba(255,255,255,0.04);
-      display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0;
-      transition: all 0.15s ease;
-    }
-    .position-checkbox input:checked ~ .custom-box {
-      background: var(--accent-2);
-      border-color: var(--accent-2);
-    }
-    .position-checkbox input:checked ~ .custom-box::after {
-      content: "✓";
-      color: #000;
-      font-weight: 900;
-      font-size: 0.75rem;
-      line-height: 1;
-    }
-    .position-checkbox input:checked ~ span:last-child { color: var(--text); }
-    .position-checkbox:has(input:checked) {
-      border-color: rgba(255,204,102,0.4);
-      background: rgba(255,204,102,0.06);
-    }
-    .pos-label { flex: 1; }
-
-    /* ---- WAIVER BLOCK ---- */
-    .waiver-block {
-      background: rgba(255,255,255,0.02);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 12px;
-      padding: 16px 18px;
-      margin: 20px 0;
-      cursor: pointer;
-      transition: border-color 0.18s, background 0.18s;
-    }
-    .waiver-block:hover {
-      border-color: rgba(255,204,102,0.35);
-      background: rgba(255,204,102,0.03);
-    }
-    .waiver-block.is-checked {
-      border-color: rgba(255,204,102,0.5);
-      background: rgba(255,204,102,0.05);
-    }
-    .waiver-inner { display: flex; gap: 12px; align-items: flex-start; }
-    .waiver-inner input[type="checkbox"] {
-      position: absolute; opacity: 0; width: 0; height: 0; pointer-events: none;
-    }
-    .custom-check {
-      width: 20px; height: 20px;
-      flex-shrink: 0; margin-top: 2px;
-      border: 2px solid rgba(255,255,255,0.15);
-      border-radius: 5px;
-      background: rgba(255,255,255,0.04);
-      display: flex; align-items: center; justify-content: center;
-      transition: border-color 0.18s, background 0.18s;
-    }
-    .waiver-block:hover .custom-check { border-color: rgba(255,204,102,0.5); }
-    .waiver-block.is-checked .custom-check {
-      border-color: var(--accent-2);
-      background: var(--accent-2);
-    }
-    .custom-check svg {
-      opacity: 0; transform: scale(0.5);
-      transition: opacity 0.14s, transform 0.14s;
-    }
-    .waiver-block.is-checked .custom-check svg { opacity: 1; transform: scale(1); }
-    .waiver-text {
-      font-size: 0.9rem; line-height: 1.6;
-      color: var(--muted); font-weight: 500;
-      transition: color 0.18s;
-    }
-    .waiver-text a { color: var(--accent-2); text-decoration: none; font-weight: 700; }
-    .waiver-text a:hover { text-decoration: underline; }
-    .waiver-block.is-checked .waiver-text { color: var(--text); }
-    .waiver-sub { font-size: 0.75rem; color: rgba(184,196,218,0.4); margin-top: 5px; line-height: 1.5; }
-
-    /* ---- SUBMIT BUTTON ---- */
-    .submit-btn {
-      width: 100%;
-      min-height: 50px;
-      padding: 0 24px;
-      border-radius: 999px;
-      background: linear-gradient(135deg, #d64045 0%, #f05b4f 100%);
-      color: #fff8f2;
-      border: none;
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 1rem;
-      font-weight: 900;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      cursor: pointer;
-      box-shadow: 0 12px 28px rgba(214,64,69,0.3);
-      transition: transform 0.15s ease, box-shadow 0.15s ease;
-    }
-    .submit-btn:hover:not(:disabled) {
-      transform: translateY(-1px);
-      box-shadow: 0 16px 32px rgba(214,64,69,0.38);
-    }
-    .submit-btn:disabled { opacity: 0.55; cursor: not-allowed; transform: none; }
-
-    /* ---- MESSAGES ---- */
-    .msg {
-      margin-top: 14px;
-      padding: 14px 16px;
-      border-radius: 12px;
-      display: none;
-      font-size: 0.88rem;
-      line-height: 1.6;
-      white-space: pre-wrap;
-    }
-    .msg.ok {
-      background: rgba(46,204,113,0.08);
-      border: 1px solid rgba(46,204,113,0.3);
-      color: #a7f3d0;
-    }
-    .msg.err {
-      background: rgba(214,64,69,0.08);
-      border: 1px solid rgba(214,64,69,0.25);
-      color: #ffb3b5;
-    }
-
-    /* ---- SCHEDULE PANEL ---- */
-    .schedule-note {
-      font-size: 0.82rem;
-      color: var(--muted);
-      margin-bottom: 18px;
-      line-height: 1.55;
-    }
-
-    .schedule-list { list-style: none; padding: 0; margin: 0 0 18px; }
-
-    .schedule-row {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 9px 0;
-      border-bottom: 1px solid rgba(255,255,255,0.04);
-    }
-    .schedule-row:last-child { border-bottom: none; }
-
-    .s-date {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 0.95rem; font-weight: 800;
-      color: var(--text); min-width: 72px;
-    }
-    .s-date.playoff { color: #5ee8d8; }
-
-    .s-time {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 0.85rem; font-weight: 700;
-      color: var(--muted); margin-left: auto;
-      white-space: nowrap;
-    }
-    .s-time.muted { color: #5ee8d8; opacity: 0.75; }
-
-    .s-label {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 0.68rem; font-weight: 800;
-      letter-spacing: 0.12em; text-transform: uppercase;
-      color: #5ee8d8;
-      background: rgba(94,232,216,0.1);
-      border: 1px solid rgba(94,232,216,0.25);
-      padding: 2px 8px;
-      border-radius: 999px;
-    }
-
-    .schedule-divider {
-      height: 1px;
-      background: rgba(255,255,255,0.06);
-      margin: 6px 0;
-    }
-
-    /* ---- INFO BOXES (schedule panel) ---- */
-    .info-card {
-      display: flex;
-      gap: 10px;
-      align-items: flex-start;
-      background: rgba(255,255,255,0.025);
-      border: 1px solid rgba(255,255,255,0.06);
-      border-radius: 12px;
-      padding: 12px 14px;
       margin-bottom: 10px;
-      font-size: 0.83rem;
-      line-height: 1.6;
-      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 7px;
     }
-    .info-card:last-child { margin-bottom: 0; }
-    .info-card .icon { font-size: 1rem; flex-shrink: 0; margin-top: 1px; }
-    .info-card strong { color: var(--text); font-weight: 600; }
+    .info-card-label::before {
+      content: "";
+      display: inline-block;
+      width: 4px; height: 14px;
+      border-radius: 999px;
+      background: var(--accent);
+      flex-shrink: 0;
+    }
 
-    /* ---- ANIMATIONS ---- */
+    .info-card h3 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 10px;
+      letter-spacing: 0.03em;
+    }
+
+    .info-card p {
+      font-size: 0.92rem;
+      color: #c8d6ee;
+      line-height: 1.8;
+    }
+    .info-card p strong { color: var(--text); font-weight: 600; }
+
+    /* ================================================================
+       ANIMATIONS
+    ================================================================ */
     @keyframes cardIn {
       from { opacity: 0; transform: translateY(14px); }
       to   { opacity: 1; transform: translateY(0); }
     }
 
-    /* ---- RESPONSIVE ---- */
+    /* ================================================================
+       RESPONSIVE
+    ================================================================ */
     @media (max-width: 900px) {
-      .signup-layout {
+      .hero-inner {
         grid-template-columns: 1fr;
+        gap: 36px;
       }
-      .schedule-panel { order: -1; }
-      #positionGroup { grid-template-columns: 1fr 1fr; }
+      .hero-stat-card { max-width: 420px; }
+      .hero-tagline { max-width: none; }
+      .features-grid { grid-template-columns: 1fr; }
+      .info-strip-inner { grid-template-columns: 1fr 1fr; }
     }
 
     @media (max-width: 640px) {
-      .stats-bar { gap: 8px; }
-      .stat-chip { padding: 12px 18px; min-width: 80px; }
-      .stat-val { font-size: 1.6rem; }
-      .field-row, .field-row3 { grid-template-columns: 1fr; }
-      #positionGroup { grid-template-columns: 1fr 1fr; }
-      .panel-body { padding: 18px 16px; }
-    }
-
-    @media (max-width: 420px) {
-      #positionGroup { grid-template-columns: 1fr; }
+      .hero { padding: 48px 0 48px; }
+      .hero-headline { font-size: clamp(2.8rem, 10vw, 3.8rem); }
+      .features-section { padding: 40px 0 48px; }
+      .info-strip { padding: 36px 0 48px; }
+      .info-strip-inner { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -476,332 +533,237 @@
 
 <div id="site-header"></div>
 
-<header>
-  <div style="width:min(1140px,calc(100% - 32px));margin:0 auto;">
-    <h1>Sign Up For The League</h1>
-    <p>Spring 2026 season registration · Staten Island</p>
-    <div class="stats-bar">
-      <div class="stat-chip">
-        <span class="stat-val">1</span>
-        <span class="stat-label">Division</span>
+<!-- ================================================================
+     HERO
+================================================================ -->
+<section class="hero">
+  <div class="hero-inner">
+
+    <!-- Left -->
+    <div class="hero-left">
+      <div class="hero-kicker">Spring Season · Staten Island</div>
+
+      <h1 class="hero-headline">
+        Baseball
+        <span class="line2">For Bums</span>
+      </h1>
+
+      <p class="hero-tagline">
+        Real baseball. Real competition. No nonsense. Staten Island's competitive adult league — spring season now registering.
+      </p>
+
+      <div class="hero-ctas">
+        <a href="/signup/" class="btn-hero-primary">Join the Waitlist →</a>
+        <a href="/schedule.html" class="btn-hero-secondary">View Schedule</a>
       </div>
-      <div class="stat-chip">
-        <span class="stat-val">6</span>
-        <span class="stat-label">Teams</span>
+
+      <div class="waitlist-notice">
+        <span class="waitlist-notice-icon">⚾</span>
+        <p><strong>Registration is full.</strong> Sign up to join the <strong>waitlist as a sub</strong> — we call on subs regularly throughout the season when teams are short.</p>
       </div>
-      <div class="stat-chip">
-        <span class="stat-val gold">$235</span>
-        <span class="stat-label">Entry Fee</span>
+    </div>
+
+    <!-- Right: league card -->
+    <div class="hero-right">
+      <div class="league-card">
+
+        <div class="league-card-header">
+          <span class="league-card-header-label">Spring 2026</span>
+          <span class="league-card-header-season">Staten Island · 6 Teams</span>
+        </div>
+
+        <!-- Teams -->
+        <div class="league-teams-section">
+          <div class="league-section-title">This Season's Teams</div>
+          <div class="teams-list">
+            <div class="team-chip"><span class="team-dot" style="background:#f5c542;"></span><span class="team-chip-name">Renegades</span></div>
+            <div class="team-chip"><span class="team-dot" style="background:#4da3ff;"></span><span class="team-chip-name">See Ya!</span></div>
+            <div class="team-chip"><span class="team-dot" style="background:#5ee8d8;"></span><span class="team-chip-name">Hurricanes</span></div>
+            <div class="team-chip"><span class="team-dot" style="background:#ff9090;"></span><span class="team-chip-name">Elite</span></div>
+            <div class="team-chip"><span class="team-dot" style="background:#b47eff;"></span><span class="team-chip-name">Legends</span></div>
+            <div class="team-chip"><span class="team-dot" style="background:#6de6a0;"></span><span class="team-chip-name">Cut Fresh</span></div>
+          </div>
+        </div>
+
+        <!-- Standings leaderboard — populated by JS -->
+        <div class="league-standings-section">
+          <div class="league-section-title">Standings</div>
+          <div id="home-standings">
+            <div class="standings-empty">
+              <div class="standings-empty-icon">📅</div>
+              <div class="standings-empty-text">Season hasn't started yet</div>
+              <div class="standings-empty-date">Opener: April 18, 2026</div>
+            </div>
+          </div>
+        </div>
+
       </div>
-      <div class="stat-chip">
-        <span class="stat-val">66</span>
-        <span class="stat-label">Player Cap</span>
-      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ================================================================
+     FEATURE CARDS
+================================================================ -->
+<section class="features-section">
+  <div class="features-inner">
+    <div class="features-heading">Quick Links</div>
+
+    <div class="features-grid">
+      <a href="/schedule.html" class="feat-card teal">
+        <div class="feat-icon">📅</div>
+        <div class="feat-title">Schedule</div>
+        <div class="feat-desc">View the full Spring 2026 game schedule. Game dates, times, field assignments, and status for every matchup this season.</div>
+        <div class="feat-arrow">View Schedule →</div>
+      </a>
+
+      <a href="/league-rules/" class="feat-card">
+        <div class="feat-icon">📖</div>
+        <div class="feat-title">League Rules</div>
+        <div class="feat-desc">Game basics, base running, equipment requirements, conduct policy, standings, and playoff format — everything you need to know before first pitch.</div>
+        <div class="feat-arrow">Read the Rules →</div>
+      </a>
+
+      <a href="/waiver-and-conduct/" class="feat-card red">
+        <div class="feat-icon">🤝</div>
+        <div class="feat-title">Waiver &amp; Conduct</div>
+        <div class="feat-desc">Review the league waiver and code of conduct before registering. All players must agree to these terms prior to participation.</div>
+        <div class="feat-arrow">View Waiver →</div>
+      </a>
     </div>
   </div>
-</header>
+</section>
 
-<main style="width:min(1140px,calc(100% - 32px));margin:0 auto;">
-  <div class="signup-layout">
+<!-- ================================================================
+     INFO STRIP
+================================================================ -->
+<section class="info-strip">
+  <div class="info-strip-inner">
 
-    <!-- ── FORM PANEL ── -->
-    <div class="panel-card">
-      <div class="panel-header">
-        <div class="step-badge">1</div>
-        <span class="panel-title">Your Information</span>
-      </div>
-      <div class="panel-body">
-        <p class="form-note">
-          Submitting does <strong>not</strong> guarantee a spot. You'll receive an email confirming <strong>CONFIRMED</strong> or <strong>WAITLIST</strong> status.
-        </p>
-
-        <form id="regForm">
-
-          <div class="field">
-            <label>Full Name <span class="req">*</span></label>
-            <input name="fullName" placeholder="Jane Doe" required>
-          </div>
-
-          <div class="field-row">
-            <div class="field">
-              <label>Email <span class="req">*</span></label>
-              <input type="email" name="email" placeholder="you@example.com" required>
-            </div>
-            <div class="field">
-              <label>Phone <span class="req">*</span></label>
-              <input name="phone" placeholder="(917) 555-0100" required>
-            </div>
-          </div>
-
-          <div class="section-label">Player Details</div>
-
-          <div class="field-row3">
-            <div class="field">
-              <label>Jersey Size</label>
-              <select name="jerseySize">
-                <option value="">Select</option>
-                <option>S</option><option>M</option><option>L</option><option>XL</option>
-                <option>2XL</option><option>3XL</option><option>4XL</option><option>5XL</option>
-              </select>
-            </div>
-            <div class="field">
-              <label>Jersey Name <span style="font-weight:400;opacity:0.6;">(max 15)</span></label>
-              <input name="jerseyWording" maxlength="15" placeholder="Max 15 chars">
-            </div>
-            <div class="field">
-              <label>Jersey # <span style="font-weight:400;opacity:0.6;">(0–99)</span></label>
-              <input name="jerseyNumber" type="number" min="0" max="99" placeholder="24">
-            </div>
-          </div>
-
-          <div class="field">
-            <label>Preferred Position(s) <span class="req">*</span></label>
-            <p class="field-hint">Select all that apply</p>
-            <div id="positionGroup">
-              <label class="position-checkbox">
-                <input type="checkbox" name="position" value="Pitcher">
-                <span class="custom-box"></span>
-                <span class="pos-label">Pitcher</span>
-              </label>
-              <label class="position-checkbox">
-                <input type="checkbox" name="position" value="Catcher">
-                <span class="custom-box"></span>
-                <span class="pos-label">Catcher</span>
-              </label>
-              <label class="position-checkbox">
-                <input type="checkbox" name="position" value="1B">
-                <span class="custom-box"></span>
-                <span class="pos-label">1B</span>
-              </label>
-              <label class="position-checkbox">
-                <input type="checkbox" name="position" value="2B">
-                <span class="custom-box"></span>
-                <span class="pos-label">2B</span>
-              </label>
-              <label class="position-checkbox">
-                <input type="checkbox" name="position" value="3B">
-                <span class="custom-box"></span>
-                <span class="pos-label">3B</span>
-              </label>
-              <label class="position-checkbox">
-                <input type="checkbox" name="position" value="SS">
-                <span class="custom-box"></span>
-                <span class="pos-label">SS</span>
-              </label>
-              <label class="position-checkbox">
-                <input type="checkbox" name="position" value="LF">
-                <span class="custom-box"></span>
-                <span class="pos-label">LF</span>
-              </label>
-              <label class="position-checkbox">
-                <input type="checkbox" name="position" value="CF">
-                <span class="custom-box"></span>
-                <span class="pos-label">CF</span>
-              </label>
-              <label class="position-checkbox">
-                <input type="checkbox" name="position" value="RF">
-                <span class="custom-box"></span>
-                <span class="pos-label">RF</span>
-              </label>
-              <label class="position-checkbox">
-                <input type="checkbox" name="position" value="Utility">
-                <span class="custom-box"></span>
-                <span class="pos-label">Utility</span>
-              </label>
-            </div>
-            <div id="positionError" class="msg err" style="margin-top:10px;display:none;">
-              Please select at least one position.
-            </div>
-          </div>
-
-          <div class="field-row">
-            <div class="field">
-              <label>Experience Level</label>
-              <select name="experience">
-                <option value="">Select</option>
-                <option>Beginner</option>
-                <option>Some experience</option>
-                <option>High school</option>
-                <option>College</option>
-                <option>Adult leagues</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="field">
-            <label>Notes</label>
-            <textarea name="notes" placeholder="Injuries, schedule conflicts, anything we should know…"></textarea>
-          </div>
-
-          <!-- Waiver checkbox — identical logic to original -->
-          <div class="waiver-block" id="waiverBlock">
-            <div class="waiver-inner">
-              <input type="checkbox" id="waiver" name="waiver" required>
-              <div class="custom-check" aria-hidden="true">
-                <svg width="12" height="10" viewBox="0 0 12 10" fill="none">
-                  <path d="M1 5L4.5 8.5L11 1" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </div>
-              <div>
-                <div class="waiver-text">
-                  I agree to the <a href="/waiver-and-conduct/" target="_blank" onclick="event.stopPropagation()">league waiver and code of conduct</a> *
-                </div>
-                <div class="waiver-sub">By registering, you acknowledge that availability, schedule changes, and league decisions are handled by league administration.</div>
-              </div>
-            </div>
-          </div>
-
-          <button class="submit-btn" id="submitBtn" type="submit">Submit Registration →</button>
-
-          <div class="msg ok" id="okMsg"></div>
-          <div class="msg err" id="errMsg"></div>
-
-        </form>
-      </div>
+    <div class="info-card">
+      <div class="info-card-label">Format</div>
+      <h3 style="color:#7cc4ff;">7-Inning Games</h3>
+      <p>11 players per side. Everyone bats, even if rotating in and out on defense. <strong>Single-elimination playoffs</strong> cap the season.</p>
     </div>
 
-    <!-- ── SCHEDULE PANEL ── -->
-    <div class="panel-card schedule-panel">
-      <div class="panel-header">
-        <div class="step-badge">2</div>
-        <span class="panel-title">Spring Schedule</span>
-      </div>
-      <div class="panel-body">
-        <p class="schedule-note">Review before registering. Playoff and championship dates are flexible.</p>
-
-        <ul class="schedule-list">
-          <li class="schedule-row"><span class="s-date">4/18</span><span class="s-time">9:30 PM</span></li>
-          <li class="schedule-row"><span class="s-date">4/25</span><span class="s-time">9:30 PM</span></li>
-          <li class="schedule-row"><span class="s-date">5/2</span> <span class="s-time">9:30 PM</span></li>
-          <li class="schedule-row"><span class="s-date">5/9</span> <span class="s-time">9:30 PM</span></li>
-          <li class="schedule-row"><span class="s-date">5/16</span><span class="s-time">10:00 PM</span></li>
-          <li class="schedule-row"><span class="s-date">5/26</span><span class="s-time">10:00 / 9:30 PM</span></li>
-          <li class="schedule-row"><span class="s-date">5/30</span><span class="s-time">10:00 PM</span></li>
-          <div class="schedule-divider"></div>
-          <li class="schedule-row">
-            <span class="s-date playoff">6/6–6/7</span>
-            <span class="s-label">Playoffs</span>
-            <span class="s-time muted">TBD</span>
-          </li>
-          <li class="schedule-row">
-            <span class="s-date playoff">6/13–6/14</span>
-            <span class="s-label">Championship</span>
-            <span class="s-time muted">TBD</span>
-          </li>
-          <li class="schedule-row">
-            <span class="s-date playoff">6/16</span>
-            <span class="s-label">All-Star Game</span>
-            <span class="s-time muted">TBD</span>
-          </li>
-        </ul>
-
-        <div class="info-card">
-          <span class="icon">🌧️</span>
-          <p><strong>Rainout Policy:</strong> Rained-out games will be made up the following Tuesday.</p>
-        </div>
-        <div class="info-card">
-          <span class="icon">⚠️</span>
-          <p><strong>Reminder:</strong> Signing up does <strong>not</strong> guarantee a spot. If the league reaches capacity, you'll be placed on the waitlist.</p>
-        </div>
-      </div>
+    <div class="info-card">
+      <div class="info-card-label">Standings</div>
+      <h3 style="color:#ffcc66;">Run Differential</h3>
+      <p>Standings are determined by <strong>run differential</strong>. Tiebreakers go to head-to-head record. Both scores vs. a double-opponent are averaged.</p>
     </div>
 
-  </div><!-- /.signup-layout -->
-</main>
+    <div class="info-card">
+      <div class="info-card-label">Rainouts</div>
+      <h3 style="color:#5ee8d8;">Tuesday Makeups</h3>
+      <p>Any rained-out game is rescheduled for the <strong>following Tuesday</strong>, or the next available field date if the field is unavailable.</p>
+    </div>
+
+    <div class="info-card">
+      <div class="info-card-label">Scorecard</div>
+      <h3 style="color:#ff9090;">Print &amp; Score</h3>
+      <p>Official game scorecard for scorekeepers. Two cards per sheet — one per team. Includes full instructions.</p>
+      <a href="/scorecard.html" target="_blank" style="
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        margin-top: 14px;
+        padding: 9px 18px;
+        border-radius: 999px;
+        background: linear-gradient(135deg, #d64045, #f05b4f);
+        color: #fff;
+        font-family: 'Barlow Condensed', sans-serif;
+        font-size: 0.82rem;
+        font-weight: 900;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        text-decoration: none;
+        box-shadow: 0 8px 20px rgba(214,64,69,0.28);
+        transition: 0.15s ease;
+      " onmouseover="this.style.transform='translateY(-1px)'" onmouseout="this.style.transform='translateY(0)'">
+        🖨 Open &amp; Print Scorecard
+      </a>
+    </div>
+
+  </div>
+</section>
 
 <footer style="width:min(1140px,calc(100% - 32px));margin:0 auto;">
-  Baseball For Bums League Central · Staten Island ·
-  <a href="/waiver-and-conduct/" style="color:var(--accent-2);text-decoration:none;font-weight:700;">View Waiver &amp; Code of Conduct →</a>
+  Baseball For Bums League Central · Staten Island · © 2026
 </footer>
 
-<script src="../shared.js?v=5"></script>
-<script src="../header.js?v=5"></script>
-
+<script src="./shared.js?v=5"></script>
+<script src="./header.js?v=5"></script>
 <script>
-  /* ---- Waiver toggle ---- */
-  var waiverBlock = document.getElementById('waiverBlock');
-  var waiverInput = document.getElementById('waiver');
+// Team color map matches the team chips above
+var TEAM_COLORS = {
+  "Renegades":  "#f5c542",
+  "See Ya!":    "#4da3ff",
+  "Hurricanes": "#5ee8d8",
+  "Elite":      "#ff9090",
+  "Legends":    "#b47eff",
+  "Cut Fresh":  "#6de6a0"
+};
 
-  waiverBlock.addEventListener('click', function(e) {
-    if (e.target.tagName === 'A') return;
-    waiverInput.checked = !waiverInput.checked;
-    waiverBlock.classList.toggle('is-checked', waiverInput.checked);
-  });
+function rdClass(val) {
+  var n = Number(val || 0);
+  if (n > 0) return "pos";
+  if (n < 0) return "neg";
+  return "zero";
+}
+function rdSign(val) {
+  var n = Number(val || 0);
+  return n > 0 ? "+" + n : String(n);
+}
 
-  /* ---- Form submission — unchanged from production ---- */
-  document.getElementById('regForm').addEventListener('submit', async function(e) {
-    e.preventDefault();
-    var btn          = document.getElementById('submitBtn');
-    var okMsg        = document.getElementById('okMsg');
-    var errMsg       = document.getElementById('errMsg');
-    var positionError = document.getElementById('positionError');
+async function loadHomeStandings() {
+  var el = document.getElementById("home-standings");
+  try {
+    var data = await loadData("Standings");
+    if (!Array.isArray(data) || !data.length) return; // keep default empty state
 
-    okMsg.style.display  = 'none';
-    errMsg.style.display = 'none';
-    positionError.style.display = 'none';
+    // Sort by wins desc, then run diff desc
+    var sorted = data.slice().sort(function(a, b) {
+      var wDiff = Number(b.wins || b.w || 0) - Number(a.wins || a.w || 0);
+      if (wDiff !== 0) return wDiff;
+      return Number(b.run_diff || b.rd || b.run_differential || 0) -
+             Number(a.run_diff || a.rd || a.run_differential || 0);
+    });
 
-    var selectedPositions = Array.from(
-      document.querySelectorAll('input[name="position"]:checked')
-    ).map(function(cb) { return cb.value; });
+    var getName = function(r) { return r.team_name || r.team || r.Team || ""; };
+    var getW    = function(r) { return r.wins || r.w || r.W || 0; };
+    var getL    = function(r) { return r.losses || r.l || r.L || 0; };
+    var getRD   = function(r) { return r.run_diff || r.rd || r.run_differential || r.RD || 0; };
 
-    if (selectedPositions.length === 0) {
-      positionError.style.display = 'block';
-      positionError.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      return;
-    }
+    el.innerHTML =
+      '<div class="standings-thead">' +
+        '<div class="standings-th">#</div>' +
+        '<div class="standings-th" style="text-align:left;">Team</div>' +
+        '<div class="standings-th">W</div>' +
+        '<div class="standings-th">L</div>' +
+        '<div class="standings-th">RD</div>' +
+      '</div>' +
+      sorted.map(function(row, i) {
+        var name  = getName(row);
+        var color = TEAM_COLORS[name] || "rgba(255,255,255,0.3)";
+        var rd    = getRD(row);
+        return '<div class="standings-row">' +
+          '<div class="standings-rank">' + (i + 1) + '</div>' +
+          '<div class="standings-team-name" style="display:flex;align-items:center;gap:6px;">' +
+            '<span style="width:7px;height:7px;border-radius:50%;background:' + color + ';flex-shrink:0;display:inline-block;"></span>' +
+            name +
+          '</div>' +
+          '<div class="standings-num">' + getW(row) + '</div>' +
+          '<div class="standings-num">' + getL(row) + '</div>' +
+          '<div class="standings-rd ' + rdClass(rd) + '">' + rdSign(rd) + '</div>' +
+        '</div>';
+      }).join("");
+  } catch(e) {
+    // silently keep the "season hasn't started" placeholder
+  }
+}
 
-    btn.disabled    = true;
-    btn.textContent = 'Submitting…';
-
-    try {
-      var formData = new FormData(this);
-      var data = {};
-      for (var pair of formData.entries()) {
-        if (pair[0] === 'position') continue;
-        data[pair[0]] = pair[1].trim();
-      }
-      data.position       = selectedPositions.join(', ');
-      data.waiverAccepted = waiverInput.checked;
-      data.userAgent      = navigator.userAgent;
-
-      var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbze6uynBhtPrdaNw2XHg77KOn4pCb4t0TlSqdpEkYVta2z11fSMbwTHhqFVLvHG_vnB/exec';
-
-      var response = await fetch(SCRIPT_URL, {
-        method: 'POST',
-        mode: 'cors',
-        headers: { 'Content-Type': 'text/plain; charset=utf-8' },
-        body: JSON.stringify(data)
-      });
-
-      if (!response.ok) throw new Error('Server responded with status ' + response.status);
-      var result = await response.json();
-
-      if (result.ok) {
-        var successMessage = '';
-        if (result.status === 'CONFIRMED') {
-          successMessage = '✓ Thank you — we\'ve received your submission!\n\nRegistration ID: ' + (result.registrationId || '—') + '\n\nMore details will follow via email soon.';
-        } else if (result.status === 'WAITLIST') {
-          successMessage = '✓ Thank you — we\'ve received your submission!\n\nRegistration ID: ' + (result.registrationId || '—') + '\n\nWe\'ve reached or passed the 66-player cap, so your entry has been placed on the waitlist.\n\nIf a spot opens up, we\'ll contact you right away.';
-        } else {
-          successMessage = '✓ Thank you — we\'ve received your submission!\n\nRegistration ID: ' + (result.registrationId || '—') + '\n\nMore details will follow via email soon.';
-        }
-        okMsg.textContent   = successMessage;
-        okMsg.style.display = 'block';
-        this.reset();
-        waiverBlock.classList.remove('is-checked');
-        waiverInput.checked = false;
-      } else {
-        throw new Error(result.error || 'Registration failed');
-      }
-    } catch (err) {
-      errMsg.textContent   = '× Something went wrong: ' + (err.message || 'Please try again.');
-      errMsg.style.display = 'block';
-    } finally {
-      btn.disabled    = false;
-      btn.textContent = 'Submit Registration →';
-    }
-  });
+loadHomeStandings();
 </script>
-
 </body>
 </html>

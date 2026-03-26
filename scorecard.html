@@ -1,0 +1,500 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Baseball For Bums — Scorecard</title>
+  <style>
+    /* ============================================================
+       SCREEN STYLES
+    ============================================================ */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #f0f0f0;
+      padding: 24px;
+      color: #000;
+    }
+
+    .print-btn {
+      display: block;
+      margin: 0 auto 24px;
+      padding: 12px 32px;
+      background: #d64045;
+      color: #fff;
+      border: none;
+      border-radius: 999px;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      letter-spacing: 0.05em;
+    }
+    .print-btn:hover { background: #b02424; }
+
+    .scorecard {
+      background: #fff;
+      border: 2px solid #111;
+      max-width: 780px;
+      margin: 0 auto 32px;
+      page-break-after: always;
+    }
+
+    /* ---- HEADER ---- */
+    .card-header {
+      border-bottom: 2px solid #111;
+      padding: 10px 14px 8px;
+    }
+
+    .card-header-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 8px;
+    }
+
+    .league-name {
+      font-size: 1.1rem;
+      font-weight: 900;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .team-label {
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: #555;
+      margin-bottom: 2px;
+    }
+
+    .team-name-line {
+      border-bottom: 1.5px solid #111;
+      min-width: 200px;
+      height: 22px;
+      font-size: 1rem;
+      font-weight: 700;
+    }
+
+    .meta-row {
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .meta-field {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .meta-label {
+      font-size: 0.6rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #555;
+      margin-bottom: 2px;
+    }
+
+    .meta-line {
+      border-bottom: 1.5px solid #111;
+      min-width: 100px;
+      height: 18px;
+    }
+    .meta-line.wide { min-width: 140px; }
+    .meta-line.narrow { min-width: 60px; }
+
+    /* ---- SCORE GRID ---- */
+    .score-grid {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .score-grid th,
+    .score-grid td {
+      border: 1px solid #bbb;
+      text-align: center;
+      vertical-align: middle;
+      font-size: 0.72rem;
+      padding: 0;
+    }
+
+    /* Header row */
+    .score-grid thead th {
+      background: #111;
+      color: #fff;
+      font-weight: 700;
+      font-size: 0.68rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 5px 3px;
+      border-color: #333;
+    }
+
+    .score-grid thead th.inning-header {
+      background: #333;
+      width: 46px;
+    }
+
+    .score-grid thead th.name-col { width: 130px; text-align: left; padding-left: 6px; }
+    .score-grid thead th.num-col  { width: 32px; }
+    .score-grid thead th.stat-col { width: 34px; background: #555; }
+
+    /* Batter rows */
+    .score-grid tbody tr { height: 36px; }
+    .score-grid tbody tr:nth-child(even) td { background: #fafafa; }
+
+    .score-grid tbody td.batter-num {
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: #777;
+      width: 24px;
+    }
+
+    .score-grid tbody td.batter-name {
+      text-align: left;
+      padding: 2px 6px;
+      border-right: 2px solid #999;
+    }
+
+    .score-grid tbody td.inning-cell {
+      width: 46px;
+      height: 36px;
+      position: relative;
+    }
+
+    /* Small diamond inside each at-bat cell */
+    .inning-cell::after {
+      content: "";
+      display: block;
+      width: 14px;
+      height: 14px;
+      border: 1.2px solid #ccc;
+      transform: rotate(45deg);
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      margin-top: -7px;
+      margin-left: -7px;
+    }
+
+    .score-grid tbody td.stat-cell {
+      background: #f5f5f5;
+      font-weight: 700;
+      border-left: 2px solid #999;
+    }
+
+    /* Totals row */
+    .score-grid tfoot tr { height: 28px; }
+
+    .score-grid tfoot td {
+      background: #eee;
+      font-weight: 700;
+      font-size: 0.7rem;
+      border-top: 2px solid #111;
+    }
+
+    .score-grid tfoot td.totals-label {
+      text-align: right;
+      padding-right: 6px;
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #333;
+      border-right: 2px solid #999;
+    }
+
+    .score-grid tfoot td.totals-r {
+      background: #ddd;
+      font-size: 0.8rem;
+      border-left: 2px solid #999;
+    }
+
+    /* ---- LEGEND ---- */
+    .legend {
+      border-top: 2px solid #111;
+      padding: 8px 14px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px 16px;
+      align-items: flex-start;
+    }
+
+    .legend-title {
+      font-size: 0.62rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #333;
+      width: 100%;
+      margin-bottom: 4px;
+    }
+
+    .legend-item {
+      font-size: 0.65rem;
+      color: #222;
+      white-space: nowrap;
+    }
+
+    .legend-item strong {
+      font-weight: 900;
+      font-size: 0.7rem;
+    }
+
+    /* ---- NOTES ---- */
+    .notes-row {
+      border-top: 1px solid #ccc;
+      padding: 7px 14px;
+      display: flex;
+      gap: 16px;
+      align-items: center;
+    }
+    .notes-label {
+      font-size: 0.62rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #555;
+      white-space: nowrap;
+    }
+    .notes-line {
+      flex: 1;
+      border-bottom: 1px solid #aaa;
+      height: 16px;
+    }
+
+    /* ============================================================
+       PRINT STYLES
+    ============================================================ */
+    @media print {
+      body { background: #fff; padding: 0; }
+      .print-btn { display: none; }
+      .scorecard {
+        border: 1.5px solid #000;
+        margin: 0;
+        max-width: 100%;
+        box-shadow: none;
+      }
+      /* Each scorecard on its own page */
+      .scorecard { page-break-after: always; }
+      .scorecard:last-child { page-break-after: avoid; }
+
+      @page { margin: 10mm; size: letter portrait; }
+    }
+  </style>
+</head>
+<body>
+
+<button class="print-btn" onclick="window.print()">🖨 Print Scorecards</button>
+
+<!-- ============================================================
+     AWAY TEAM SCORECARD
+============================================================ -->
+<div class="scorecard">
+
+  <div class="card-header">
+    <div class="card-header-top">
+      <div class="league-name">⚾ Baseball For Bums</div>
+      <div>
+        <div class="team-label">Batting Team</div>
+        <div class="team-name-line"></div>
+      </div>
+    </div>
+    <div class="meta-row">
+      <div class="meta-field">
+        <div class="meta-label">Date</div>
+        <div class="meta-line"></div>
+      </div>
+      <div class="meta-field">
+        <div class="meta-label">Game Time</div>
+        <div class="meta-line narrow"></div>
+      </div>
+      <div class="meta-field">
+        <div class="meta-label">Field</div>
+        <div class="meta-line narrow"></div>
+      </div>
+      <div class="meta-field">
+        <div class="meta-label">Opposing Team</div>
+        <div class="meta-line wide"></div>
+      </div>
+      <div class="meta-field">
+        <div class="meta-label">Scorekeeper</div>
+        <div class="meta-line"></div>
+      </div>
+    </div>
+  </div>
+
+  <table class="score-grid">
+    <thead>
+      <tr>
+        <th class="num-col">#</th>
+        <th class="name-col">Player Name</th>
+        <th class="inning-header">1</th>
+        <th class="inning-header">2</th>
+        <th class="inning-header">3</th>
+        <th class="inning-header">4</th>
+        <th class="inning-header">5</th>
+        <th class="inning-header">6</th>
+        <th class="inning-header">7</th>
+        <th class="inning-header">EX</th>
+        <th class="stat-col">R</th>
+        <th class="stat-col">H</th>
+        <th class="stat-col">RBI</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- 11 batter rows -->
+      <tr><td class="batter-num">1</td><td class="batter-name"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="stat-cell"></td><td class="stat-cell"></td><td class="stat-cell"></td></tr>
+      <tr><td class="batter-num">2</td><td class="batter-name"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="stat-cell"></td><td class="stat-cell"></td><td class="stat-cell"></td></tr>
+      <tr><td class="batter-num">3</td><td class="batter-name"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="stat-cell"></td><td class="stat-cell"></td><td class="stat-cell"></td></tr>
+      <tr><td class="batter-num">4</td><td class="batter-name"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="stat-cell"></td><td class="stat-cell"></td><td class="stat-cell"></td></tr>
+      <tr><td class="batter-num">5</td><td class="batter-name"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="stat-cell"></td><td class="stat-cell"></td><td class="stat-cell"></td></tr>
+      <tr><td class="batter-num">6</td><td class="batter-name"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="stat-cell"></td><td class="stat-cell"></td><td class="stat-cell"></td></tr>
+      <tr><td class="batter-num">7</td><td class="batter-name"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="stat-cell"></td><td class="stat-cell"></td><td class="stat-cell"></td></tr>
+      <tr><td class="batter-num">8</td><td class="batter-name"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="stat-cell"></td><td class="stat-cell"></td><td class="stat-cell"></td></tr>
+      <tr><td class="batter-num">9</td><td class="batter-name"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="stat-cell"></td><td class="stat-cell"></td><td class="stat-cell"></td></tr>
+      <tr><td class="batter-num">10</td><td class="batter-name"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="stat-cell"></td><td class="stat-cell"></td><td class="stat-cell"></td></tr>
+      <tr><td class="batter-num">11</td><td class="batter-name"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="stat-cell"></td><td class="stat-cell"></td><td class="stat-cell"></td></tr>
+    </tbody>
+    <tfoot>
+      <tr>
+        <td colspan="2" class="totals-label">Runs Per Inning</td>
+        <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+        <td class="totals-r"></td>
+        <td class="stat-cell"></td>
+        <td class="stat-cell"></td>
+      </tr>
+    </tfoot>
+  </table>
+
+  <div class="legend">
+    <div class="legend-title">At-Bat Codes — write these in each box</div>
+    <div class="legend-item"><strong>1B</strong> Single</div>
+    <div class="legend-item"><strong>2B</strong> Double</div>
+    <div class="legend-item"><strong>3B</strong> Triple</div>
+    <div class="legend-item"><strong>HR</strong> Home Run</div>
+    <div class="legend-item"><strong>BB</strong> Walk</div>
+    <div class="legend-item"><strong>K</strong> Strikeout</div>
+    <div class="legend-item"><strong>GO</strong> Ground Out</div>
+    <div class="legend-item"><strong>FO</strong> Fly Out</div>
+    <div class="legend-item"><strong>E</strong> Reached on Error</div>
+    <div class="legend-item"><strong>FC</strong> Fielder's Choice</div>
+    <div class="legend-item"><strong>SAC</strong> Sacrifice</div>
+    <div class="legend-item"><strong>HBP</strong> Hit by Pitch</div>
+    <div class="legend-item" style="color:#d64045;font-weight:700;">★ Circle the diamond when a run scores</div>
+  </div>
+
+  <div class="notes-row">
+    <span class="notes-label">Notes</span>
+    <div class="notes-line"></div>
+  </div>
+
+</div><!-- /.scorecard -->
+
+
+<!-- ============================================================
+     HOME TEAM SCORECARD (identical, page 2)
+============================================================ -->
+<div class="scorecard">
+
+  <div class="card-header">
+    <div class="card-header-top">
+      <div class="league-name">⚾ Baseball For Bums</div>
+      <div>
+        <div class="team-label">Batting Team</div>
+        <div class="team-name-line"></div>
+      </div>
+    </div>
+    <div class="meta-row">
+      <div class="meta-field">
+        <div class="meta-label">Date</div>
+        <div class="meta-line"></div>
+      </div>
+      <div class="meta-field">
+        <div class="meta-label">Game Time</div>
+        <div class="meta-line narrow"></div>
+      </div>
+      <div class="meta-field">
+        <div class="meta-label">Field</div>
+        <div class="meta-line narrow"></div>
+      </div>
+      <div class="meta-field">
+        <div class="meta-label">Opposing Team</div>
+        <div class="meta-line wide"></div>
+      </div>
+      <div class="meta-field">
+        <div class="meta-label">Scorekeeper</div>
+        <div class="meta-line"></div>
+      </div>
+    </div>
+  </div>
+
+  <table class="score-grid">
+    <thead>
+      <tr>
+        <th class="num-col">#</th>
+        <th class="name-col">Player Name</th>
+        <th class="inning-header">1</th>
+        <th class="inning-header">2</th>
+        <th class="inning-header">3</th>
+        <th class="inning-header">4</th>
+        <th class="inning-header">5</th>
+        <th class="inning-header">6</th>
+        <th class="inning-header">7</th>
+        <th class="inning-header">EX</th>
+        <th class="stat-col">R</th>
+        <th class="stat-col">H</th>
+        <th class="stat-col">RBI</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td class="batter-num">1</td><td class="batter-name"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="stat-cell"></td><td class="stat-cell"></td><td class="stat-cell"></td></tr>
+      <tr><td class="batter-num">2</td><td class="batter-name"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="stat-cell"></td><td class="stat-cell"></td><td class="stat-cell"></td></tr>
+      <tr><td class="batter-num">3</td><td class="batter-name"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="stat-cell"></td><td class="stat-cell"></td><td class="stat-cell"></td></tr>
+      <tr><td class="batter-num">4</td><td class="batter-name"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="stat-cell"></td><td class="stat-cell"></td><td class="stat-cell"></td></tr>
+      <tr><td class="batter-num">5</td><td class="batter-name"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="stat-cell"></td><td class="stat-cell"></td><td class="stat-cell"></td></tr>
+      <tr><td class="batter-num">6</td><td class="batter-name"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="stat-cell"></td><td class="stat-cell"></td><td class="stat-cell"></td></tr>
+      <tr><td class="batter-num">7</td><td class="batter-name"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="stat-cell"></td><td class="stat-cell"></td><td class="stat-cell"></td></tr>
+      <tr><td class="batter-num">8</td><td class="batter-name"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="stat-cell"></td><td class="stat-cell"></td><td class="stat-cell"></td></tr>
+      <tr><td class="batter-num">9</td><td class="batter-name"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="stat-cell"></td><td class="stat-cell"></td><td class="stat-cell"></td></tr>
+      <tr><td class="batter-num">10</td><td class="batter-name"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="stat-cell"></td><td class="stat-cell"></td><td class="stat-cell"></td></tr>
+      <tr><td class="batter-num">11</td><td class="batter-name"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="inning-cell"></td><td class="stat-cell"></td><td class="stat-cell"></td><td class="stat-cell"></td></tr>
+    </tbody>
+    <tfoot>
+      <tr>
+        <td colspan="2" class="totals-label">Runs Per Inning</td>
+        <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+        <td class="totals-r"></td>
+        <td class="stat-cell"></td>
+        <td class="stat-cell"></td>
+      </tr>
+    </tfoot>
+  </table>
+
+  <div class="legend">
+    <div class="legend-title">At-Bat Codes — write these in each box</div>
+    <div class="legend-item"><strong>1B</strong> Single</div>
+    <div class="legend-item"><strong>2B</strong> Double</div>
+    <div class="legend-item"><strong>3B</strong> Triple</div>
+    <div class="legend-item"><strong>HR</strong> Home Run</div>
+    <div class="legend-item"><strong>BB</strong> Walk</div>
+    <div class="legend-item"><strong>K</strong> Strikeout</div>
+    <div class="legend-item"><strong>GO</strong> Ground Out</div>
+    <div class="legend-item"><strong>FO</strong> Fly Out</div>
+    <div class="legend-item"><strong>E</strong> Reached on Error</div>
+    <div class="legend-item"><strong>FC</strong> Fielder's Choice</div>
+    <div class="legend-item"><strong>SAC</strong> Sacrifice</div>
+    <div class="legend-item"><strong>HBP</strong> Hit by Pitch</div>
+    <div class="legend-item" style="color:#d64045;font-weight:700;">★ Circle the diamond when a run scores</div>
+  </div>
+
+  <div class="notes-row">
+    <span class="notes-label">Notes</span>
+    <div class="notes-line"></div>
+  </div>
+
+</div><!-- /.scorecard -->
+
+</body>
+</html>
