@@ -9,12 +9,6 @@ function renderHeader() {
     <div class="site-header">
       <div class="header-inner">
 
-        <div class="logo">
-          <a href="/">
-            <img src="https://7095cda1.logo-46y.pages.dev/logo.svg" alt="Logo">
-          </a>
-        </div>
-
         <nav class="nav">
 
           <div class="nav-main">
