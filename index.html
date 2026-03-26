@@ -449,7 +449,7 @@
       width: min(1140px, calc(100% - 32px));
       margin: 0 auto;
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(4, 1fr);
       gap: 16px;
     }
 
@@ -517,7 +517,7 @@
       .hero-stat-card { max-width: 420px; }
       .hero-tagline { max-width: none; }
       .features-grid { grid-template-columns: 1fr; }
-      .info-strip-inner { grid-template-columns: 1fr; }
+      .info-strip-inner { grid-template-columns: 1fr 1fr; }
     }
 
     @media (max-width: 640px) {
@@ -525,7 +525,7 @@
       .hero-headline { font-size: clamp(2.8rem, 10vw, 3.8rem); }
       .features-section { padding: 40px 0 48px; }
       .info-strip { padding: 36px 0 48px; }
-      .stat-val { font-size: 1.7rem; }
+      .info-strip-inner { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -643,20 +643,46 @@
 
     <div class="info-card">
       <div class="info-card-label">Format</div>
-      <h3>7-Inning Games</h3>
+      <h3 style="color:#7cc4ff;">7-Inning Games</h3>
       <p>11 players per side. Everyone bats, even if rotating in and out on defense. <strong>Single-elimination playoffs</strong> cap the season.</p>
     </div>
 
     <div class="info-card">
       <div class="info-card-label">Standings</div>
-      <h3>Run Differential</h3>
+      <h3 style="color:#ffcc66;">Run Differential</h3>
       <p>Standings are determined by <strong>run differential</strong>. Tiebreakers go to head-to-head record. Both scores vs. a double-opponent are averaged.</p>
     </div>
 
     <div class="info-card">
       <div class="info-card-label">Rainouts</div>
-      <h3>Tuesday Makeups</h3>
+      <h3 style="color:#5ee8d8;">Tuesday Makeups</h3>
       <p>Any rained-out game is rescheduled for the <strong>following Tuesday</strong>, or the next available field date if the field is unavailable.</p>
+    </div>
+
+    <div class="info-card">
+      <div class="info-card-label">Scorecard</div>
+      <h3 style="color:#ff9090;">Print &amp; Score</h3>
+      <p>Official game scorecard for scorekeepers. Two cards per sheet — one per team. Includes full instructions.</p>
+      <a href="/scorecard.html" target="_blank" style="
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        margin-top: 14px;
+        padding: 9px 18px;
+        border-radius: 999px;
+        background: linear-gradient(135deg, #d64045, #f05b4f);
+        color: #fff;
+        font-family: 'Barlow Condensed', sans-serif;
+        font-size: 0.82rem;
+        font-weight: 900;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        text-decoration: none;
+        box-shadow: 0 8px 20px rgba(214,64,69,0.28);
+        transition: 0.15s ease;
+      " onmouseover="this.style.transform='translateY(-1px)'" onmouseout="this.style.transform='translateY(0)'">
+        🖨 Open &amp; Print Scorecard
+      </a>
     </div>
 
   </div>
