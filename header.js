@@ -10,7 +10,7 @@ const CONFIG = {
   logoEmoji:   "⚾",                  // ← change this to any emoji or swap for an <img> tag
   tickerSeason:"Spring 2026",
   ctaLabel:    "Join Waitlist",       // ← top-right button label
-  ctaHref:     "/signup/",            // ← top-right button destination
+  ctaHref:     "/waitlist/",           // ← top-right button destination
 
   primaryLinks: [
     { label: "Home",      href: "/" },
@@ -21,9 +21,9 @@ const CONFIG = {
   ],
 
   leagueLinks: [
-    { label: "Rules",   href: "/league-rules/" },
-    { label: "Waiver",  href: "/waiver-and-conduct/" },
-    { label: "Sign Up", href: "/signup/" }
+    { label: "Rules",     href: "/league-rules/" },
+    { label: "Waiver",    href: "/waiver-and-conduct/" },
+    { label: "Waitlist",  href: "/waitlist/" }
   ]
 };
 

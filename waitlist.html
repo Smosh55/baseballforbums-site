@@ -1,0 +1,663 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Join the Waitlist | Baseball For Bums</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../app.css?v=5">
+
+  <style>
+    body { font-family: 'Barlow', sans-serif; }
+
+    /* ---- PAGE HEADER ---- */
+    header {
+      padding: 40px 0 24px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      margin-bottom: 0;
+      position: relative;
+    }
+    header::before {
+      content: "";
+      position: absolute;
+      bottom: -1px; left: 0;
+      width: 80px; height: 2px;
+      background: var(--accent);
+      border-radius: 999px;
+    }
+    header h1 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-size: clamp(2.4rem, 5vw, 3.6rem);
+      letter-spacing: -0.02em;
+      margin: 0 0 6px;
+      background: linear-gradient(135deg, #eef4ff 30%, #ffcc66 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    header p { color: var(--muted); margin: 0; font-size: 1rem; }
+
+    /* ---- MAIN LAYOUT ---- */
+    .signup-layout {
+      display: grid;
+      grid-template-columns: minmax(0,1fr) 320px;
+      gap: 28px;
+      align-items: start;
+      padding: 28px 0 60px;
+    }
+
+    /* ---- PANEL CARD ---- */
+    .panel-card {
+      background: rgba(15,22,38,0.9);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+      animation: cardIn 0.4s ease both;
+    }
+    .panel-card:nth-child(1) { animation-delay: 0.05s; }
+    .panel-card:nth-child(2) { animation-delay: 0.12s; }
+
+    .panel-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 18px 24px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      background: rgba(255,255,255,0.02);
+    }
+
+    .step-badge {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #d64045, #f05b4f);
+      color: #fff;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 900;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      box-shadow: 0 6px 14px rgba(214,64,69,0.3);
+    }
+
+    .panel-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text);
+    }
+
+    .panel-body { padding: 26px; }
+
+    /* ---- FORM NOTE ---- */
+    .form-note {
+      font-size: 0.88rem;
+      color: var(--muted);
+      line-height: 1.65;
+      margin-bottom: 22px;
+      padding-bottom: 18px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .form-note strong { color: var(--text); font-weight: 700; }
+
+    /* ---- SECTION LABEL ---- */
+    .section-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 800;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent-2);
+      margin: 22px 0 14px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+    .section-label:first-of-type { margin-top: 0; padding-top: 0; border-top: none; }
+
+    /* ---- FIELD LAYOUTS ---- */
+    .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .field {
+      display: flex; flex-direction: column; gap: 7px;
+      margin-bottom: 16px;
+    }
+    .field:last-child { margin-bottom: 0; }
+
+    .field label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .field label .req { color: var(--accent); }
+
+    /* ---- INPUTS ---- */
+    input[type="text"],
+    input[type="email"],
+    input[type="search"],
+    input[type="number"],
+    input:not([type="checkbox"]):not([type="radio"]),
+    select,
+    textarea {
+      width: 100%;
+      padding: 11px 14px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.09);
+      border-radius: 10px;
+      color: var(--text);
+      font-family: 'Barlow', sans-serif;
+      font-size: 0.92rem;
+      outline: none;
+      transition: border-color 0.15s, box-shadow 0.15s;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+    input:focus, select:focus, textarea:focus {
+      border-color: rgba(214,64,69,0.5);
+      box-shadow: 0 0 0 3px rgba(214,64,69,0.1);
+    }
+    input::placeholder { color: rgba(184,196,218,0.3); }
+    textarea { min-height: 96px; resize: vertical; line-height: 1.6; }
+
+    select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%235a6480' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+      padding-right: 32px;
+      cursor: pointer;
+    }
+
+    /* ---- POSITION CHECKBOXES ---- */
+    .field-hint {
+      font-size: 0.75rem;
+      color: rgba(184,196,218,0.45);
+      margin: -4px 0 12px;
+    }
+
+    #positionGroup {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 8px;
+    }
+
+    .position-checkbox {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 11px 14px;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 10px;
+      background: rgba(255,255,255,0.025);
+      cursor: pointer;
+      transition: border-color 0.15s, background 0.15s;
+      user-select: none;
+      font-size: 0.92rem;
+      font-weight: 500;
+      color: var(--muted);
+    }
+    .position-checkbox:hover {
+      border-color: rgba(255,204,102,0.35);
+      background: rgba(255,204,102,0.05);
+      color: var(--text);
+    }
+    .position-checkbox input[type="checkbox"] {
+      position: absolute; opacity: 0; width: 0; height: 0;
+    }
+    .custom-box {
+      width: 20px; height: 20px;
+      border: 2px solid rgba(255,255,255,0.15);
+      border-radius: 5px;
+      background: rgba(255,255,255,0.04);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      transition: all 0.15s ease;
+    }
+    .position-checkbox input:checked ~ .custom-box {
+      background: var(--accent-2);
+      border-color: var(--accent-2);
+    }
+    .position-checkbox input:checked ~ .custom-box::after {
+      content: "✓";
+      color: #000;
+      font-weight: 900;
+      font-size: 0.75rem;
+      line-height: 1;
+    }
+    .position-checkbox:has(input:checked) {
+      border-color: rgba(255,204,102,0.4);
+      background: rgba(255,204,102,0.06);
+    }
+    .pos-label { flex: 1; }
+
+    /* ---- WAIVER BLOCK ---- */
+    .waiver-block {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px;
+      padding: 16px 18px;
+      margin: 20px 0;
+      cursor: pointer;
+      transition: border-color 0.18s, background 0.18s;
+    }
+    .waiver-block:hover {
+      border-color: rgba(255,204,102,0.35);
+      background: rgba(255,204,102,0.03);
+    }
+    .waiver-block.is-checked {
+      border-color: rgba(255,204,102,0.5);
+      background: rgba(255,204,102,0.05);
+    }
+    .waiver-inner { display: flex; gap: 12px; align-items: flex-start; }
+    .waiver-inner input[type="checkbox"] {
+      position: absolute; opacity: 0; width: 0; height: 0; pointer-events: none;
+    }
+    .custom-check {
+      width: 20px; height: 20px;
+      flex-shrink: 0; margin-top: 2px;
+      border: 2px solid rgba(255,255,255,0.15);
+      border-radius: 5px;
+      background: rgba(255,255,255,0.04);
+      display: flex; align-items: center; justify-content: center;
+      transition: border-color 0.18s, background 0.18s;
+    }
+    .waiver-block:hover .custom-check { border-color: rgba(255,204,102,0.5); }
+    .waiver-block.is-checked .custom-check {
+      border-color: var(--accent-2);
+      background: var(--accent-2);
+    }
+    .custom-check svg {
+      opacity: 0; transform: scale(0.5);
+      transition: opacity 0.14s, transform 0.14s;
+    }
+    .waiver-block.is-checked .custom-check svg { opacity: 1; transform: scale(1); }
+    .waiver-text {
+      font-size: 0.9rem; line-height: 1.6;
+      color: var(--muted); font-weight: 500;
+      transition: color 0.18s;
+    }
+    .waiver-text a { color: var(--accent-2); text-decoration: none; font-weight: 700; }
+    .waiver-text a:hover { text-decoration: underline; }
+    .waiver-block.is-checked .waiver-text { color: var(--text); }
+    .waiver-sub { font-size: 0.75rem; color: rgba(184,196,218,0.4); margin-top: 5px; line-height: 1.5; }
+
+    /* ---- SUBMIT BUTTON ---- */
+    .submit-btn {
+      width: 100%;
+      min-height: 50px;
+      padding: 0 24px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #d64045 0%, #f05b4f 100%);
+      color: #fff8f2;
+      border: none;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1rem;
+      font-weight: 900;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      cursor: pointer;
+      box-shadow: 0 12px 28px rgba(214,64,69,0.3);
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+    .submit-btn:hover:not(:disabled) {
+      transform: translateY(-1px);
+      box-shadow: 0 16px 32px rgba(214,64,69,0.38);
+    }
+    .submit-btn:disabled { opacity: 0.55; cursor: not-allowed; transform: none; }
+
+    /* ---- MESSAGES ---- */
+    .msg {
+      margin-top: 14px;
+      padding: 14px 16px;
+      border-radius: 12px;
+      display: none;
+      font-size: 0.88rem;
+      line-height: 1.6;
+      white-space: pre-wrap;
+    }
+    .msg.ok {
+      background: rgba(46,204,113,0.08);
+      border: 1px solid rgba(46,204,113,0.3);
+      color: #a7f3d0;
+    }
+    .msg.err {
+      background: rgba(214,64,69,0.08);
+      border: 1px solid rgba(214,64,69,0.25);
+      color: #ffb3b5;
+    }
+
+    /* ---- SIDE INFO PANEL ---- */
+    .schedule-note {
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-bottom: 18px;
+      line-height: 1.55;
+    }
+
+    .info-card {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      background: rgba(255,255,255,0.025);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 12px;
+      padding: 12px 14px;
+      margin-bottom: 10px;
+      font-size: 0.83rem;
+      line-height: 1.6;
+      color: #c8d6ee;
+    }
+    .info-card:last-child { margin-bottom: 0; }
+    .info-card .icon { font-size: 1rem; flex-shrink: 0; margin-top: 1px; }
+    .info-card strong { color: var(--text); font-weight: 600; }
+
+    /* ---- ANIMATIONS ---- */
+    @keyframes cardIn {
+      from { opacity: 0; transform: translateY(14px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ---- RESPONSIVE ---- */
+    @media (max-width: 900px) {
+      .signup-layout { grid-template-columns: 1fr; }
+      .schedule-panel { order: -1; }
+      #positionGroup { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 640px) {
+      .field-row { grid-template-columns: 1fr; }
+      #positionGroup { grid-template-columns: 1fr 1fr; }
+      .panel-body { padding: 18px 16px; }
+    }
+    @media (max-width: 420px) {
+      #positionGroup { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<div id="site-header"></div>
+
+<header>
+  <div style="width:min(1140px,calc(100% - 32px));margin:0 auto;">
+    <h1>Join the Waitlist</h1>
+    <p>Spring 2026 season · Sub &amp; waitlist registration · Staten Island</p>
+  </div>
+</header>
+
+<main style="width:min(1140px,calc(100% - 32px));margin:0 auto;">
+  <div class="signup-layout">
+
+    <!-- ── FORM PANEL ── -->
+    <div class="panel-card">
+      <div class="panel-header">
+        <div class="step-badge">1</div>
+        <span class="panel-title">Your Information</span>
+      </div>
+      <div class="panel-body">
+        <p class="form-note">
+          The Spring 2026 roster is <strong>full</strong>. Add yourself to the waitlist and we'll call on you as a <strong>sub</strong> whenever a team is short — which happens regularly. If a full roster spot opens up, waitlist players get first dibs.
+        </p>
+
+        <form id="regForm">
+
+          <div class="field">
+            <label>Full Name <span class="req">*</span></label>
+            <input name="fullName" placeholder="Jane Doe" required>
+          </div>
+
+          <div class="field-row">
+            <div class="field">
+              <label>Email <span class="req">*</span></label>
+              <input type="email" name="email" placeholder="you@example.com" required>
+            </div>
+            <div class="field">
+              <label>Phone <span class="req">*</span></label>
+              <input name="phone" placeholder="(917) 555-0100" required>
+            </div>
+          </div>
+
+          <div class="section-label">Player Details</div>
+
+          <div class="field">
+            <label>Preferred Position(s) <span class="req">*</span></label>
+            <p class="field-hint">Select all that apply</p>
+            <div id="positionGroup">
+              <label class="position-checkbox">
+                <input type="checkbox" name="position" value="Pitcher">
+                <span class="custom-box"></span>
+                <span class="pos-label">Pitcher</span>
+              </label>
+              <label class="position-checkbox">
+                <input type="checkbox" name="position" value="Catcher">
+                <span class="custom-box"></span>
+                <span class="pos-label">Catcher</span>
+              </label>
+              <label class="position-checkbox">
+                <input type="checkbox" name="position" value="1B">
+                <span class="custom-box"></span>
+                <span class="pos-label">1B</span>
+              </label>
+              <label class="position-checkbox">
+                <input type="checkbox" name="position" value="2B">
+                <span class="custom-box"></span>
+                <span class="pos-label">2B</span>
+              </label>
+              <label class="position-checkbox">
+                <input type="checkbox" name="position" value="3B">
+                <span class="custom-box"></span>
+                <span class="pos-label">3B</span>
+              </label>
+              <label class="position-checkbox">
+                <input type="checkbox" name="position" value="SS">
+                <span class="custom-box"></span>
+                <span class="pos-label">SS</span>
+              </label>
+              <label class="position-checkbox">
+                <input type="checkbox" name="position" value="LF">
+                <span class="custom-box"></span>
+                <span class="pos-label">LF</span>
+              </label>
+              <label class="position-checkbox">
+                <input type="checkbox" name="position" value="CF">
+                <span class="custom-box"></span>
+                <span class="pos-label">CF</span>
+              </label>
+              <label class="position-checkbox">
+                <input type="checkbox" name="position" value="RF">
+                <span class="custom-box"></span>
+                <span class="pos-label">RF</span>
+              </label>
+              <label class="position-checkbox">
+                <input type="checkbox" name="position" value="Utility">
+                <span class="custom-box"></span>
+                <span class="pos-label">Utility</span>
+              </label>
+            </div>
+            <div id="positionError" class="msg err" style="margin-top:10px;display:none;">
+              Please select at least one position.
+            </div>
+          </div>
+
+          <div class="field-row">
+            <div class="field">
+              <label>Experience Level</label>
+              <select name="experience">
+                <option value="">Select</option>
+                <option>Beginner</option>
+                <option>Some experience</option>
+                <option>High school</option>
+                <option>College</option>
+                <option>Adult leagues</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="field">
+            <label>Notes</label>
+            <textarea name="notes" placeholder="Availability, injuries, schedule conflicts, anything we should know…"></textarea>
+          </div>
+
+          <div class="waiver-block" id="waiverBlock">
+            <div class="waiver-inner">
+              <input type="checkbox" id="waiver" name="waiver" required>
+              <div class="custom-check" aria-hidden="true">
+                <svg width="12" height="10" viewBox="0 0 12 10" fill="none">
+                  <path d="M1 5L4.5 8.5L11 1" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div>
+                <div class="waiver-text">
+                  I agree to the <a href="/waiver-and-conduct/" target="_blank" onclick="event.stopPropagation()">league waiver and code of conduct</a> *
+                </div>
+                <div class="waiver-sub">By joining the waitlist, you acknowledge that availability, schedule changes, and league decisions are handled by league administration.</div>
+              </div>
+            </div>
+          </div>
+
+          <button class="submit-btn" id="submitBtn" type="submit">Join the Waitlist →</button>
+
+          <div class="msg ok" id="okMsg"></div>
+          <div class="msg err" id="errMsg"></div>
+
+        </form>
+      </div>
+    </div>
+
+    <!-- ── SIDE INFO PANEL ── -->
+    <div class="panel-card schedule-panel">
+      <div class="panel-header">
+        <div class="step-badge">2</div>
+        <span class="panel-title">What to Expect</span>
+      </div>
+      <div class="panel-body">
+        <p class="schedule-note">Here's how the sub and waitlist process works.</p>
+
+        <div class="info-card">
+          <span class="icon">📲</span>
+          <p><strong>Getting called as a sub:</strong> When a team is short on players for a game, we reach out to the waitlist. Sub availability is first-come, first-served. Make sure your phone number is correct.</p>
+        </div>
+
+        <div class="info-card">
+          <span class="icon">⚾</span>
+          <p><strong>Subbing rules:</strong> Subs play for the short-handed team and bat at the bottom of the order. Stats count. No fee for subbing.</p>
+        </div>
+
+        <div class="info-card">
+          <span class="icon">🏆</span>
+          <p><strong>Full roster spot:</strong> If a registered player drops out, the next eligible person on the waitlist gets first offer on the open spot.</p>
+        </div>
+
+        <div class="info-card">
+          <span class="icon">💰</span>
+          <p><strong>No fee to waitlist:</strong> There's no cost to join the waitlist. If you're offered a full roster spot, the <strong>$235 entry fee</strong> applies at that point.</p>
+        </div>
+
+        <div class="info-card">
+          <span class="icon">🌧️</span>
+          <p><strong>Rainout policy:</strong> Rained-out games are made up the following Tuesday.</p>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /.signup-layout -->
+</main>
+
+<footer style="width:min(1140px,calc(100% - 32px));margin:0 auto;">
+  Baseball For Bums League Central · Staten Island ·
+  <a href="/waiver-and-conduct/" style="color:var(--accent-2);text-decoration:none;font-weight:700;">View Waiver &amp; Code of Conduct →</a>
+</footer>
+
+<script src="../shared.js?v=5"></script>
+<script src="../header.js?v=5"></script>
+
+<script>
+  /* ---- Waiver toggle ---- */
+  var waiverBlock = document.getElementById('waiverBlock');
+  var waiverInput = document.getElementById('waiver');
+
+  waiverBlock.addEventListener('click', function(e) {
+    if (e.target.tagName === 'A') return;
+    waiverInput.checked = !waiverInput.checked;
+    waiverBlock.classList.toggle('is-checked', waiverInput.checked);
+  });
+
+  /* ---- Form submission — same logic as signup ---- */
+  document.getElementById('regForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    var btn           = document.getElementById('submitBtn');
+    var okMsg         = document.getElementById('okMsg');
+    var errMsg        = document.getElementById('errMsg');
+    var positionError = document.getElementById('positionError');
+
+    okMsg.style.display         = 'none';
+    errMsg.style.display        = 'none';
+    positionError.style.display = 'none';
+
+    var selectedPositions = Array.from(
+      document.querySelectorAll('input[name="position"]:checked')
+    ).map(function(cb) { return cb.value; });
+
+    if (selectedPositions.length === 0) {
+      positionError.style.display = 'block';
+      positionError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
+
+    btn.disabled    = true;
+    btn.textContent = 'Submitting…';
+
+    try {
+      var formData = new FormData(this);
+      var data = {};
+      for (var pair of formData.entries()) {
+        if (pair[0] === 'position') continue;
+        data[pair[0]] = pair[1].trim();
+      }
+      data.position       = selectedPositions.join(', ');
+      data.waiverAccepted = waiverInput.checked;
+      data.userAgent      = navigator.userAgent;
+      data.formType       = 'waitlist'; // lets your Apps Script distinguish this from a full signup
+
+      var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbze6uynBhtPrdaNw2XHg77KOn4pCb4t0TlSqdpEkYVta2z11fSMbwTHhqFVLvHG_vnB/exec';
+
+      var response = await fetch(SCRIPT_URL, {
+        method: 'POST',
+        mode: 'cors',
+        headers: { 'Content-Type': 'text/plain; charset=utf-8' },
+        body: JSON.stringify(data)
+      });
+
+      if (!response.ok) throw new Error('Server responded with status ' + response.status);
+      var result = await response.json();
+
+      if (result.ok) {
+        okMsg.textContent =
+          '✓ You\'re on the waitlist!\n\n' +
+          'Reference ID: ' + (result.registrationId || '—') + '\n\n' +
+          'We\'ll reach out when a sub spot or full roster opening comes up. Make sure your phone is reachable.';
+        okMsg.style.display = 'block';
+        this.reset();
+        waiverBlock.classList.remove('is-checked');
+        waiverInput.checked = false;
+      } else {
+        throw new Error(result.error || 'Submission failed');
+      }
+    } catch (err) {
+      errMsg.textContent   = '× Something went wrong: ' + (err.message || 'Please try again.');
+      errMsg.style.display = 'block';
+    } finally {
+      btn.disabled    = false;
+      btn.textContent = 'Join the Waitlist →';
+    }
+  });
+</script>
+
+</body>
+</html>
