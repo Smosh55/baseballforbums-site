@@ -8,7 +8,6 @@ function normalizePath(value) {
 function isActivePath(targetPath) {
   const current = normalizePath(path);
   const target = normalizePath(targetPath.toLowerCase());
-
   return current === target || current.startsWith(target + "/");
 }
 
@@ -39,15 +38,18 @@ function renderHeader() {
     <div class="site-header">
       <div class="score-ticker">
         <div class="score-ticker-inner">
-          <span class="ticker-pill">Baseball For Bums</span>
-          <span class="ticker-text">Community league coverage • Schedules • Rosters • Stats • Standings</span>
+          <span class="ticker-pill">Spring 2026</span>
+          <span class="ticker-text">Baseball For Bums • Community league coverage • Schedule • Rosters • Stats • Standings</span>
         </div>
       </div>
 
       <div class="header-main">
         <div class="header-inner">
           <a href="/" class="site-brand" aria-label="Baseball For Bums home">
-            <span class="site-brand-mark">BFB</span>
+            <span class="site-brand-mark" aria-hidden="true">
+              <span class="baseball-mark"></span>
+            </span>
+
             <span class="site-brand-copy">
               <strong>Baseball For Bums</strong>
               <small>League Central</small>
