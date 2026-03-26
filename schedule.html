@@ -355,7 +355,6 @@ function buildFilterPills(games) {
 
 function renderSchedule(games) {
   const container = document.getElementById("schedule-groups");
-  buildFilterPills(games);
   const grouped = groupByDate(games);
   container.innerHTML = Object.entries(grouped).map(([date, list]) => {
     const hasRematch = list.some(g => g.rematch);
@@ -408,6 +407,9 @@ function renderSchedule(games) {
 }
 
 async function init() {
+  // Build filter pills once from the base schedule
+  buildFilterPills(BASE_SCHEDULE);
+
   // Show balanced schedule immediately — no loading wait
   renderSchedule(BASE_SCHEDULE);
 
