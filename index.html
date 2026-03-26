@@ -1,370 +1,743 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Baseball For Bums — Staten Island</title>
-  <meta name="description" content="Baseball For Bums — Staten Island's competitive adult baseball league. Register for Spring League."/>
-  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700;800;900&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <meta name="description" content="Baseball For Bums — Staten Island's competitive adult baseball league. Register for Spring League.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="./app.css?v=5">
+
   <style>
-    :root {
-      --red: #E53030;
-      --red-dim: #b02424;
-      --gold: #F5C42E;
-      --gold-dim: #c99e1a;
-      --teal: #00d9c0;
-      --bg: #080c14;
-      --panel: #0f1420;
-      --panel2: #141926;
-      --rule: #1e2535;
-      --rule2: #252d40;
-      --text: #f0f2f8;
-      --text-mid: #b8c2d8;
-      --text-dim: #6e7e9e;
-    }
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: 'Barlow', sans-serif;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
+    body { font-family: 'Barlow', sans-serif; }
 
-    /* ── Header / Nav ── */
-    header {
-      background: #050810;
-      border-bottom: 1px solid var(--rule);
-      padding: 0 32px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      height: 48px;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
-    .logo {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 18px; font-weight: 900;
-      letter-spacing: 0.08em; text-transform: uppercase;
-      color: #fff; text-decoration: none;
-      flex-shrink: 0;
-    }
-    .logo .accent { color: var(--red); }
-
-    .nav-center {
-      display: flex;
-      align-items: center;
-      gap: 4px;
-      position: absolute;
-      left: 50%;
-      transform: translateX(-50%);
-    }
-    .nav-link {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 13px; font-weight: 700;
-      letter-spacing: 0.12em; text-transform: uppercase;
-      color: var(--text-dim);
-      text-decoration: none;
-      padding: 6px 14px;
-      transition: color 0.15s;
-      position: relative;
-    }
-    .nav-link:hover { color: var(--text); }
-    .nav-link.active {
-      color: var(--gold);
-    }
-    .nav-link.active::after {
-      content: '';
-      position: absolute;
-      bottom: -4px; left: 14px; right: 14px;
-      height: 2px;
-      background: var(--gold);
-    }
-
-    .header-right {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-    }
-    .location-pill {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 11px; font-weight: 700;
-      letter-spacing: 0.15em; text-transform: uppercase;
-      color: #fff; background: var(--red);
-      padding: 4px 12px;
-    }
-    .header-cta {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 12px; font-weight: 800;
-      letter-spacing: 0.12em; text-transform: uppercase;
-      color: #fff; background: var(--red);
-      text-decoration: none;
-      padding: 7px 16px;
-      transition: background 0.15s;
-    }
-    .header-cta:hover { background: #ff3d3d; }
-
-    /* ── Hero ── */
+    /* ================================================================
+       HERO
+    ================================================================ */
     .hero {
+      padding: 72px 0 64px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
       position: relative;
-      padding: 80px 32px 70px;
-      text-align: center;
       overflow: hidden;
-      border-bottom: 2px solid var(--red);
-      flex: none;
     }
+
+    /* subtle radial glow behind hero */
     .hero::before {
-      content: '';
+      content: "";
       position: absolute;
-      top: -80px; left: 50%;
+      top: -100px; left: 50%;
       transform: translateX(-50%);
       width: 900px; height: 600px;
-      background: radial-gradient(ellipse at center, rgba(180,40,20,0.22) 0%, rgba(120,20,10,0.1) 45%, transparent 68%);
+      background: radial-gradient(ellipse at center,
+        rgba(214,64,69,0.16) 0%,
+        rgba(214,64,69,0.06) 40%,
+        transparent 70%);
       pointer-events: none;
     }
-    .hero-kicker {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 11px; font-weight: 700; letter-spacing: 0.35em; text-transform: uppercase;
-      color: var(--text-dim); margin-bottom: 20px;
-      display: flex; align-items: center; justify-content: center; gap: 10px;
-    }
-    .hero-kicker::before { content: '●'; color: var(--red); font-size: 8px; }
-    .hero h1 {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: clamp(52px, 9vw, 100px); font-weight: 900;
-      text-transform: uppercase; letter-spacing: 0.02em; line-height: 0.95;
-      color: #fff; margin-bottom: 10px;
-    }
-    .hero h1 .line2 { color: var(--gold); display: block; }
-    .hero-tagline {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 18px; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase;
-      color: var(--text-dim); margin-bottom: 40px;
-    }
 
-    /* Stats bar */
-    .stats-bar {
-      display: flex;
-      justify-content: center;
-      border: 1px solid var(--rule2);
-      background: var(--panel);
-      max-width: 680px;
-      margin: 0 auto 40px;
-      overflow: hidden;
-    }
-    .stat {
-      flex: 1;
-      padding: 16px 20px;
-      text-align: center;
-      border-right: 1px solid var(--rule2);
-    }
-    .stat:last-child { border-right: none; }
-    .stat-val {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 28px; font-weight: 800; color: #fff; line-height: 1; display: block;
-    }
-    .stat-val.gold { color: var(--gold); }
-    .stat-label {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 10px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase;
-      color: var(--text-dim); display: block; margin-top: 5px;
-    }
-
-    /* CTA buttons */
-    .cta-row {
-      display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin-bottom: 28px;
-    }
-    .btn-primary {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 16px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase;
-      color: #fff; background: var(--red); border: none;
-      padding: 16px 36px; text-decoration: none;
-      transition: background 0.15s; cursor: pointer;
-    }
-    .btn-primary:hover { background: #ff3d3d; }
-    .btn-secondary {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 16px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase;
-      color: var(--text-mid); background: transparent;
-      border: 1px solid var(--rule2);
-      padding: 16px 36px; text-decoration: none;
-      transition: border-color 0.15s, color 0.15s;
-    }
-    .btn-secondary:hover { border-color: var(--text-dim); color: var(--text); }
-
-    /* Waitlist notice */
-    .waitlist-note {
-      max-width: 560px; margin: 0 auto;
-      background: var(--panel2); border: 1px solid var(--rule2);
-      padding: 14px 18px;
-      font-size: 14px; color: var(--text-mid); line-height: 1.6; text-align: left;
-      display: flex; gap: 12px; align-items: flex-start;
-    }
-    .waitlist-note::before { content: '⚠️'; flex-shrink: 0; font-size: 16px; }
-    .waitlist-note strong { color: #fff; }
-
-    /* ── Feature cards ── */
-    .features {
-      max-width: 980px;
+    .hero-inner {
+      width: min(1140px, calc(100% - 32px));
       margin: 0 auto;
-      padding: 60px 32px 80px;
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 60px;
+      align-items: center;
+      position: relative;
+    }
+
+    /* ---- LEFT: text ---- */
+    .hero-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: #8fa4c4;
+      margin-bottom: 18px;
+    }
+    .hero-kicker::before {
+      content: "";
+      display: inline-block;
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      flex-shrink: 0;
+    }
+
+    .hero-headline {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-size: clamp(3.2rem, 7vw, 5.4rem);
+      line-height: 0.95;
+      letter-spacing: -0.01em;
+      text-transform: uppercase;
+      color: var(--text);
+      margin-bottom: 20px;
+    }
+    .hero-headline .line2 {
+      display: block;
+      background: linear-gradient(135deg, #ffcc66 20%, #ffaa33 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-tagline {
+      font-size: 1.15rem;
+      font-weight: 500;
+      color: #c8d6ee;
+      line-height: 1.65;
+      margin-bottom: 32px;
+      max-width: 44ch;
+    }
+
+    .hero-ctas {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 28px;
+    }
+
+    .btn-hero-primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 52px;
+      padding: 0 30px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #d64045 0%, #f05b4f 100%);
+      color: #fff8f2;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-size: 1rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border: none;
+      box-shadow: 0 14px 32px rgba(214,64,69,0.32);
+      transition: 0.18s ease;
+    }
+    .btn-hero-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 18px 38px rgba(214,64,69,0.4);
+    }
+
+    .btn-hero-secondary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 52px;
+      padding: 0 28px;
+      border-radius: 999px;
+      background: transparent;
+      color: var(--muted);
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 800;
+      font-size: 1rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border: 1px solid rgba(255,255,255,0.12);
+      transition: 0.18s ease;
+    }
+    .btn-hero-secondary:hover {
+      color: var(--text);
+      border-color: rgba(255,255,255,0.25);
+      background: rgba(255,255,255,0.04);
+    }
+
+    .waitlist-notice {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      background: rgba(214,64,69,0.07);
+      border: 1px solid rgba(214,64,69,0.22);
+      border-radius: 12px;
+      padding: 12px 16px;
+      max-width: 420px;
+    }
+    .waitlist-notice-icon { font-size: 0.9rem; flex-shrink: 0; margin-top: 2px; }
+    .waitlist-notice p {
+      font-size: 0.83rem;
+      color: #ffd5d6;
+      line-height: 1.55;
+      margin: 0;
+    }
+    .waitlist-notice p strong { color: #ffb3b5; font-weight: 700; }
+
+    /* ---- RIGHT: league card ---- */
+    .league-card {
+      background: rgba(15,22,38,0.92);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 22px;
+      overflow: hidden;
+      box-shadow: 0 24px 60px rgba(0,0,0,0.4);
+    }
+
+    .league-card-header {
+      padding: 15px 20px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      background: rgba(255,255,255,0.02);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .league-card-header-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.68rem;
+      font-weight: 800;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--accent-2);
+    }
+    .league-card-header-season {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(184,196,218,0.45);
+    }
+
+    /* Teams section */
+    .league-teams-section {
+      padding: 16px 20px 14px;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .league-section-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.62rem;
+      font-weight: 800;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(184,196,218,0.45);
+      margin-bottom: 10px;
+    }
+    .teams-list {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+    }
+    .team-chip {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 10px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 8px;
+    }
+    .team-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .team-chip-name {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 800;
+      letter-spacing: 0.03em;
+      color: var(--text);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* Standings / leaderboard */
+    .league-standings-section {
+      padding: 14px 20px 18px;
+    }
+    .standings-table {
+      width: 100%;
+    }
+    .standings-thead {
+      display: grid;
+      grid-template-columns: 18px 1fr 34px 34px 48px;
+      gap: 6px;
+      padding: 0 6px 8px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      margin-bottom: 4px;
+    }
+    .standings-th {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.6rem;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(184,196,218,0.4);
+      text-align: right;
+    }
+    .standings-th:nth-child(2) { text-align: left; }
+    .standings-row {
+      display: grid;
+      grid-template-columns: 18px 1fr 34px 34px 48px;
+      gap: 6px;
+      padding: 7px 6px;
+      border-radius: 7px;
+      transition: background 0.12s;
+    }
+    .standings-row:hover { background: rgba(255,255,255,0.03); }
+    .standings-rank {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: rgba(184,196,218,0.35);
+      text-align: center;
+      align-self: center;
+    }
+    .standings-row:nth-child(1) .standings-rank { color: #f5c542; }
+    .standings-row:nth-child(2) .standings-rank { color: #c8cfd9; }
+    .standings-row:nth-child(3) .standings-rank { color: #d9956a; }
+    .standings-team-name {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.88rem;
+      font-weight: 800;
+      color: var(--text);
+      align-self: center;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .standings-num {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: #c8d6ee;
+      text-align: right;
+      align-self: center;
+    }
+    .standings-rd {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.88rem;
+      font-weight: 800;
+      text-align: right;
+      align-self: center;
+    }
+    .standings-rd.pos { color: #5ee8d8; }
+    .standings-rd.neg { color: #ff9090; }
+    .standings-rd.zero { color: #8fa4c4; }
+
+    .standings-empty {
+      padding: 14px 0 6px;
+      text-align: center;
+    }
+    .standings-empty-icon { font-size: 1.4rem; margin-bottom: 6px; }
+    .standings-empty-text {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      color: rgba(184,196,218,0.4);
+    }
+    .standings-empty-date {
+      font-size: 0.75rem;
+      color: var(--accent-2);
+      margin-top: 3px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+    }
+
+    /* ================================================================
+       FEATURE CARDS
+    ================================================================ */
+    .features-section {
+      padding: 56px 0 64px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .features-inner {
+      width: min(1140px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .features-heading {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: #8fa4c4;
+      margin-bottom: 22px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .features-heading::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: rgba(255,255,255,0.06);
+    }
+
+    .features-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
+      gap: 16px;
     }
+
     .feat-card {
-      background: var(--panel);
-      border: 1px solid var(--rule2);
-      border-top: 3px solid var(--rule2);
-      padding: 28px 24px;
+      background: rgba(15,22,38,0.9);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-top: 3px solid rgba(255,255,255,0.07);
+      border-radius: 18px;
+      padding: 26px 24px;
       text-decoration: none;
-      display: flex; flex-direction: column; gap: 10px;
-      transition: border-top-color 0.2s, transform 0.15s;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.2);
+      transition: border-top-color 0.18s, transform 0.18s, box-shadow 0.18s;
+      animation: cardIn 0.4s ease both;
     }
-    .feat-card:hover { border-top-color: var(--gold); transform: translateY(-2px); }
-    .feat-card.red:hover { border-top-color: var(--red); }
-    .feat-card.teal:hover { border-top-color: var(--teal); }
-    .feat-icon { font-size: 28px; margin-bottom: 4px; }
+    .feat-card:nth-child(1) { animation-delay: 0.05s; }
+    .feat-card:nth-child(2) { animation-delay: 0.12s; }
+    .feat-card:nth-child(3) { animation-delay: 0.19s; }
+
+    .feat-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 20px 44px rgba(0,0,0,0.3);
+      border-top-color: var(--accent-2);
+    }
+    .feat-card.red:hover  { border-top-color: var(--accent); }
+    .feat-card.teal:hover { border-top-color: #5ee8d8; }
+
+    .feat-icon { font-size: 1.6rem; margin-bottom: 2px; }
+
     .feat-title {
       font-family: 'Barlow Condensed', sans-serif;
-      font-size: 20px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase;
-      color: #fff;
+      font-size: 1.25rem;
+      font-weight: 900;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--text);
+      line-height: 1;
     }
+
     .feat-desc {
-      font-size: 14px; color: var(--text-dim); line-height: 1.65; flex: 1;
+      font-size: 0.92rem;
+      color: #c8d6ee;
+      line-height: 1.75;
+      flex: 1;
     }
+
     .feat-arrow {
       font-family: 'Barlow Condensed', sans-serif;
-      font-size: 13px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
-      color: var(--gold); margin-top: 8px;
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent-2);
+      margin-top: 6px;
     }
-    .feat-card.red .feat-arrow { color: var(--red); }
-    .feat-card.teal .feat-arrow { color: var(--teal); }
+    .feat-card.red  .feat-arrow { color: #ff9090; }
+    .feat-card.teal .feat-arrow { color: #5ee8d8; }
 
-    /* ── Footer ── */
-    footer {
-      border-top: 1px solid var(--rule);
-      padding: 32px;
-      display: flex; flex-direction: column; align-items: center; gap: 12px;
-      text-align: center;
-      background: rgba(5,8,16,0.85);
-      margin-top: auto;
+    /* ================================================================
+       INFO STRIP
+    ================================================================ */
+    .info-strip {
+      padding: 48px 0 56px;
     }
-    .footer-logo {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 15px; font-weight: 800;
-      letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-dim);
+    .info-strip-inner {
+      width: min(1140px, calc(100% - 32px));
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
     }
-    .footer-logo .accent { color: var(--red); }
-    .footer-copy { font-size: 12px; color: var(--text-dim); }
-    .footer-link {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 12px; font-weight: 700;
-      letter-spacing: 0.15em; text-transform: uppercase;
-      color: var(--gold); text-decoration: none;
-    }
-    .footer-link:hover { text-decoration: underline; }
-    .powered-by { display: flex; align-items: center; gap: 8px; margin-top: 4px; }
-    .pb-label { font-size: 12px; color: var(--text-dim); }
-    .pb-logo { height: 20px; opacity: 0.65; transition: opacity 0.2s; }
-    .pb-logo:hover { opacity: 1; }
 
-    /* ── Mobile ── */
-    @media (max-width: 860px) {
-      .nav-center { display: none; }
-      .features { grid-template-columns: 1fr; padding: 40px 20px 60px; }
-      .hero { padding: 60px 20px 52px; }
-      .stats-bar { flex-wrap: wrap; }
-      .stat { flex: 1 1 45%; border-bottom: 1px solid var(--rule2); }
-      .stat:nth-child(2) { border-right: none; }
+    .info-card {
+      background: rgba(15,22,38,0.9);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 16px;
+      padding: 22px 22px;
+      box-shadow: 0 10px 28px rgba(0,0,0,0.18);
     }
-    @media (max-width: 500px) {
-      header { padding: 0 16px; }
-      .stat { flex: 1 1 100%; border-right: none; }
+
+    .info-card-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.65rem;
+      font-weight: 800;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent-2);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+    .info-card-label::before {
+      content: "";
+      display: inline-block;
+      width: 4px; height: 14px;
+      border-radius: 999px;
+      background: var(--accent);
+      flex-shrink: 0;
+    }
+
+    .info-card h3 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 10px;
+      letter-spacing: 0.03em;
+    }
+
+    .info-card p {
+      font-size: 0.92rem;
+      color: #c8d6ee;
+      line-height: 1.8;
+    }
+    .info-card p strong { color: var(--text); font-weight: 600; }
+
+    /* ================================================================
+       ANIMATIONS
+    ================================================================ */
+    @keyframes cardIn {
+      from { opacity: 0; transform: translateY(14px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ================================================================
+       RESPONSIVE
+    ================================================================ */
+    @media (max-width: 900px) {
+      .hero-inner {
+        grid-template-columns: 1fr;
+        gap: 36px;
+      }
+      .hero-stat-card { max-width: 420px; }
+      .hero-tagline { max-width: none; }
+      .features-grid { grid-template-columns: 1fr; }
+      .info-strip-inner { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 640px) {
+      .hero { padding: 48px 0 48px; }
+      .hero-headline { font-size: clamp(2.8rem, 10vw, 3.8rem); }
+      .features-section { padding: 40px 0 48px; }
+      .info-strip { padding: 36px 0 48px; }
+      .stat-val { font-size: 1.7rem; }
     }
   </style>
 </head>
 <body>
 
-  <!-- ── Header ── -->
-  <header>
-    <a href="/" class="logo">Baseball <span class="accent">For Bums</span></a>
+<div id="site-header"></div>
 
-    <nav class="nav-center">
-      <a href="/" class="nav-link active">Home</a>
-      <a href="/signup/" class="nav-link">Sign Up</a>
-      <a href="/league-rules/" class="nav-link">League Rules</a>
-      <a href="/waiver-and-conduct/" class="nav-link">Waiver</a>
-    </nav>
+<!-- ================================================================
+     HERO
+================================================================ -->
+<section class="hero">
+  <div class="hero-inner">
 
-    <div class="header-right">
-      <span class="location-pill">Staten Island</span>
-      <a href="/signup/" class="header-cta">Register →</a>
-    </div>
-  </header>
+    <!-- Left -->
+    <div class="hero-left">
+      <div class="hero-kicker">Spring Season · Staten Island</div>
 
-  <!-- ── Hero ── -->
-  <div class="hero">
-    <div class="hero-kicker">Spring Season · Staten Island</div>
-    <h1>Baseball<span class="line2">For Bums</span></h1>
-    <p class="hero-tagline">Real Baseball. Real Competition. No Nonsense.</p>
+      <h1 class="hero-headline">
+        Baseball
+        <span class="line2">For Bums</span>
+      </h1>
 
-    <div class="stats-bar">
-      <div class="stat"><span class="stat-val">1</span><span class="stat-label">Division</span></div>
-      <div class="stat"><span class="stat-val">6</span><span class="stat-label">Teams</span></div>
-      <div class="stat"><span class="stat-val gold">$235</span><span class="stat-label">Entry Fee</span></div>
-      <div class="stat"><span class="stat-val">66</span><span class="stat-label">Player Cap</span></div>
-      <div class="stat"><span class="stat-val">Apr 16</span><span class="stat-label">Season Start</span></div>
-    </div>
+      <p class="hero-tagline">
+        Real baseball. Real competition. No nonsense. Staten Island's competitive adult league — spring season now registering.
+      </p>
 
-    <div class="cta-row">
-      <a href="/signup/" class="btn-primary">Register Now →</a>
-      <a href="/league-rules/" class="btn-secondary">League Rules</a>
+      <div class="hero-ctas">
+        <a href="/signup/" class="btn-hero-primary">Join the Waitlist →</a>
+        <a href="/schedule.html" class="btn-hero-secondary">View Schedule</a>
+      </div>
+
+      <div class="waitlist-notice">
+        <span class="waitlist-notice-icon">⚾</span>
+        <p><strong>Registration is full.</strong> Sign up to join the <strong>waitlist as a sub</strong> — we call on subs regularly throughout the season when teams are short.</p>
+      </div>
     </div>
 
-    <div class="waitlist-note">
-      <strong>Important:</strong> Registration does <strong>not</strong> guarantee a spot.
-      Once the league reaches capacity, new registrations will be placed on the <strong>waitlist</strong>.
+    <!-- Right: league card -->
+    <div class="hero-right">
+      <div class="league-card">
+
+        <div class="league-card-header">
+          <span class="league-card-header-label">Spring 2026</span>
+          <span class="league-card-header-season">Staten Island · 6 Teams</span>
+        </div>
+
+        <!-- Teams -->
+        <div class="league-teams-section">
+          <div class="league-section-title">This Season's Teams</div>
+          <div class="teams-list">
+            <div class="team-chip"><span class="team-dot" style="background:#f5c542;"></span><span class="team-chip-name">Renegades</span></div>
+            <div class="team-chip"><span class="team-dot" style="background:#4da3ff;"></span><span class="team-chip-name">See Ya!</span></div>
+            <div class="team-chip"><span class="team-dot" style="background:#5ee8d8;"></span><span class="team-chip-name">Hurricanes</span></div>
+            <div class="team-chip"><span class="team-dot" style="background:#ff9090;"></span><span class="team-chip-name">Elite</span></div>
+            <div class="team-chip"><span class="team-dot" style="background:#b47eff;"></span><span class="team-chip-name">Legends</span></div>
+            <div class="team-chip"><span class="team-dot" style="background:#6de6a0;"></span><span class="team-chip-name">Cut Fresh</span></div>
+          </div>
+        </div>
+
+        <!-- Standings leaderboard — populated by JS -->
+        <div class="league-standings-section">
+          <div class="league-section-title">Standings</div>
+          <div id="home-standings">
+            <div class="standings-empty">
+              <div class="standings-empty-icon">📅</div>
+              <div class="standings-empty-text">Season hasn't started yet</div>
+              <div class="standings-empty-date">Opener: April 18, 2026</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
     </div>
+
   </div>
+</section>
 
-  <!-- ── Feature Cards ── -->
-  <div class="features">
-    <a href="/signup/" class="feat-card red">
-      <div class="feat-icon">📋</div>
-      <div class="feat-title">Sign Up</div>
-      <div class="feat-desc">Register for the Spring season. Fill out your player info, jersey details, and preferred positions. Spots are limited to 66 players.</div>
-      <div class="feat-arrow">Register Now →</div>
-    </a>
-    <a href="/league-rules/" class="feat-card">
-      <div class="feat-icon">📖</div>
-      <div class="feat-title">League Rules</div>
-      <div class="feat-desc">Game basics, base running, equipment requirements, conduct policy, standings, and playoff format — everything you need to know before first pitch.</div>
-      <div class="feat-arrow">Read the Rules →</div>
-    </a>
-    <a href="/waiver-and-conduct/" class="feat-card teal">
-      <div class="feat-icon">🤝</div>
-      <div class="feat-title">Waiver &amp; Conduct</div>
-      <div class="feat-desc">Review the league waiver and code of conduct before registering. All players must agree prior to participation.</div>
-      <div class="feat-arrow">View Waiver →</div>
-    </a>
-  </div>
+<!-- ================================================================
+     FEATURE CARDS
+================================================================ -->
+<section class="features-section">
+  <div class="features-inner">
+    <div class="features-heading">Quick Links</div>
 
-  <!-- ── Footer ── -->
-  <footer>
-    <div class="footer-logo">Baseball <span class="accent">For Bums</span> · Staten Island</div>
-    <div class="footer-copy">© 2026 Baseball For Bums — Staten Island. All rights reserved.</div>
-    <a href="/waiver-and-conduct/" class="footer-link">Waiver &amp; Code of Conduct →</a>
-    <div class="powered-by">
-      <span class="pb-label">Powered by</span>
-      <a href="https://oneby.ai" target="_blank" rel="noopener">
-        <img src="https://7095cda1.logo-46y.pages.dev/logo.svg" alt="Oneby.AI" class="pb-logo" />
+    <div class="features-grid">
+      <a href="/schedule.html" class="feat-card teal">
+        <div class="feat-icon">📅</div>
+        <div class="feat-title">Schedule</div>
+        <div class="feat-desc">View the full Spring 2026 game schedule. Game dates, times, field assignments, and status for every matchup this season.</div>
+        <div class="feat-arrow">View Schedule →</div>
+      </a>
+
+      <a href="/league-rules/" class="feat-card">
+        <div class="feat-icon">📖</div>
+        <div class="feat-title">League Rules</div>
+        <div class="feat-desc">Game basics, base running, equipment requirements, conduct policy, standings, and playoff format — everything you need to know before first pitch.</div>
+        <div class="feat-arrow">Read the Rules →</div>
+      </a>
+
+      <a href="/waiver-and-conduct/" class="feat-card red">
+        <div class="feat-icon">🤝</div>
+        <div class="feat-title">Waiver &amp; Conduct</div>
+        <div class="feat-desc">Review the league waiver and code of conduct before registering. All players must agree to these terms prior to participation.</div>
+        <div class="feat-arrow">View Waiver →</div>
       </a>
     </div>
-  </footer>
+  </div>
+</section>
 
+<!-- ================================================================
+     INFO STRIP
+================================================================ -->
+<section class="info-strip">
+  <div class="info-strip-inner">
+
+    <div class="info-card">
+      <div class="info-card-label">Format</div>
+      <h3>7-Inning Games</h3>
+      <p>11 players per side. Everyone bats, even if rotating in and out on defense. <strong>Single-elimination playoffs</strong> cap the season.</p>
+    </div>
+
+    <div class="info-card">
+      <div class="info-card-label">Standings</div>
+      <h3>Run Differential</h3>
+      <p>Standings are determined by <strong>run differential</strong>. Tiebreakers go to head-to-head record. Both scores vs. a double-opponent are averaged.</p>
+    </div>
+
+    <div class="info-card">
+      <div class="info-card-label">Rainouts</div>
+      <h3>Tuesday Makeups</h3>
+      <p>Any rained-out game is rescheduled for the <strong>following Tuesday</strong>, or the next available field date if the field is unavailable.</p>
+    </div>
+
+  </div>
+</section>
+
+<footer style="width:min(1140px,calc(100% - 32px));margin:0 auto;">
+  Baseball For Bums League Central · Staten Island · © 2026
+</footer>
+
+<script src="./shared.js?v=5"></script>
+<script src="./header.js?v=5"></script>
+<script>
+// Team color map matches the team chips above
+var TEAM_COLORS = {
+  "Renegades":  "#f5c542",
+  "See Ya!":    "#4da3ff",
+  "Hurricanes": "#5ee8d8",
+  "Elite":      "#ff9090",
+  "Legends":    "#b47eff",
+  "Cut Fresh":  "#6de6a0"
+};
+
+function rdClass(val) {
+  var n = Number(val || 0);
+  if (n > 0) return "pos";
+  if (n < 0) return "neg";
+  return "zero";
+}
+function rdSign(val) {
+  var n = Number(val || 0);
+  return n > 0 ? "+" + n : String(n);
+}
+
+async function loadHomeStandings() {
+  var el = document.getElementById("home-standings");
+  try {
+    var data = await loadData("Standings");
+    if (!Array.isArray(data) || !data.length) return; // keep default empty state
+
+    // Sort by wins desc, then run diff desc
+    var sorted = data.slice().sort(function(a, b) {
+      var wDiff = Number(b.wins || b.w || 0) - Number(a.wins || a.w || 0);
+      if (wDiff !== 0) return wDiff;
+      return Number(b.run_diff || b.rd || b.run_differential || 0) -
+             Number(a.run_diff || a.rd || a.run_differential || 0);
+    });
+
+    var getName = function(r) { return r.team_name || r.team || r.Team || ""; };
+    var getW    = function(r) { return r.wins || r.w || r.W || 0; };
+    var getL    = function(r) { return r.losses || r.l || r.L || 0; };
+    var getRD   = function(r) { return r.run_diff || r.rd || r.run_differential || r.RD || 0; };
+
+    el.innerHTML =
+      '<div class="standings-thead">' +
+        '<div class="standings-th">#</div>' +
+        '<div class="standings-th" style="text-align:left;">Team</div>' +
+        '<div class="standings-th">W</div>' +
+        '<div class="standings-th">L</div>' +
+        '<div class="standings-th">RD</div>' +
+      '</div>' +
+      sorted.map(function(row, i) {
+        var name  = getName(row);
+        var color = TEAM_COLORS[name] || "rgba(255,255,255,0.3)";
+        var rd    = getRD(row);
+        return '<div class="standings-row">' +
+          '<div class="standings-rank">' + (i + 1) + '</div>' +
+          '<div class="standings-team-name" style="display:flex;align-items:center;gap:6px;">' +
+            '<span style="width:7px;height:7px;border-radius:50%;background:' + color + ';flex-shrink:0;display:inline-block;"></span>' +
+            name +
+          '</div>' +
+          '<div class="standings-num">' + getW(row) + '</div>' +
+          '<div class="standings-num">' + getL(row) + '</div>' +
+          '<div class="standings-rd ' + rdClass(rd) + '">' + rdSign(rd) + '</div>' +
+        '</div>';
+      }).join("");
+  } catch(e) {
+    // silently keep the "season hasn't started" placeholder
+  }
+}
+
+loadHomeStandings();
+</script>
 </body>
 </html>
