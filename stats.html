@@ -3,94 +3,709 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Player Stats</title>
-  <link rel="stylesheet" href="./app.css">
+  <title>Player Stats | Baseball For Bums</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="./app.css?v=5">
+
+  <style>
+    body { font-family: 'Barlow', sans-serif; }
+
+    /* ---- PAGE HEADER ---- */
+    header {
+      padding: 40px 0 20px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      margin-bottom: 28px;
+      position: relative;
+    }
+    header::before {
+      content: "";
+      position: absolute;
+      bottom: -1px; left: 0;
+      width: 80px; height: 2px;
+      background: var(--accent);
+      border-radius: 999px;
+    }
+    header h1 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-size: clamp(2.4rem, 5vw, 3.6rem);
+      letter-spacing: -0.02em;
+      margin: 0 0 6px;
+      background: linear-gradient(135deg, #eef4ff 30%, #ffcc66 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    header p { color: var(--muted); margin: 0; font-size: 1rem; }
+
+    /* ---- SECTION TITLES ---- */
+    .section-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 900;
+      letter-spacing: 0.02em;
+      color: var(--text);
+      margin: 0 0 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .section-title-accent {
+      display: inline-block;
+      width: 4px; height: 22px;
+      border-radius: 999px;
+      background: var(--accent);
+      flex-shrink: 0;
+    }
+
+    /* ================================================================
+       LEADERBOARDS
+    ================================================================ */
+    .leaderboards-section { margin-bottom: 36px; }
+
+    /* Tab strip */
+    .lb-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 18px;
+    }
+
+    .lb-tab {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.03);
+      color: var(--muted);
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      cursor: pointer;
+      transition: all 0.14s ease;
+      user-select: none;
+      white-space: nowrap;
+    }
+    .lb-tab:hover {
+      color: var(--text);
+      border-color: rgba(255,255,255,0.18);
+      background: rgba(255,255,255,0.07);
+    }
+    .lb-tab.active {
+      background: rgba(214,64,69,0.15);
+      border-color: rgba(214,64,69,0.45);
+      color: #ffd5d6;
+    }
+    .lb-tab-icon { font-size: 0.85rem; }
+
+    /* Leaderboard card */
+    .lb-card {
+      background: rgba(15,22,38,0.9);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 20px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+      overflow: hidden;
+      display: none;
+      animation: cardIn 0.3s ease both;
+    }
+    .lb-card.active { display: block; }
+
+    .lb-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 22px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      background: rgba(255,255,255,0.02);
+      gap: 12px;
+    }
+
+    .lb-card-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .lb-card-title .lb-icon {
+      font-size: 1.3rem;
+      line-height: 1;
+    }
+    .lb-card-title h3 {
+      margin: 0;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: var(--text);
+    }
+    .lb-card-title small {
+      color: var(--muted);
+      font-size: 0.78rem;
+      font-weight: 600;
+      margin-top: 1px;
+      display: block;
+    }
+
+    .lb-see-all {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--accent-2);
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 0;
+      opacity: 0.7;
+      transition: opacity 0.14s;
+    }
+    .lb-see-all:hover { opacity: 1; }
+
+    /* Leaderboard rows */
+    .lb-list {
+      list-style: none;
+      margin: 0;
+      padding: 12px;
+      display: grid;
+      gap: 8px;
+    }
+
+    .lb-row {
+      display: grid;
+      grid-template-columns: 36px 1fr auto;
+      align-items: center;
+      gap: 14px;
+      padding: 13px 16px;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.025);
+      border: 1px solid rgba(255,255,255,0.05);
+      transition: background 0.14s;
+    }
+    .lb-row:hover { background: rgba(255,255,255,0.045); }
+
+    .lb-rank {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 900;
+      color: var(--muted);
+      text-align: center;
+      line-height: 1;
+    }
+
+    /* Gold / silver / bronze */
+    .lb-row:nth-child(1) { border-left: 3px solid #f5c542; background: rgba(245,197,66,0.06); }
+    .lb-row:nth-child(1) .lb-rank { color: #f5c542; }
+    .lb-row:nth-child(2) { border-left: 3px solid #b0b8c8; background: rgba(176,184,200,0.04); }
+    .lb-row:nth-child(2) .lb-rank { color: #c8cfd9; }
+    .lb-row:nth-child(3) { border-left: 3px solid #c97b4b; background: rgba(201,123,75,0.04); }
+    .lb-row:nth-child(3) .lb-rank { color: #d9956a; }
+
+    .lb-player-info { min-width: 0; }
+    .lb-player-name {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--text);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .lb-player-team {
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-top: 1px;
+    }
+
+    .lb-stat-value {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 900;
+      color: var(--accent-2);
+      letter-spacing: -0.01em;
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    /* ================================================================
+       FULL STATS TABLE SECTION
+    ================================================================ */
+    .stats-section { margin-bottom: 48px; }
+
+    /* Toolbar */
+    .stats-toolbar {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 16px;
+    }
+
+    .stats-search {
+      position: relative;
+      flex: 1;
+      min-width: 200px;
+      max-width: 340px;
+    }
+    .stats-search input {
+      width: 100%;
+      min-height: 44px;
+      padding: 0 16px 0 40px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.09);
+      background: rgba(17,26,43,0.92);
+      color: var(--text);
+      outline: none;
+      font: inherit;
+      font-size: 0.9rem;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+    .stats-search input:focus {
+      border-color: rgba(214,64,69,0.45);
+      box-shadow: 0 0 0 3px rgba(214,64,69,0.1);
+    }
+    .stats-search input::placeholder { color: var(--muted); }
+    .stats-search-icon {
+      position: absolute;
+      left: 14px; top: 50%;
+      transform: translateY(-50%);
+      color: var(--muted);
+      pointer-events: none;
+      font-size: 0.9rem;
+    }
+
+    .stats-sort-wrap {
+      position: relative;
+    }
+    .stats-sort-wrap select {
+      appearance: none;
+      min-height: 44px;
+      padding: 0 36px 0 16px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.09);
+      background: rgba(17,26,43,0.92);
+      color: var(--text);
+      font: inherit;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      outline: none;
+      cursor: pointer;
+      transition: border-color 0.15s;
+    }
+    .stats-sort-wrap select:focus { border-color: rgba(214,64,69,0.45); }
+    .stats-sort-wrap::after {
+      content: "▾";
+      position: absolute;
+      right: 14px; top: 50%;
+      transform: translateY(-50%);
+      color: var(--muted);
+      pointer-events: none;
+      font-size: 0.75rem;
+    }
+
+    .stats-count {
+      margin-left: auto;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    /* Table */
+    .table-wrap {
+      background: rgba(15,22,38,0.9);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+    }
+
+    table { width: 100%; border-collapse: collapse; }
+
+    thead th {
+      padding: 14px 16px;
+      background: rgba(255,255,255,0.03);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent-2);
+      text-align: left;
+      cursor: pointer;
+      white-space: nowrap;
+      user-select: none;
+      transition: color 0.14s;
+    }
+    thead th:hover { color: var(--text); }
+    thead th.sort-active { color: #fff; }
+    thead th.sort-active::after { content: " ↓"; font-size: 0.7rem; }
+
+    tbody td {
+      padding: 13px 16px;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      vertical-align: middle;
+      font-size: 0.9rem;
+    }
+    tbody tr:last-child td { border-bottom: none; }
+    tbody tr:hover td { background: rgba(255,255,255,0.03); }
+
+    .td-player {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--text);
+      white-space: nowrap;
+    }
+    .td-team {
+      font-size: 0.78rem;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+    .td-num {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #c8d6ee;
+      text-align: right;
+    }
+    .td-avg {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: var(--accent-2);
+      text-align: right;
+    }
+
+    /* rank medal on top rows */
+    .rank-gold   { color: #f5c542; font-weight: 900; }
+    .rank-silver { color: #c8cfd9; font-weight: 900; }
+    .rank-bronze { color: #d9956a; font-weight: 900; }
+
+    /* ---- ANIMATIONS ---- */
+    @keyframes cardIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ---- RESPONSIVE ---- */
+    @media (max-width: 860px) {
+      .table-wrap { overflow-x: auto; }
+      table { min-width: 760px; }
+    }
+
+    @media (max-width: 640px) {
+      .stats-toolbar { gap: 8px; }
+      .stats-search { max-width: 100%; flex: 1 1 100%; }
+      .stats-count { display: none; }
+
+      .lb-tabs { gap: 5px; }
+      .lb-tab { padding: 6px 11px; font-size: 0.75rem; }
+    }
+  </style>
 </head>
 <body>
+
+<div id="site-header"></div>
+
 <header>
-  <h1>Player Stats</h1>
-  <p>This page is ready for a JSON feed from your <strong>Web_Player_Stats</strong> tab.</p>
+  <div style="width:min(1140px,calc(100% - 32px));margin:0 auto;">
+    <h1>Player Stats</h1>
+    <p>Spring 2026 season · Full batting statistics</p>
+  </div>
 </header>
-<main>
-  <div class="toolbar">
-    <input id="search" type="search" placeholder="Search player or team">
-    <select id="sort">
-      <option value="ops">Sort by OPS</option>
-      <option value="avg">Sort by AVG</option>
-      <option value="hr">Sort by HR</option>
-      <option value="rbi">Sort by RBI</option>
-      <option value="sb">Sort by SB</option>
-    </select>
+
+<main style="width:min(1140px,calc(100% - 32px));margin:0 auto;">
+
+  <div class="brand-bar">
+    <div class="brand-chip">
+      <span>Powered by</span>
+      <img src="https://7095cda1.logo-46y.pages.dev/logo.svg" alt="Oneby.AI">
+    </div>
   </div>
-  <div class="table-wrap">
-    <table>
-      <thead>
-        <tr>
-          <th>Player</th>
-          <th>Team</th>
-          <th>GP</th>
-          <th>AB</th>
-          <th>H</th>
-          <th>HR</th>
-          <th>RBI</th>
-          <th>SB</th>
-          <th>AVG</th>
-          <th>OBP</th>
-          <th>SLG</th>
-          <th>OPS</th>
-        </tr>
-      </thead>
-      <tbody id="rows"></tbody>
-    </table>
-  </div>
+
+  <!-- ══════════════════════════════
+       LEADERBOARDS
+  ══════════════════════════════ -->
+  <section class="leaderboards-section">
+    <div class="section-title">
+      <span class="section-title-accent"></span>
+      Leaderboards
+    </div>
+
+    <!-- 10 quick-select tabs -->
+    <div class="lb-tabs" id="lb-tabs">
+      <button class="lb-tab active" data-lb="ops">  <span class="lb-tab-icon">💥</span> OPS</button>
+      <button class="lb-tab" data-lb="avg">         <span class="lb-tab-icon">🎯</span> AVG</button>
+      <button class="lb-tab" data-lb="obp">         <span class="lb-tab-icon">👁️</span> OBP</button>
+      <button class="lb-tab" data-lb="slg">         <span class="lb-tab-icon">⚡</span> SLG</button>
+      <button class="lb-tab" data-lb="hr">          <span class="lb-tab-icon">🚀</span> Home Runs</button>
+      <button class="lb-tab" data-lb="rbi">         <span class="lb-tab-icon">🏠</span> RBI</button>
+      <button class="lb-tab" data-lb="sb">          <span class="lb-tab-icon">💨</span> Stolen Bases</button>
+      <button class="lb-tab" data-lb="h">           <span class="lb-tab-icon">🏏</span> Hits</button>
+      <button class="lb-tab" data-lb="ab">          <span class="lb-tab-icon">📋</span> At Bats</button>
+      <button class="lb-tab" data-lb="gp">          <span class="lb-tab-icon">📅</span> Games Played</button>
+    </div>
+
+    <!-- Leaderboard cards (one per stat, shown/hidden via .active) -->
+    <div id="lb-cards"></div>
+  </section>
+
+  <!-- ══════════════════════════════
+       FULL STATS TABLE
+  ══════════════════════════════ -->
+  <section class="stats-section">
+    <div class="section-title">
+      <span class="section-title-accent"></span>
+      Full Stats Table
+    </div>
+
+    <div class="stats-toolbar">
+      <div class="stats-search">
+        <span class="stats-search-icon" aria-hidden="true">⌕</span>
+        <input type="search" id="search" placeholder="Search player or team…" autocomplete="off">
+      </div>
+
+      <div class="stats-sort-wrap">
+        <select id="sort">
+          <option value="ops">Sort: OPS</option>
+          <option value="avg">Sort: AVG</option>
+          <option value="obp">Sort: OBP</option>
+          <option value="slg">Sort: SLG</option>
+          <option value="hr">Sort: HR</option>
+          <option value="rbi">Sort: RBI</option>
+          <option value="sb">Sort: SB</option>
+          <option value="h">Sort: Hits</option>
+          <option value="ab">Sort: AB</option>
+          <option value="gp">Sort: GP</option>
+        </select>
+      </div>
+
+      <span class="stats-count" id="stats-count"></span>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th data-col="player_name">#  Player</th>
+            <th data-col="team">Team</th>
+            <th data-col="gp"  class="th-num">GP</th>
+            <th data-col="ab"  class="th-num">AB</th>
+            <th data-col="h"   class="th-num">H</th>
+            <th data-col="hr"  class="th-num">HR</th>
+            <th data-col="rbi" class="th-num">RBI</th>
+            <th data-col="sb"  class="th-num">SB</th>
+            <th data-col="avg" class="th-num">AVG</th>
+            <th data-col="obp" class="th-num">OBP</th>
+            <th data-col="slg" class="th-num">SLG</th>
+            <th data-col="ops" class="th-num">OPS</th>
+          </tr>
+        </thead>
+        <tbody id="rows"></tbody>
+      </table>
+    </div>
+  </section>
+
 </main>
-<footer>Starter page for Cloudflare Pages / static HTML</footer>
-<script src="./shared.js"></script>
+
+<footer style="width:min(1140px,calc(100% - 32px));margin:0 auto;">
+  Baseball For Bums League Central
+</footer>
+
+<script src="./shared.js?v=5"></script>
+<script src="./header.js?v=5"></script>
 <script>
-async function init() {
-  const rowsEl = document.getElementById("rows");
-  const search = document.getElementById("search");
-  const sort = document.getElementById("sort");
-  const stats = await loadData("Web_Player_Stats", "../data/player_stats.json");
-
-  function fmt(v, digits=3) {
-    const num = Number(v || 0);
-    return num.toFixed(digits);
-  }
-  function render() {
-    const q = search.value.trim().toLowerCase();
-    const sortKey = sort.value;
-    const filtered = stats.filter(row =>
-      !q ||
-      (row.player_name || "").toLowerCase().includes(q) ||
-      (row.team || row.team_name || "").toLowerCase().includes(q)
-    ).sort((a,b) => Number(b[sortKey] || 0) - Number(a[sortKey] || 0));
-
-    rowsEl.innerHTML = filtered.map(row => `
-      <tr>
-        <td>${row.player_name || row.full_name}</td>
-        <td>${row.team || row.team_name}</td>
-        <td>${row.gp || 0}</td>
-        <td>${row.ab || 0}</td>
-        <td>${row.h || 0}</td>
-        <td>${row.hr || 0}</td>
-        <td>${row.rbi || 0}</td>
-        <td>${row.sb || 0}</td>
-        <td>${fmt(row.avg)}</td>
-        <td>${fmt(row.obp)}</td>
-        <td>${fmt(row.slg)}</td>
-        <td>${fmt(row.ops)}</td>
-      </tr>
-    `).join("");
-  }
-
-  search.addEventListener("input", render);
-  sort.addEventListener("change", render);
-  render();
+/* ----------------------------------------------------------------
+   HELPERS
+---------------------------------------------------------------- */
+function fmt(v, digits = 3) {
+  const n = Number(v || 0);
+  return isNaN(n) ? "—" : n.toFixed(digits);
 }
+function fmtInt(v) {
+  const n = Number(v || 0);
+  return isNaN(n) ? "—" : String(n);
+}
+function getName(r) {
+  return r.player_name || r.full_name || r.Name || "Unknown";
+}
+function getTeam(r) {
+  return r.team || r.team_name || r.Team || "";
+}
+
+/* ----------------------------------------------------------------
+   LEADERBOARD CONFIG
+---------------------------------------------------------------- */
+const LB_CONFIG = [
+  { key: "ops",  label: "OPS Leaders",          desc: "On-base + Slugging",       icon: "💥", fmt: v => fmt(v,3), higher: true },
+  { key: "avg",  label: "Batting Average",       desc: "Hits / At Bats",           icon: "🎯", fmt: v => fmt(v,3), higher: true },
+  { key: "obp",  label: "On-Base %",             desc: "Reaching base per PA",     icon: "👁️", fmt: v => fmt(v,3), higher: true },
+  { key: "slg",  label: "Slugging %",            desc: "Total bases per AB",       icon: "⚡", fmt: v => fmt(v,3), higher: true },
+  { key: "hr",   label: "Home Runs",             desc: "Balls hit over the fence", icon: "🚀", fmt: v => fmtInt(v), higher: true },
+  { key: "rbi",  label: "Runs Batted In",        desc: "RBI this season",          icon: "🏠", fmt: v => fmtInt(v), higher: true },
+  { key: "sb",   label: "Stolen Bases",          desc: "Speed on the base paths",  icon: "💨", fmt: v => fmtInt(v), higher: true },
+  { key: "h",    label: "Hits",                  desc: "Total base hits",          icon: "🏏", fmt: v => fmtInt(v), higher: true },
+  { key: "ab",   label: "At Bats",               desc: "Plate appearances (AB)",   icon: "📋", fmt: v => fmtInt(v), higher: true },
+  { key: "gp",   label: "Games Played",          desc: "Appearances this season",  icon: "📅", fmt: v => fmtInt(v), higher: true },
+];
+
+function buildLeaderboardCards(stats) {
+  const container = document.getElementById("lb-cards");
+
+  container.innerHTML = LB_CONFIG.map((cfg, i) => {
+    const sorted = [...stats]
+      .filter(r => Number(r[cfg.key] || 0) > 0)
+      .sort((a, b) => Number(b[cfg.key] || 0) - Number(a[cfg.key] || 0))
+      .slice(0, 10);
+
+    const rows = sorted.map((r, idx) => `
+      <li class="lb-row">
+        <div class="lb-rank">${idx + 1}</div>
+        <div class="lb-player-info">
+          <div class="lb-player-name">${getName(r)}</div>
+          <div class="lb-player-team">${getTeam(r)}</div>
+        </div>
+        <div class="lb-stat-value">${cfg.fmt(r[cfg.key])}</div>
+      </li>
+    `).join("") || `<li style="padding:20px;color:var(--muted);font-size:0.9rem;">No data yet.</li>`;
+
+    return `
+      <div class="lb-card${i === 0 ? " active" : ""}" data-lb="${cfg.key}">
+        <div class="lb-card-header">
+          <div class="lb-card-title">
+            <span class="lb-icon">${cfg.icon}</span>
+            <div>
+              <h3>${cfg.label}</h3>
+              <small>${cfg.desc}</small>
+            </div>
+          </div>
+          <button class="lb-see-all" data-sort="${cfg.key}">See full table ↓</button>
+        </div>
+        <ol class="lb-list">${rows}</ol>
+      </div>
+    `;
+  }).join("");
+
+  /* tab switching */
+  document.getElementById("lb-tabs").addEventListener("click", e => {
+    const tab = e.target.closest(".lb-tab");
+    if (!tab) return;
+    const key = tab.dataset.lb;
+
+    document.querySelectorAll(".lb-tab").forEach(t => t.classList.remove("active"));
+    document.querySelectorAll(".lb-card").forEach(c => c.classList.remove("active"));
+    tab.classList.add("active");
+    container.querySelector(`.lb-card[data-lb="${key}"]`).classList.add("active");
+  });
+
+  /* "See full table" shortcut */
+  container.addEventListener("click", e => {
+    const btn = e.target.closest(".lb-see-all");
+    if (!btn) return;
+    document.getElementById("sort").value = btn.dataset.sort;
+    document.getElementById("sort").dispatchEvent(new Event("change"));
+    document.querySelector(".stats-section").scrollIntoView({ behavior: "smooth", block: "start" });
+  });
+}
+
+/* ----------------------------------------------------------------
+   FULL STATS TABLE
+---------------------------------------------------------------- */
+let currentSortCol = "ops";
+
+function renderTable(stats, query, sortCol) {
+  currentSortCol = sortCol;
+  const q = (query || "").trim().toLowerCase();
+
+  const filtered = stats.filter(r =>
+    !q ||
+    getName(r).toLowerCase().includes(q) ||
+    getTeam(r).toLowerCase().includes(q)
+  ).sort((a, b) => Number(b[sortCol] || 0) - Number(a[sortCol] || 0));
+
+  document.getElementById("stats-count").textContent =
+    `${filtered.length} player${filtered.length === 1 ? "" : "s"}`;
+
+  /* update sort-active header */
+  document.querySelectorAll("thead th").forEach(th => {
+    th.classList.toggle("sort-active", th.dataset.col === sortCol);
+  });
+
+  const medals = ["rank-gold", "rank-silver", "rank-bronze"];
+
+  document.getElementById("rows").innerHTML = filtered.map((r, i) => {
+    const medalCls = i < 3 ? medals[i] : "";
+    return `
+      <tr>
+        <td class="td-player">
+          <span class="${medalCls}">${i < 3 ? ["🥇","🥈","🥉"][i] : i + 1}</span>
+          &nbsp;${getName(r)}
+        </td>
+        <td class="td-team">${getTeam(r)}</td>
+        <td class="td-num">${fmtInt(r.gp)}</td>
+        <td class="td-num">${fmtInt(r.ab)}</td>
+        <td class="td-num">${fmtInt(r.h)}</td>
+        <td class="td-num">${fmtInt(r.hr)}</td>
+        <td class="td-num">${fmtInt(r.rbi)}</td>
+        <td class="td-num">${fmtInt(r.sb)}</td>
+        <td class="td-avg">${fmt(r.avg)}</td>
+        <td class="td-avg">${fmt(r.obp)}</td>
+        <td class="td-avg">${fmt(r.slg)}</td>
+        <td class="td-avg">${fmt(r.ops)}</td>
+      </tr>
+    `;
+  }).join("") || `<tr><td colspan="12" style="padding:28px;text-align:center;color:var(--muted);">No players found.</td></tr>`;
+}
+
+/* ----------------------------------------------------------------
+   INIT
+---------------------------------------------------------------- */
+async function init() {
+  const stats = await loadData("Web_Player_Stats");
+
+  if (!Array.isArray(stats) || !stats.length) {
+    document.getElementById("rows").innerHTML =
+      `<tr><td colspan="12" style="padding:28px;text-align:center;color:var(--muted);">No stats data available yet.</td></tr>`;
+    return;
+  }
+
+  /* build leaderboards */
+  buildLeaderboardCards(stats);
+
+  /* initial table render */
+  const searchEl = document.getElementById("search");
+  const sortEl   = document.getElementById("sort");
+
+  renderTable(stats, "", "ops");
+
+  searchEl.addEventListener("input",  () => renderTable(stats, searchEl.value, currentSortCol));
+  sortEl.addEventListener("change",   () => renderTable(stats, searchEl.value, sortEl.value));
+
+  /* clickable column headers */
+  document.querySelectorAll("thead th[data-col]").forEach(th => {
+    th.addEventListener("click", () => {
+      const col = th.dataset.col;
+      sortEl.value = col;
+      renderTable(stats, searchEl.value, col);
+    });
+  });
+}
+
 init().catch(err => {
-  document.getElementById("rows").innerHTML = `<tr><td colspan="12"><strong>Error:</strong> ${err.message}</td></tr>`;
+  document.getElementById("rows").innerHTML =
+    `<tr><td colspan="12" style="padding:28px;text-align:center;color:var(--muted);">Error loading stats: ${err.message}</td></tr>`;
 });
 </script>
+
 </body>
 </html>
