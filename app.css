@@ -715,3 +715,24 @@ footer {
     justify-content: center;
   }
 }
+html,
+body {
+  background:
+    radial-gradient(circle at top left, rgba(77,163,255,0.18), transparent 28%),
+    linear-gradient(180deg, #09101c 0%, #0b1220 100%) !important;
+  background-attachment: fixed;
+}
+
+body {
+  min-height: 100vh;
+}
+
+header,
+main,
+footer,
+.schedule-layout,
+.schedule-groups,
+.date-card,
+.side-panel {
+  background-color: transparent;
+}
