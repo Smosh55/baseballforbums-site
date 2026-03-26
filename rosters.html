@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>League Rosters | Baseball For Bums</title>
-  <link rel="stylesheet" href="./app.css">
+  <link rel="stylesheet" href="./app.css?v=4">
   <style>
     .rosters-shell {
       display: grid;
@@ -250,8 +250,8 @@
     Baseball For Bums League Central
   </footer>
 
-  <script src="./shared.js"></script>
-  <script src="./header.js"></script>
+  <script src="./shared.js?v=4"></script>
+  <script src="./header.js?v=4"></script>
   <script>
     function slugify(value) {
       return String(value || "")
@@ -261,12 +261,6 @@
         .replace(/^-+|-+$/g, "");
     }
 
-    function titleCase(value) {
-      return String(value || "")
-        .toLowerCase()
-        .replace(/\b\w/g, char => char.toUpperCase());
-    }
-
     function normalizeRosterRows(rows) {
       if (!Array.isArray(rows)) return [];
 
@@ -274,46 +268,25 @@
         .map(row => {
           if (!row || typeof row !== "object") return null;
 
-          const teamId =
-            row.team_id ||
-            row["Team ID"] ||
-            row.teamId ||
-            "";
-
           const teamName =
             row.team_name ||
             row.Team ||
             row.team ||
-            "";
-
-          const playerId =
-            row.player_id ||
-            row["Player ID"] ||
-            row.playerId ||
+            row["Team Name"] ||
             "";
 
           const fullName =
             row.full_name ||
             row.player_name ||
-            row.Full_Name ||
+            row["Player Name"] ||
+            row.Name ||
             [row.first_name || "", row.last_name || ""].join(" ").trim();
-
-          const firstName =
-            row.first_name ||
-            (fullName ? fullName.split(" ").slice(0, -1).join(" ") : "");
-
-          const lastName =
-            row.last_name ||
-            (fullName ? fullName.split(" ").slice(-1).join(" ") : "");
 
           if (!teamName || !fullName) return null;
 
           return {
-            team_id: teamId || slugify(teamName),
+            team_id: row.team_id || slugify(teamName),
             team_name: teamName,
-            player_id: playerId || slugify(fullName),
-            first_name: firstName,
-            last_name: lastName,
             full_name: fullName.trim()
           };
         })
@@ -321,38 +294,36 @@
     }
 
     function groupRosters(rows) {
-      const map = new Map();
+      const grouped = new Map();
 
       rows.forEach(player => {
         const key = player.team_id || slugify(player.team_name);
 
-        if (!map.has(key)) {
-          map.set(key, {
+        if (!grouped.has(key)) {
+          grouped.set(key, {
             team_id: key,
             team_name: player.team_name,
             players: []
           });
         }
 
-        map.get(key).players.push(player);
+        grouped.get(key).players.push(player);
       });
 
-      return Array.from(map.values()).map(team => ({
-        ...team,
-        players: team.players.sort((a, b) =>
-          a.full_name.localeCompare(b.full_name, undefined, { sensitivity: "base" })
-        )
-      }));
+      return Array.from(grouped.values())
+        .map(team => ({
+          ...team,
+          players: team.players.sort((a, b) =>
+            a.full_name.localeCompare(b.full_name, undefined, { sensitivity: "base" })
+          )
+        }))
+        .sort((a, b) =>
+          a.team_name.localeCompare(b.team_name, undefined, { sensitivity: "base" })
+        );
     }
 
     function renderJumpbar(teams) {
       const jumpbar = document.getElementById("team-jumpbar");
-
-      if (!teams.length) {
-        jumpbar.innerHTML = "";
-        return;
-      }
-
       jumpbar.innerHTML = teams.map(team => `
         <a class="jump-link" href="#team-${team.team_id}">${team.team_name}</a>
       `).join("");
@@ -370,6 +341,7 @@
       const content = document.getElementById("rosters-content");
 
       if (!teams.length) {
+        content.className = "";
         content.innerHTML = `
           <div class="empty-state-card">
             No roster data is available right now.
@@ -386,7 +358,6 @@
               <h2>${team.team_name}</h2>
               <p>${team.players.length} player${team.players.length === 1 ? "" : "s"} on roster</p>
             </div>
-
             <div class="roster-count">
               <span class="badge">${team.players.length} Players</span>
             </div>
@@ -417,10 +388,9 @@
         return;
       }
 
-      const filteredTeams = allTeams
+      const filtered = allTeams
         .map(team => {
           const teamMatch = team.team_name.toLowerCase().includes(term);
-
           const players = team.players.filter(player =>
             player.full_name.toLowerCase().includes(term)
           );
@@ -428,16 +398,13 @@
           if (teamMatch) return team;
           if (!players.length) return null;
 
-          return {
-            ...team,
-            players
-          };
+          return { ...team, players };
         })
         .filter(Boolean);
 
-      renderSummary(filteredTeams);
-      renderJumpbar(filteredTeams);
-      renderRosters(filteredTeams);
+      renderSummary(filtered);
+      renderJumpbar(filtered);
+      renderRosters(filtered);
     }
 
     async function initRostersPage() {
@@ -452,8 +419,7 @@
         renderJumpbar(teams);
         renderRosters(teams);
 
-        const search = document.getElementById("roster-search");
-        search.addEventListener("input", (e) => {
+        document.getElementById("roster-search").addEventListener("input", (e) => {
           applySearch(teams, e.target.value);
         });
       } catch (error) {
@@ -466,7 +432,6 @@
         `;
         document.getElementById("rosters-summary").textContent =
           "Roster data is temporarily unavailable";
-        document.getElementById("team-jumpbar").innerHTML = "";
       }
     }
 

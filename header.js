@@ -49,7 +49,6 @@ function renderHeader() {
             <span class="site-brand-mark" aria-hidden="true">
               <span class="baseball-mark"></span>
             </span>
-
             <span class="site-brand-copy">
               <strong>Baseball For Bums</strong>
               <small>League Central</small>
