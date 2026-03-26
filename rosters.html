@@ -3,63 +3,474 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>League Rosters</title>
+  <title>League Rosters | Baseball For Bums</title>
   <link rel="stylesheet" href="./app.css">
+  <style>
+    .rosters-shell {
+      display: grid;
+      gap: 22px;
+    }
+
+    .rosters-topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .rosters-summary {
+      color: var(--muted);
+      font-size: 0.96rem;
+    }
+
+    .rosters-search {
+      width: min(100%, 360px);
+      position: relative;
+    }
+
+    .rosters-search input {
+      width: 100%;
+      min-height: 48px;
+      padding: 0 16px;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      background: rgba(17,26,43,0.92);
+      color: var(--text);
+      outline: none;
+      box-shadow: var(--shadow);
+      font: inherit;
+    }
+
+    .rosters-search input::placeholder {
+      color: var(--muted);
+    }
+
+    .team-jumpbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .jump-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 38px;
+      padding: 0 14px;
+      border-radius: 999px;
+      text-decoration: none;
+      color: var(--accent-2);
+      background: rgba(77,163,255,0.12);
+      border: 1px solid rgba(77,163,255,0.24);
+      font-size: 0.9rem;
+      font-weight: 700;
+      transition: 0.18s ease;
+    }
+
+    .jump-link:hover {
+      color: var(--text);
+      background: rgba(77,163,255,0.18);
+      transform: translateY(-1px);
+    }
+
+    .roster-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 22px;
+    }
+
+    .roster-card {
+      background: rgba(17,26,43,0.88);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      scroll-margin-top: 120px;
+    }
+
+    .roster-card-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 18px 20px;
+      border-bottom: 1px solid var(--line);
+      background: rgba(255,255,255,0.03);
+    }
+
+    .roster-card-title h2 {
+      margin: 0 0 6px;
+      font-size: 1.3rem;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+    }
+
+    .roster-card-title p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.94rem;
+    }
+
+    .roster-count {
+      flex-shrink: 0;
+    }
+
+    .roster-list {
+      list-style: none;
+      margin: 0;
+      padding: 10px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .roster-player {
+      display: grid;
+      grid-template-columns: 44px minmax(0, 1fr);
+      gap: 14px;
+      align-items: center;
+      padding: 14px 16px;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .player-number {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.08);
+      color: var(--accent-2);
+      font-weight: 800;
+      font-size: 0.95rem;
+    }
+
+    .player-name {
+      font-size: 1rem;
+      font-weight: 700;
+      line-height: 1.25;
+      color: var(--text);
+      word-break: break-word;
+    }
+
+    .player-meta {
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .empty-state-card {
+      padding: 26px;
+      border-radius: var(--radius);
+      background: rgba(17,26,43,0.88);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      color: var(--muted);
+    }
+
+    .loading-state {
+      color: var(--muted);
+      padding: 12px 2px;
+    }
+
+    @media (max-width: 900px) {
+      .roster-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .rosters-topbar {
+        align-items: stretch;
+      }
+
+      .rosters-search {
+        width: 100%;
+      }
+
+      .roster-card-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .roster-player {
+        grid-template-columns: 40px minmax(0, 1fr);
+        gap: 12px;
+        padding: 13px 14px;
+      }
+
+      .player-number {
+        width: 40px;
+        height: 40px;
+        border-radius: 10px;
+      }
+    }
+  </style>
 </head>
 <body>
-<header>
-  <h1>League Rosters</h1>
-  <p>This page can read from local JSON files now, or from your Google Sheets / Apps Script endpoint later.</p>
-</header>
-<main>
-  <div class="toolbar">
-    <input id="search" type="search" placeholder="Search player or team">
-  </div>
-  <div id="teams" class="grid"></div>
-</main>
-<footer>Starter page for Cloudflare Pages / static HTML</footer>
-<script src="./shared.js"></script>
-<script>
-async function init() {
-  const teams = await loadData("Web_Rosters", "../data/teams.json");
-  const search = document.getElementById("search");
-  const wrap = document.getElementById("teams");
+  <div id="site-header"></div>
 
-  function render() {
-    const q = search.value.trim().toLowerCase();
-    const filtered = teams
-      .map(team => ({
+  <header>
+    <h1>League Rosters</h1>
+    <p>Team-by-team player listings for the current season.</p>
+  </header>
+
+  <main>
+    <div class="brand-bar">
+      <a class="brand-chip" href="/" aria-label="Baseball For Bums home">
+        <span>Powered by</span>
+        <img src="https://7095cda1.logo-46y.pages.dev/logo.svg" alt="Baseball For Bums logo">
+      </a>
+    </div>
+
+    <section class="rosters-shell">
+      <div class="rosters-topbar">
+        <div class="rosters-summary" id="rosters-summary">Loading rosters...</div>
+
+        <label class="rosters-search" aria-label="Search rosters">
+          <input
+            type="search"
+            id="roster-search"
+            placeholder="Search by team or player name"
+            autocomplete="off"
+          >
+        </label>
+      </div>
+
+      <div class="team-jumpbar" id="team-jumpbar"></div>
+
+      <section id="rosters-content" class="loading-state">Loading team rosters...</section>
+    </section>
+  </main>
+
+  <footer>
+    Baseball For Bums League Central
+  </footer>
+
+  <script src="./shared.js"></script>
+  <script src="./header.js"></script>
+  <script>
+    function slugify(value) {
+      return String(value || "")
+        .toLowerCase()
+        .trim()
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-+|-+$/g, "");
+    }
+
+    function titleCase(value) {
+      return String(value || "")
+        .toLowerCase()
+        .replace(/\b\w/g, char => char.toUpperCase());
+    }
+
+    function normalizeRosterRows(rows) {
+      if (!Array.isArray(rows)) return [];
+
+      return rows
+        .map(row => {
+          if (!row || typeof row !== "object") return null;
+
+          const teamId =
+            row.team_id ||
+            row["Team ID"] ||
+            row.teamId ||
+            "";
+
+          const teamName =
+            row.team_name ||
+            row.Team ||
+            row.team ||
+            "";
+
+          const playerId =
+            row.player_id ||
+            row["Player ID"] ||
+            row.playerId ||
+            "";
+
+          const fullName =
+            row.full_name ||
+            row.player_name ||
+            row.Full_Name ||
+            [row.first_name || "", row.last_name || ""].join(" ").trim();
+
+          const firstName =
+            row.first_name ||
+            (fullName ? fullName.split(" ").slice(0, -1).join(" ") : "");
+
+          const lastName =
+            row.last_name ||
+            (fullName ? fullName.split(" ").slice(-1).join(" ") : "");
+
+          if (!teamName || !fullName) return null;
+
+          return {
+            team_id: teamId || slugify(teamName),
+            team_name: teamName,
+            player_id: playerId || slugify(fullName),
+            first_name: firstName,
+            last_name: lastName,
+            full_name: fullName.trim()
+          };
+        })
+        .filter(Boolean);
+    }
+
+    function groupRosters(rows) {
+      const map = new Map();
+
+      rows.forEach(player => {
+        const key = player.team_id || slugify(player.team_name);
+
+        if (!map.has(key)) {
+          map.set(key, {
+            team_id: key,
+            team_name: player.team_name,
+            players: []
+          });
+        }
+
+        map.get(key).players.push(player);
+      });
+
+      return Array.from(map.values()).map(team => ({
         ...team,
-        players: team.players.filter(p =>
-          !q ||
-          team.team_name.toLowerCase().includes(q) ||
-          p.full_name.toLowerCase().includes(q)
+        players: team.players.sort((a, b) =>
+          a.full_name.localeCompare(b.full_name, undefined, { sensitivity: "base" })
         )
-      }))
-      .filter(team => team.players.length || !q);
+      }));
+    }
 
-    wrap.innerHTML = filtered.map(team => `
-      <section class="card">
-        <h3>${team.team_name}</h3>
-        <div class="meta">${team.players.length} players${team.colors ? ` • ${team.colors}` : ""}</div>
-        <ul class="roster">
-          ${team.players.map(player => `
-            <li>
-              <span>${player.full_name}</span>
-              <span class="small">${player.player_id}</span>
-            </li>
-          `).join("")}
-        </ul>
-      </section>
-    `).join("");
-  }
+    function renderJumpbar(teams) {
+      const jumpbar = document.getElementById("team-jumpbar");
 
-  search.addEventListener("input", render);
-  render();
-}
-init().catch(err => {
-  document.getElementById("teams").innerHTML = `<div class="card"><strong>Error:</strong> ${err.message}</div>`;
-});
-</script>
+      if (!teams.length) {
+        jumpbar.innerHTML = "";
+        return;
+      }
+
+      jumpbar.innerHTML = teams.map(team => `
+        <a class="jump-link" href="#team-${team.team_id}">${team.team_name}</a>
+      `).join("");
+    }
+
+    function renderSummary(teams) {
+      const totalTeams = teams.length;
+      const totalPlayers = teams.reduce((sum, team) => sum + team.players.length, 0);
+
+      document.getElementById("rosters-summary").textContent =
+        `${totalTeams} teams • ${totalPlayers} players listed`;
+    }
+
+    function renderRosters(teams) {
+      const content = document.getElementById("rosters-content");
+
+      if (!teams.length) {
+        content.innerHTML = `
+          <div class="empty-state-card">
+            No roster data is available right now.
+          </div>
+        `;
+        return;
+      }
+
+      content.className = "roster-grid";
+      content.innerHTML = teams.map(team => `
+        <article class="roster-card" id="team-${team.team_id}">
+          <div class="roster-card-header">
+            <div class="roster-card-title">
+              <h2>${team.team_name}</h2>
+              <p>${team.players.length} player${team.players.length === 1 ? "" : "s"} on roster</p>
+            </div>
+
+            <div class="roster-count">
+              <span class="badge">${team.players.length} Players</span>
+            </div>
+          </div>
+
+          <ol class="roster-list">
+            ${team.players.map((player, index) => `
+              <li class="roster-player">
+                <div class="player-number">${index + 1}</div>
+                <div>
+                  <div class="player-name">${player.full_name}</div>
+                  <div class="player-meta">${team.team_name}</div>
+                </div>
+              </li>
+            `).join("")}
+          </ol>
+        </article>
+      `).join("");
+    }
+
+    function applySearch(allTeams, query) {
+      const term = String(query || "").trim().toLowerCase();
+
+      if (!term) {
+        renderSummary(allTeams);
+        renderJumpbar(allTeams);
+        renderRosters(allTeams);
+        return;
+      }
+
+      const filteredTeams = allTeams
+        .map(team => {
+          const teamMatch = team.team_name.toLowerCase().includes(term);
+
+          const players = team.players.filter(player =>
+            player.full_name.toLowerCase().includes(term)
+          );
+
+          if (teamMatch) return team;
+          if (!players.length) return null;
+
+          return {
+            ...team,
+            players
+          };
+        })
+        .filter(Boolean);
+
+      renderSummary(filteredTeams);
+      renderJumpbar(filteredTeams);
+      renderRosters(filteredTeams);
+    }
+
+    async function initRostersPage() {
+      const content = document.getElementById("rosters-content");
+
+      try {
+        const raw = await loadData("Web_Rosters");
+        const normalized = normalizeRosterRows(raw);
+        const teams = groupRosters(normalized);
+
+        renderSummary(teams);
+        renderJumpbar(teams);
+        renderRosters(teams);
+
+        const search = document.getElementById("roster-search");
+        search.addEventListener("input", (e) => {
+          applySearch(teams, e.target.value);
+        });
+      } catch (error) {
+        console.error(error);
+        content.className = "";
+        content.innerHTML = `
+          <div class="empty-state-card">
+            Unable to load rosters right now.
+          </div>
+        `;
+        document.getElementById("rosters-summary").textContent =
+          "Roster data is temporarily unavailable";
+        document.getElementById("team-jumpbar").innerHTML = "";
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", initRostersPage);
+  </script>
 </body>
 </html>
