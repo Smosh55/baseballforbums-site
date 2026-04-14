@@ -228,7 +228,9 @@
    BALANCED SCHEDULE — Spring 2026
 
    Dates 1–5: Full round-robin (every team plays every other team once)
+     All on Saturday nights (Motzei Shabbos)
    Dates 6–7: Rematches (★)
+     All on Tuesday nights
 
    Each game night uses Field 1, Field 2, and Field 3 exactly once.
    Field distribution per team over the full season:
@@ -263,19 +265,22 @@ const BASE_SCHEDULE = [
   { game_date:"2026-05-16", game_time:"10:00 PM", away_team:"Elite",      home_team:"Legends",    field:"Field 1", status:"Scheduled" },
   { game_date:"2026-05-16", game_time:"10:00 PM", away_team:"Hurricanes", home_team:"Cut Fresh",  field:"Field 2", status:"Scheduled" },
   { game_date:"2026-05-16", game_time:"10:00 PM", away_team:"Renegades",  home_team:"See Ya!",    field:"Field 3", status:"Scheduled" },
-  // Date 6 · Monday May 26 · Rematches ★
+  // Date 6 · Tuesday May 26 · Rematches ★
   { game_date:"2026-05-26", game_time:"9:30 PM",  away_team:"See Ya!",    home_team:"Elite",      field:"Field 1", status:"Scheduled", rematch:true },
   { game_date:"2026-05-26", game_time:"9:30 PM",  away_team:"Renegades",  home_team:"Legends",    field:"Field 2", status:"Scheduled", rematch:true },
   { game_date:"2026-05-26", game_time:"10:00 PM", away_team:"Hurricanes", home_team:"Cut Fresh",  field:"Field 3", status:"Scheduled", rematch:true },
-  // Date 7 · Friday May 30 · Rematches ★
-  { game_date:"2026-05-30", game_time:"10:00 PM", away_team:"Renegades",  home_team:"Cut Fresh",  field:"Field 1", status:"Scheduled", rematch:true },
-  { game_date:"2026-05-30", game_time:"10:00 PM", away_team:"See Ya!",    home_team:"Hurricanes", field:"Field 2", status:"Scheduled", rematch:true },
-  { game_date:"2026-05-30", game_time:"10:00 PM", away_team:"Elite",      home_team:"Legends",    field:"Field 3", status:"Scheduled", rematch:true },
+  // Date 7 · Tuesday June 2 · Rematches ★
+  { game_date:"2026-06-02", game_time:"10:00 PM", away_team:"Renegades",  home_team:"Cut Fresh",  field:"Field 1", status:"Scheduled", rematch:true },
+  { game_date:"2026-06-02", game_time:"10:00 PM", away_team:"See Ya!",    home_team:"Hurricanes", field:"Field 2", status:"Scheduled", rematch:true },
+  { game_date:"2026-06-02", game_time:"10:00 PM", away_team:"Elite",      home_team:"Legends",    field:"Field 3", status:"Scheduled", rematch:true },
 ];
 
 function formatDateLabel(value) {
   if (!value) return "TBD";
-  const parsed = new Date(value);
+  // Split manually to avoid UTC-to-local timezone shift (e.g. Sat → Fri)
+  const parts = value.split("-").map(Number);
+  if (parts.length !== 3) return value;
+  const parsed = new Date(parts[0], parts[1] - 1, parts[2]);
   if (isNaN(parsed.getTime())) return value;
   const weekday = parsed.toLocaleDateString("en-US", { weekday: "long" });
   const rest    = parsed.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" });
