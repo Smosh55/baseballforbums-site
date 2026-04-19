@@ -11,51 +11,71 @@
   <link rel="stylesheet" href="./app.css?v=5">
 
   <style>
+    :root {
+      --text:     #f0f6ff;
+      --muted:    #8ca0be;       /* was too dark; boosted */
+      --accent:   #d64045;
+      --accent-2: #ffcc66;
+      --surface:  rgba(15,22,38,0.95);
+      --border:   rgba(255,255,255,0.09);
+    }
+
     body { font-family: 'Barlow', sans-serif; }
+
+    /* ---- LOGO SIZE FIX ---- */
+    .brand-chip img { height: 18px; width: auto; }
+    .brand-chip { font-size: 0.75rem; gap: 6px; padding: 5px 10px; }
 
     /* ---- PAGE HEADER ---- */
     header {
-      padding: 40px 0 20px;
-      border-bottom: 1px solid rgba(255,255,255,0.06);
-      margin-bottom: 28px;
+      padding: 44px 0 24px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      margin-bottom: 32px;
       position: relative;
     }
     header::before {
       content: "";
       position: absolute;
       bottom: -1px; left: 0;
-      width: 80px; height: 2px;
+      width: 80px; height: 3px;
       background: var(--accent);
       border-radius: 999px;
     }
     header h1 {
       font-family: 'Barlow Condensed', sans-serif;
       font-weight: 900;
-      font-size: clamp(2.4rem, 5vw, 3.6rem);
+      font-size: clamp(2.8rem, 5.5vw, 4rem);
       letter-spacing: -0.02em;
-      margin: 0 0 6px;
-      background: linear-gradient(135deg, #eef4ff 30%, #ffcc66 100%);
+      margin: 0 0 8px;
+      background: linear-gradient(135deg, #ffffff 20%, #ffcc66 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
     }
-    header p { color: var(--muted); margin: 0; font-size: 1rem; }
+    header p {
+      color: var(--muted);
+      margin: 0;
+      font-size: 1.05rem;
+      font-weight: 500;
+      letter-spacing: 0.01em;
+    }
 
     /* ---- SECTION TITLES ---- */
     .section-title {
       font-family: 'Barlow Condensed', sans-serif;
-      font-size: 1.4rem;
+      font-size: 1.5rem;
       font-weight: 900;
-      letter-spacing: 0.02em;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
       color: var(--text);
-      margin: 0 0 14px;
+      margin: 0 0 16px;
       display: flex;
       align-items: center;
       gap: 10px;
     }
     .section-title-accent {
       display: inline-block;
-      width: 4px; height: 22px;
+      width: 5px; height: 24px;
       border-radius: 999px;
       background: var(--accent);
       flex-shrink: 0;
@@ -64,55 +84,56 @@
     /* ================================================================
        LEADERBOARDS
     ================================================================ */
-    .leaderboards-section { margin-bottom: 36px; }
+    .leaderboards-section { margin-bottom: 44px; }
 
     /* Tab strip */
     .lb-tabs {
       display: flex;
       flex-wrap: wrap;
-      gap: 6px;
-      margin-bottom: 18px;
+      gap: 7px;
+      margin-bottom: 20px;
     }
 
     .lb-tab {
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      padding: 7px 14px;
+      padding: 8px 16px;
       border-radius: 999px;
-      border: 1px solid rgba(255,255,255,0.08);
-      background: rgba(255,255,255,0.03);
-      color: var(--muted);
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.05);
+      color: #a0b4cc;               /* was var(--muted) — brighter */
       font-family: 'Barlow Condensed', sans-serif;
-      font-size: 0.82rem;
+      font-size: 0.86rem;
       font-weight: 800;
-      letter-spacing: 0.05em;
+      letter-spacing: 0.06em;
       cursor: pointer;
       transition: all 0.14s ease;
       user-select: none;
       white-space: nowrap;
     }
     .lb-tab:hover {
-      color: var(--text);
-      border-color: rgba(255,255,255,0.18);
-      background: rgba(255,255,255,0.07);
+      color: #e8f0ff;
+      border-color: rgba(255,255,255,0.25);
+      background: rgba(255,255,255,0.10);
     }
     .lb-tab.active {
-      background: rgba(214,64,69,0.15);
-      border-color: rgba(214,64,69,0.45);
-      color: #ffd5d6;
+      background: rgba(214,64,69,0.22);
+      border-color: rgba(214,64,69,0.60);
+      color: #ffe2e3;
+      box-shadow: 0 0 0 1px rgba(214,64,69,0.25), 0 4px 12px rgba(214,64,69,0.2);
     }
-    .lb-tab-icon { font-size: 0.85rem; }
+    .lb-tab-icon { font-size: 0.9rem; }
 
     /* Leaderboard card */
     .lb-card {
-      background: rgba(15,22,38,0.9);
-      border: 1px solid rgba(255,255,255,0.07);
+      background: rgba(10,17,32,0.97);
+      border: 1px solid rgba(255,255,255,0.09);
       border-radius: 20px;
-      box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+      box-shadow: 0 24px 60px rgba(0,0,0,0.45);
       overflow: hidden;
       display: none;
-      animation: cardIn 0.3s ease both;
+      animation: cardIn 0.28s ease both;
     }
     .lb-card.active { display: block; }
 
@@ -120,48 +141,49 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 18px 22px;
-      border-bottom: 1px solid rgba(255,255,255,0.06);
-      background: rgba(255,255,255,0.02);
+      padding: 20px 24px;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+      background: rgba(255,255,255,0.025);
       gap: 12px;
     }
 
     .lb-card-title {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 12px;
     }
     .lb-card-title .lb-icon {
-      font-size: 1.3rem;
+      font-size: 1.5rem;
       line-height: 1;
     }
     .lb-card-title h3 {
       margin: 0;
       font-family: 'Barlow Condensed', sans-serif;
-      font-size: 1.2rem;
-      font-weight: 800;
-      color: var(--text);
+      font-size: 1.35rem;
+      font-weight: 900;
+      color: #ffffff;              /* pure white for max contrast */
+      letter-spacing: 0.01em;
     }
     .lb-card-title small {
-      color: var(--muted);
-      font-size: 0.78rem;
+      color: #8ca0be;
+      font-size: 0.82rem;
       font-weight: 600;
-      margin-top: 1px;
+      margin-top: 2px;
       display: block;
     }
 
     .lb-see-all {
       font-family: 'Barlow Condensed', sans-serif;
-      font-size: 0.78rem;
+      font-size: 0.82rem;
       font-weight: 800;
-      letter-spacing: 0.06em;
+      letter-spacing: 0.08em;
       text-transform: uppercase;
       color: var(--accent-2);
       cursor: pointer;
       background: none;
       border: none;
       padding: 0;
-      opacity: 0.7;
+      opacity: 0.85;
       transition: opacity 0.14s;
     }
     .lb-see-all:hover { opacity: 1; }
@@ -170,71 +192,86 @@
     .lb-list {
       list-style: none;
       margin: 0;
-      padding: 12px;
+      padding: 14px;
       display: grid;
       gap: 8px;
     }
 
     .lb-row {
       display: grid;
-      grid-template-columns: 36px 1fr auto;
+      grid-template-columns: 40px 1fr auto;
       align-items: center;
-      gap: 14px;
-      padding: 13px 16px;
+      gap: 16px;
+      padding: 14px 18px;
       border-radius: 12px;
-      background: rgba(255,255,255,0.025);
-      border: 1px solid rgba(255,255,255,0.05);
+      background: rgba(255,255,255,0.035);
+      border: 1px solid rgba(255,255,255,0.07);
       transition: background 0.14s;
     }
-    .lb-row:hover { background: rgba(255,255,255,0.045); }
+    .lb-row:hover { background: rgba(255,255,255,0.065); }
 
     .lb-rank {
       font-family: 'Barlow Condensed', sans-serif;
-      font-size: 1.1rem;
+      font-size: 1.25rem;
       font-weight: 900;
-      color: var(--muted);
+      color: #7a91ad;
       text-align: center;
       line-height: 1;
     }
 
     /* Gold / silver / bronze */
-    .lb-row:nth-child(1) { border-left: 3px solid #f5c542; background: rgba(245,197,66,0.06); }
-    .lb-row:nth-child(1) .lb-rank { color: #f5c542; }
-    .lb-row:nth-child(2) { border-left: 3px solid #b0b8c8; background: rgba(176,184,200,0.04); }
-    .lb-row:nth-child(2) .lb-rank { color: #c8cfd9; }
-    .lb-row:nth-child(3) { border-left: 3px solid #c97b4b; background: rgba(201,123,75,0.04); }
-    .lb-row:nth-child(3) .lb-rank { color: #d9956a; }
+    .lb-row:nth-child(1) {
+      border-left: 4px solid #f5c542;
+      background: rgba(245,197,66,0.09);
+    }
+    .lb-row:nth-child(1) .lb-rank { color: #f5c542; font-size: 1.4rem; }
+
+    .lb-row:nth-child(2) {
+      border-left: 4px solid #b0b8c8;
+      background: rgba(176,184,200,0.06);
+    }
+    .lb-row:nth-child(2) .lb-rank { color: #d0d8e4; font-size: 1.3rem; }
+
+    .lb-row:nth-child(3) {
+      border-left: 4px solid #c97b4b;
+      background: rgba(201,123,75,0.07);
+    }
+    .lb-row:nth-child(3) .lb-rank { color: #e0a07a; font-size: 1.2rem; }
 
     .lb-player-info { min-width: 0; }
     .lb-player-name {
       font-family: 'Barlow Condensed', sans-serif;
-      font-size: 1.05rem;
-      font-weight: 800;
-      color: var(--text);
+      font-size: 1.15rem;
+      font-weight: 900;
+      color: #e8f2ff;              /* brighter player names */
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+      letter-spacing: 0.01em;
     }
     .lb-player-team {
-      font-size: 0.75rem;
-      color: var(--muted);
-      margin-top: 1px;
+      font-size: 0.78rem;
+      color: #7a91ad;
+      margin-top: 2px;
+      font-weight: 600;
+      letter-spacing: 0.03em;
     }
 
     .lb-stat-value {
       font-family: 'Barlow Condensed', sans-serif;
-      font-size: 1.5rem;
+      font-size: 1.75rem;          /* bigger stat numbers */
       font-weight: 900;
-      color: var(--accent-2);
+      color: #ffcc66;
       letter-spacing: -0.01em;
       text-align: right;
       white-space: nowrap;
+      text-shadow: 0 0 20px rgba(255,204,102,0.3);
     }
 
     /* ================================================================
        FULL STATS TABLE SECTION
     ================================================================ */
-    .stats-section { margin-bottom: 48px; }
+    .stats-section { margin-bottom: 56px; }
 
     /* Toolbar */
     .stats-toolbar {
@@ -242,69 +279,68 @@
       align-items: center;
       gap: 12px;
       flex-wrap: wrap;
-      margin-bottom: 16px;
+      margin-bottom: 18px;
     }
 
     .stats-search {
       position: relative;
       flex: 1;
       min-width: 200px;
-      max-width: 340px;
+      max-width: 360px;
     }
     .stats-search input {
       width: 100%;
-      min-height: 44px;
-      padding: 0 16px 0 40px;
+      min-height: 46px;
+      padding: 0 18px 0 44px;
       border-radius: 999px;
-      border: 1px solid rgba(255,255,255,0.09);
-      background: rgba(17,26,43,0.92);
-      color: var(--text);
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(12,20,36,0.95);
+      color: #e8f2ff;
       outline: none;
       font: inherit;
-      font-size: 0.9rem;
+      font-size: 0.95rem;
+      font-weight: 500;
       transition: border-color 0.15s, box-shadow 0.15s;
     }
     .stats-search input:focus {
-      border-color: rgba(214,64,69,0.45);
-      box-shadow: 0 0 0 3px rgba(214,64,69,0.1);
+      border-color: rgba(214,64,69,0.55);
+      box-shadow: 0 0 0 3px rgba(214,64,69,0.12);
     }
-    .stats-search input::placeholder { color: var(--muted); }
+    .stats-search input::placeholder { color: #607088; }
     .stats-search-icon {
       position: absolute;
-      left: 14px; top: 50%;
+      left: 16px; top: 50%;
       transform: translateY(-50%);
-      color: var(--muted);
+      color: #607088;
       pointer-events: none;
-      font-size: 0.9rem;
+      font-size: 1rem;
     }
 
-    .stats-sort-wrap {
-      position: relative;
-    }
+    .stats-sort-wrap { position: relative; }
     .stats-sort-wrap select {
       appearance: none;
-      min-height: 44px;
-      padding: 0 36px 0 16px;
+      min-height: 46px;
+      padding: 0 38px 0 18px;
       border-radius: 999px;
-      border: 1px solid rgba(255,255,255,0.09);
-      background: rgba(17,26,43,0.92);
-      color: var(--text);
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(12,20,36,0.95);
+      color: #e8f2ff;
       font: inherit;
       font-family: 'Barlow Condensed', sans-serif;
-      font-size: 0.85rem;
-      font-weight: 700;
-      letter-spacing: 0.04em;
+      font-size: 0.9rem;
+      font-weight: 800;
+      letter-spacing: 0.05em;
       outline: none;
       cursor: pointer;
       transition: border-color 0.15s;
     }
-    .stats-sort-wrap select:focus { border-color: rgba(214,64,69,0.45); }
+    .stats-sort-wrap select:focus { border-color: rgba(214,64,69,0.55); }
     .stats-sort-wrap::after {
       content: "▾";
       position: absolute;
-      right: 14px; top: 50%;
+      right: 16px; top: 50%;
       transform: translateY(-50%);
-      color: var(--muted);
+      color: #8ca0be;
       pointer-events: none;
       font-size: 0.75rem;
     }
@@ -312,104 +348,126 @@
     .stats-count {
       margin-left: auto;
       font-family: 'Barlow Condensed', sans-serif;
-      font-size: 0.8rem;
-      font-weight: 700;
-      letter-spacing: 0.06em;
-      color: var(--muted);
+      font-size: 0.85rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      color: #8ca0be;
       white-space: nowrap;
+      text-transform: uppercase;
     }
 
-    /* Table */
+    /* ---- TABLE ---- */
     .table-wrap {
-      background: rgba(15,22,38,0.9);
-      border: 1px solid rgba(255,255,255,0.07);
+      background: rgba(10,17,32,0.97);
+      border: 1px solid rgba(255,255,255,0.09);
       border-radius: 20px;
       overflow: hidden;
-      box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+      box-shadow: 0 24px 60px rgba(0,0,0,0.45);
     }
 
     table { width: 100%; border-collapse: collapse; }
 
+    /* Column header row */
     thead th {
-      padding: 14px 16px;
-      background: rgba(255,255,255,0.03);
-      border-bottom: 1px solid rgba(255,255,255,0.06);
+      padding: 16px 16px;
+      background: rgba(255,255,255,0.04);
+      border-bottom: 2px solid rgba(255,255,255,0.09);
       font-family: 'Barlow Condensed', sans-serif;
-      font-size: 0.78rem;
-      font-weight: 800;
-      letter-spacing: 0.1em;
+      font-size: 0.82rem;
+      font-weight: 900;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
-      color: var(--accent-2);
+      color: #a8bcd4;              /* noticeably brighter than before */
       text-align: left;
       cursor: pointer;
       white-space: nowrap;
       user-select: none;
       transition: color 0.14s;
     }
-    thead th:hover { color: var(--text); }
-    thead th.sort-active { color: #fff; }
-    thead th.sort-active::after { content: " ↓"; font-size: 0.7rem; }
+    thead th:hover { color: #ffffff; }
+    thead th.th-num { text-align: right; }
+    thead th.sort-active {
+      color: #ffcc66;
+      background: rgba(255,204,102,0.07);
+    }
+    thead th.sort-active::after {
+      content: " ↓";
+      font-size: 0.72rem;
+      opacity: 0.8;
+    }
 
+    /* Data rows */
     tbody td {
       padding: 13px 16px;
-      border-bottom: 1px solid rgba(255,255,255,0.04);
+      border-bottom: 1px solid rgba(255,255,255,0.055);
       vertical-align: middle;
-      font-size: 0.9rem;
+      font-size: 0.92rem;
+    }
+    /* Even-row tint for scannability */
+    tbody tr:nth-child(even) td {
+      background: rgba(255,255,255,0.018);
     }
     tbody tr:last-child td { border-bottom: none; }
-    tbody tr:hover td { background: rgba(255,255,255,0.03); }
+    tbody tr:hover td {
+      background: rgba(255,204,102,0.06) !important;
+    }
 
     .td-player {
       font-family: 'Barlow Condensed', sans-serif;
-      font-size: 1rem;
-      font-weight: 800;
-      color: var(--text);
+      font-size: 1.05rem;
+      font-weight: 900;
+      color: #eaf2ff;              /* bright white-blue */
       white-space: nowrap;
     }
     .td-team {
-      font-size: 0.78rem;
-      color: var(--muted);
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #7a91ad;
       white-space: nowrap;
+      letter-spacing: 0.02em;
     }
     .td-num {
       font-family: 'Barlow Condensed', sans-serif;
-      font-size: 0.95rem;
+      font-size: 1rem;
       font-weight: 700;
-      color: #c8d6ee;
+      color: #c8d8f0;              /* was too dim */
       text-align: right;
     }
     .td-avg {
       font-family: 'Barlow Condensed', sans-serif;
-      font-size: 0.95rem;
-      font-weight: 800;
-      color: var(--accent-2);
+      font-size: 1rem;
+      font-weight: 900;
+      color: #ffcc66;              /* keep gold for rate stats */
       text-align: right;
     }
 
-    /* rank medal on top rows */
-    .rank-gold   { color: #f5c542; font-weight: 900; }
-    .rank-silver { color: #c8cfd9; font-weight: 900; }
-    .rank-bronze { color: #d9956a; font-weight: 900; }
+    /* Rank medals */
+    .rank-gold   { color: #f5c542; font-weight: 900; font-size: 1.1rem; }
+    .rank-silver { color: #d0d8e4; font-weight: 900; font-size: 1.1rem; }
+    .rank-bronze { color: #e0a07a; font-weight: 900; font-size: 1.1rem; }
+
+    /* Top-3 row highlights */
+    tbody tr:nth-child(1) td { background: rgba(245,197,66,0.055) !important; }
+    tbody tr:nth-child(2) td { background: rgba(176,184,200,0.035) !important; }
+    tbody tr:nth-child(3) td { background: rgba(201,123,75,0.040) !important; }
 
     /* ---- ANIMATIONS ---- */
     @keyframes cardIn {
-      from { opacity: 0; transform: translateY(12px); }
+      from { opacity: 0; transform: translateY(14px); }
       to   { opacity: 1; transform: translateY(0); }
     }
 
     /* ---- RESPONSIVE ---- */
     @media (max-width: 860px) {
       .table-wrap { overflow-x: auto; }
-      table { min-width: 760px; }
+      table { min-width: 780px; }
     }
-
     @media (max-width: 640px) {
       .stats-toolbar { gap: 8px; }
       .stats-search { max-width: 100%; flex: 1 1 100%; }
       .stats-count { display: none; }
-
       .lb-tabs { gap: 5px; }
-      .lb-tab { padding: 6px 11px; font-size: 0.75rem; }
+      .lb-tab { padding: 6px 12px; font-size: 0.78rem; }
     }
   </style>
 </head>
@@ -442,7 +500,6 @@
       Leaderboards
     </div>
 
-    <!-- 12 quick-select tabs -->
     <div class="lb-tabs" id="lb-tabs">
       <button class="lb-tab active" data-lb="ops">  <span class="lb-tab-icon">💥</span> OPS</button>
       <button class="lb-tab" data-lb="avg">         <span class="lb-tab-icon">🎯</span> AVG</button>
@@ -459,7 +516,6 @@
       <button class="lb-tab" data-lb="gp">          <span class="lb-tab-icon">📅</span> Games Played</button>
     </div>
 
-    <!-- Leaderboard cards (one per stat, shown/hidden via .active) -->
     <div id="lb-cards"></div>
   </section>
 
@@ -503,7 +559,7 @@
       <table>
         <thead>
           <tr>
-            <th data-col="player_name">#  Player</th>
+            <th data-col="player_name">#&nbsp; Player</th>
             <th data-col="team">Team</th>
             <th data-col="gp"  class="th-num">GP</th>
             <th data-col="ab"  class="th-num">AB</th>
@@ -589,7 +645,7 @@ function buildLeaderboardCards(stats) {
         </div>
         <div class="lb-stat-value">${cfg.fmt(r[cfg.key])}</div>
       </li>
-    `).join("") || `<li style="padding:20px;color:var(--muted);font-size:0.9rem;">No data yet.</li>`;
+    `).join("") || `<li style="padding:20px;color:#6070a0;font-size:0.9rem;">No data yet.</li>`;
 
     return `
       <div class="lb-card${i === 0 ? " active" : ""}" data-lb="${cfg.key}">
@@ -613,7 +669,6 @@ function buildLeaderboardCards(stats) {
     const tab = e.target.closest(".lb-tab");
     if (!tab) return;
     const key = tab.dataset.lb;
-
     document.querySelectorAll(".lb-tab").forEach(t => t.classList.remove("active"));
     document.querySelectorAll(".lb-card").forEach(c => c.classList.remove("active"));
     tab.classList.add("active");
@@ -648,7 +703,6 @@ function renderTable(stats, query, sortCol) {
   document.getElementById("stats-count").textContent =
     `${filtered.length} player${filtered.length === 1 ? "" : "s"}`;
 
-  /* update sort-active header */
   document.querySelectorAll("thead th").forEach(th => {
     th.classList.toggle("sort-active", th.dataset.col === sortCol);
   });
@@ -679,7 +733,7 @@ function renderTable(stats, query, sortCol) {
         <td class="td-avg">${fmt(r.ops)}</td>
       </tr>
     `;
-  }).join("") || `<tr><td colspan="14" style="padding:28px;text-align:center;color:var(--muted);">No players found.</td></tr>`;
+  }).join("") || `<tr><td colspan="15" style="padding:28px;text-align:center;color:#6070a0;">No players found.</td></tr>`;
 }
 
 /* ----------------------------------------------------------------
@@ -690,21 +744,18 @@ async function init() {
 
   if (!Array.isArray(stats) || !stats.length) {
     document.getElementById("rows").innerHTML =
-      `<tr><td colspan="14" style="padding:28px;text-align:center;color:var(--muted);">No stats data available yet.</td></tr>`;
+      `<tr><td colspan="15" style="padding:28px;text-align:center;color:#6070a0;">No stats data available yet.</td></tr>`;
     return;
   }
 
-  // Compute 1b if the sheet doesn't provide it
   stats.forEach(r => {
     if (r["1b"] == null) {
       r["1b"] = Math.max(0, (Number(r.h)||0) - (Number(r["2b"])||0) - (Number(r["3b"])||0) - (Number(r.hr)||0));
     }
   });
 
-  /* build leaderboards */
   buildLeaderboardCards(stats);
 
-  /* initial table render */
   const searchEl = document.getElementById("search");
   const sortEl   = document.getElementById("sort");
 
@@ -713,7 +764,6 @@ async function init() {
   searchEl.addEventListener("input",  () => renderTable(stats, searchEl.value, currentSortCol));
   sortEl.addEventListener("change",   () => renderTable(stats, searchEl.value, sortEl.value));
 
-  /* clickable column headers */
   document.querySelectorAll("thead th[data-col]").forEach(th => {
     th.addEventListener("click", () => {
       const col = th.dataset.col;
@@ -725,7 +775,7 @@ async function init() {
 
 init().catch(err => {
   document.getElementById("rows").innerHTML =
-    `<tr><td colspan="14" style="padding:28px;text-align:center;color:var(--muted);">Error loading stats: ${err.message}</td></tr>`;
+    `<tr><td colspan="15" style="padding:28px;text-align:center;color:#6070a0;">Error loading stats: ${err.message}</td></tr>`;
 });
 </script>
 
