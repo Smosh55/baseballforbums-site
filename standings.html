@@ -6,332 +6,514 @@
   <title>Standings | Baseball For Bums</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,300;0,400;0,600;0,700;0,800;0,900;1,700;1,800;1,900&family=Barlow:wght@300;400;500;600;700&family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="./app.css?v=5">
 
   <style>
-    body { font-family: 'Barlow', sans-serif; }
+    :root {
+      --bg:        #070c15;
+      --surface:   #0d1626;
+      --surface2:  #111d30;
+      --border:    rgba(255,255,255,0.07);
+      --border2:   rgba(255,255,255,0.12);
+      --text:      #e8f0ff;
+      --muted:     rgba(184,196,218,0.55);
+      --accent:    #d64045;
+      --accent2:   #ffcc66;
+      --teal:      #3ee8d8;
+      --green:     #4cdb8a;
+      --red:       #ff6b6b;
 
-    /* ---- PAGE HEADER ---- */
-    header {
-      padding: 40px 0 20px;
-      border-bottom: 1px solid rgba(255,255,255,0.06);
-      margin-bottom: 28px;
-      position: relative;
+      /* Team colors */
+      --renegades:  #f5c542;
+      --see-ya:     #4da3ff;
+      --hurricanes: #3ee8d8;
+      --elite:      #ff8080;
+      --legends:    #c084fc;
+      --cut-fresh:  #4cdb8a;
     }
-    header::before {
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Barlow', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    /* ── NOISE OVERLAY ── */
+    body::before {
       content: "";
-      position: absolute;
-      bottom: -1px; left: 0;
-      width: 80px; height: 2px;
-      background: var(--accent);
-      border-radius: 999px;
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+      opacity: 0.025;
+      pointer-events: none;
+      z-index: 0;
     }
-    header h1 {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 900;
-      font-size: clamp(2.4rem, 5vw, 3.6rem);
+
+    /* ── PAGE HEADER ── */
+    .page-header {
+      position: relative;
+      padding: 48px 0 36px;
+      overflow: hidden;
+    }
+    .page-header::before {
+      content: "STANDINGS";
+      position: absolute;
+      top: -10px; right: -20px;
+      font-family: 'Oswald', sans-serif;
+      font-size: clamp(80px, 14vw, 160px);
+      font-weight: 700;
       letter-spacing: -0.02em;
-      margin: 0 0 6px;
-      background: linear-gradient(135deg, #eef4ff 30%, #ffcc66 100%);
+      color: rgba(255,255,255,0.025);
+      pointer-events: none;
+      user-select: none;
+      white-space: nowrap;
+    }
+    .page-header-inner {
+      position: relative;
+      z-index: 1;
+      width: min(1180px, calc(100% - 40px));
+      margin: 0 auto;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .page-title-block {}
+    .page-eyebrow {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .page-eyebrow::before {
+      content: "";
+      display: inline-block;
+      width: 20px; height: 2px;
+      background: var(--accent);
+      border-radius: 1px;
+    }
+    .page-title {
+      font-family: 'Oswald', sans-serif;
+      font-size: clamp(2.8rem, 6vw, 4.5rem);
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      line-height: 0.92;
+      background: linear-gradient(140deg, #ffffff 40%, #aac4ff 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
     }
-    header p { color: var(--muted); margin: 0; font-size: 1rem; }
-
-    /* ---- SECTION TITLE ---- */
-    .section-title {
+    .page-subtitle {
+      margin-top: 10px;
+      font-size: 0.88rem;
+      color: var(--muted);
+      font-weight: 400;
+    }
+    .live-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(78,219,138,0.3);
+      background: rgba(78,219,138,0.08);
       font-family: 'Barlow Condensed', sans-serif;
-      font-size: 1.1rem;
-      font-weight: 900;
-      letter-spacing: 0.08em;
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
-      color: var(--text);
-      margin: 0 0 16px;
+      color: var(--green);
+      align-self: flex-start;
+      margin-top: 4px;
+    }
+    .live-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--green);
+      animation: pulse 1.8s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.7); }
+    }
+
+    /* ── DIVIDER ── */
+    .header-divider {
+      height: 1px;
+      background: linear-gradient(90deg, var(--accent) 0%, rgba(255,204,102,0.3) 30%, transparent 70%);
+      margin-bottom: 36px;
+    }
+
+    /* ── LAYOUT ── */
+    .page-body {
+      width: min(1180px, calc(100% - 40px));
+      margin: 0 auto;
+      padding-bottom: 80px;
+      position: relative;
+      z-index: 1;
+    }
+    .content-grid {
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 32px;
+      align-items: start;
+    }
+
+    /* ── SECTION LABEL ── */
+    .section-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.68rem;
+      font-weight: 800;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 14px;
       display: flex;
       align-items: center;
       gap: 10px;
     }
-    .section-title-accent {
-      display: inline-block;
-      width: 4px; height: 20px;
-      border-radius: 999px;
-      background: var(--accent);
-      flex-shrink: 0;
+    .section-label::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: var(--border);
     }
 
-    /* ---- PAGE LAYOUT ---- */
-    .standings-layout {
-      display: grid;
-      grid-template-columns: minmax(0,1fr) 320px;
-      gap: 28px;
-      align-items: start;
-      padding-bottom: 60px;
-    }
-
-    /* ---- PANEL CARD ---- */
-    .panel-card {
-      background: rgba(15,22,38,0.9);
-      border: 1px solid rgba(255,255,255,0.07);
-      border-radius: 20px;
+    /* ── STANDINGS TABLE ── */
+    .standings-panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
       overflow: hidden;
-      box-shadow: 0 20px 50px rgba(0,0,0,0.3);
-      animation: cardIn 0.4s ease both;
     }
-    .panel-card:nth-child(1) { animation-delay: 0.05s; }
-    .panel-card:nth-child(2) { animation-delay: 0.12s; }
-    .panel-card:nth-child(3) { animation-delay: 0.18s; }
-
-    .panel-header {
-      padding: 16px 22px;
-      border-bottom: 1px solid rgba(255,255,255,0.06);
-      background: rgba(255,255,255,0.02);
+    .standings-panel-header {
+      padding: 18px 24px;
+      background: var(--surface2);
+      border-bottom: 1px solid var(--border);
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 12px;
     }
-    .panel-header-title {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 0.72rem;
-      font-weight: 800;
-      letter-spacing: 0.18em;
+    .standings-panel-title {
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
       text-transform: uppercase;
-      color: var(--accent-2);
+      color: var(--accent2);
     }
-    .panel-header-sub {
+    .playoffs-pill {
       font-family: 'Barlow Condensed', sans-serif;
       font-size: 0.65rem;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      color: rgba(184,196,218,0.4);
+      font-weight: 800;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
+      color: rgba(255,204,102,0.7);
+      border: 1px solid rgba(255,204,102,0.2);
+      padding: 4px 10px;
+      border-radius: 4px;
     }
 
-    /* ---- STANDINGS TABLE ---- */
+    #standings-wrap {
+      /* JS fills this */
+    }
+
     .standings-table {
       width: 100%;
       border-collapse: collapse;
     }
-
+    .standings-table thead tr {
+      background: rgba(255,255,255,0.02);
+      border-bottom: 1px solid var(--border);
+    }
     .standings-table thead th {
-      padding: 11px 16px;
-      background: rgba(255,255,255,0.03);
-      border-bottom: 1px solid rgba(255,255,255,0.06);
+      padding: 10px 16px;
       font-family: 'Barlow Condensed', sans-serif;
-      font-size: 0.68rem;
+      font-size: 0.62rem;
       font-weight: 800;
-      letter-spacing: 0.12em;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
-      color: var(--accent-2);
+      color: rgba(184,196,218,0.4);
       text-align: right;
       white-space: nowrap;
     }
-    .standings-table thead th:first-child { text-align: left; width: 32px; }
-    .standings-table thead th.th-team   { text-align: left; }
-    .standings-table thead th.th-rd     { color: #5ee8d8; }
+    .standings-table thead th:nth-child(1) { text-align: center; width: 44px; }
+    .standings-table thead th.th-team { text-align: left; }
+    .standings-table thead th.th-rd { color: var(--teal); }
 
     .standings-table tbody tr {
-      border-bottom: 1px solid rgba(255,255,255,0.04);
-      transition: background 0.12s;
+      border-bottom: 1px solid rgba(255,255,255,0.035);
+      transition: background 0.15s;
+      position: relative;
     }
     .standings-table tbody tr:last-child { border-bottom: none; }
-    .standings-table tbody tr:hover td  { background: rgba(255,255,255,0.03); }
+    .standings-table tbody tr:hover { background: rgba(255,255,255,0.025); }
 
     .standings-table tbody td {
-      padding: 14px 16px;
-      vertical-align: middle;
-      text-align: right;
+      padding: 15px 16px;
       font-family: 'Barlow Condensed', sans-serif;
-      font-size: 0.95rem;
+      font-size: 1rem;
       font-weight: 700;
-      color: #c8d6ee;
+      color: var(--text);
+      text-align: right;
+      vertical-align: middle;
     }
 
-    /* Rank cell */
+    /* Rank */
     .td-rank {
       text-align: center !important;
-      font-size: 1rem !important;
-      font-weight: 900 !important;
-      width: 32px;
-      color: rgba(184,196,218,0.35) !important;
+      width: 44px;
+      padding-left: 10px !important;
+      padding-right: 10px !important;
     }
-    .td-rank.gold   { color: #f5c542 !important; }
-    .td-rank.silver { color: #c8cfd9 !important; }
-    .td-rank.bronze { color: #d9956a !important; }
+    .rank-medal {
+      font-size: 1.1rem;
+      line-height: 1;
+    }
+    .rank-num {
+      font-family: 'Oswald', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      color: rgba(184,196,218,0.3);
+    }
 
     /* Team cell */
-    .td-team {
-      text-align: left !important;
-    }
-    .team-name-row {
+    .td-team { text-align: left !important; }
+    .team-cell {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 12px;
     }
-    .team-dot {
-      width: 8px; height: 8px;
-      border-radius: 50%;
+    .team-color-bar {
+      width: 4px;
+      height: 36px;
+      border-radius: 2px;
       flex-shrink: 0;
     }
-    .team-name-text {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 1.05rem;
-      font-weight: 800;
+    .team-info {}
+    .team-name {
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
       color: var(--text);
+      line-height: 1.1;
+    }
+    .team-record {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+      margin-top: 2px;
     }
 
-    /* W / L cells */
-    .td-w { color: #6de6a0 !important; }
-    .td-l { color: #ff9090 !important; }
+    /* W/L */
+    .td-w { color: var(--green) !important; font-size: 1.05rem !important; }
+    .td-l { color: var(--red) !important; font-size: 1.05rem !important; }
 
-    /* PCT cell */
-    .td-pct { color: var(--accent-2) !important; font-size: 1rem !important; }
-
-    /* RD cell */
-    .td-rd { font-size: 1rem !important; }
-    .td-rd.pos { color: #5ee8d8 !important; }
-    .td-rd.neg { color: #ff9090 !important; }
-    .td-rd.zero { color: rgba(184,196,218,0.4) !important; }
-
-    /* RS / RA */
-    .td-rs { color: #c8d6ee !important; }
-    .td-ra { color: rgba(184,196,218,0.5) !important; }
-
-    /* GB cell */
-    .td-gb { color: rgba(184,196,218,0.5) !important; font-size: 0.88rem !important; }
-
-    /* Playoff line */
-    .playoffs-cutoff td {
-      border-top: 2px dashed rgba(255,204,102,0.35) !important;
+    /* PCT */
+    .td-pct {
+      color: var(--accent2) !important;
+      font-size: 1rem !important;
     }
 
-    /* ---- LEAGUE LEADERS SIDEBAR ---- */
-    .leaders-stack { display: grid; gap: 16px; }
+    /* GB */
+    .td-gb {
+      color: var(--muted) !important;
+      font-size: 0.88rem !important;
+    }
+
+    /* RS/RA */
+    .td-rs { color: rgba(200,215,240,0.8) !important; }
+    .td-ra { color: rgba(184,196,218,0.45) !important; }
+
+    /* RD */
+    .td-rd { font-size: 1rem !important; font-weight: 800 !important; }
+    .td-rd.pos { color: var(--teal) !important; }
+    .td-rd.neg { color: var(--red) !important; }
+    .td-rd.zero { color: rgba(184,196,218,0.3) !important; }
+
+    /* Playoff cutoff row */
+    .playoffs-cutoff > td {
+      border-top: 2px dashed rgba(255,204,102,0.4) !important;
+    }
+    .playoffs-cutoff > td:first-child::before {
+      content: "";
+    }
+
+    /* Playoff label */
+    .playoff-divider-label {
+      position: relative;
+    }
+
+    /* Top 3 row glow */
+    .standings-table tbody tr.top-1 { background: rgba(245,197,66,0.04); }
+    .standings-table tbody tr.top-2 { background: rgba(200,207,217,0.03); }
+    .standings-table tbody tr.top-3 { background: rgba(217,149,106,0.03); }
+
+    /* Tiebreaker note */
+    .tiebreaker-note {
+      padding: 12px 20px;
+      font-size: 0.72rem;
+      color: rgba(184,196,218,0.35);
+      line-height: 1.6;
+      border-top: 1px solid var(--border);
+    }
+
+    /* Empty state */
+    .empty-state {
+      padding: 56px 24px;
+      text-align: center;
+    }
+    .empty-icon { font-size: 3rem; margin-bottom: 14px; opacity: 0.6; }
+    .empty-title {
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+    .empty-sub { font-size: 0.85rem; color: var(--muted); }
+
+    /* ── LEADERS SIDEBAR ── */
+    .leaders-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
 
     .leader-card {
-      background: rgba(15,22,38,0.9);
-      border: 1px solid rgba(255,255,255,0.07);
-      border-radius: 20px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
       overflow: hidden;
-      box-shadow: 0 12px 32px rgba(0,0,0,0.25);
-      animation: cardIn 0.4s ease both;
+      transition: border-color 0.2s, box-shadow 0.2s;
     }
-    .leader-card:nth-child(1) { animation-delay: 0.08s; }
-    .leader-card:nth-child(2) { animation-delay: 0.14s; }
-    .leader-card:nth-child(3) { animation-delay: 0.20s; }
-    .leader-card:nth-child(4) { animation-delay: 0.26s; }
-    .leader-card:nth-child(5) { animation-delay: 0.32s; }
+    .leader-card:hover {
+      border-color: rgba(255,255,255,0.12);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+    }
 
     .leader-card-header {
-      padding: 12px 18px;
-      border-bottom: 1px solid rgba(255,255,255,0.06);
-      background: rgba(255,255,255,0.02);
+      padding: 12px 16px;
+      background: var(--surface2);
+      border-bottom: 1px solid var(--border);
       display: flex;
       align-items: center;
       gap: 8px;
     }
-    .leader-icon { font-size: 1rem; flex-shrink: 0; }
+    .leader-icon { font-size: 0.9rem; }
     .leader-card-title {
       font-family: 'Barlow Condensed', sans-serif;
-      font-size: 0.78rem;
+      font-size: 0.7rem;
       font-weight: 800;
-      letter-spacing: 0.12em;
+      letter-spacing: 0.16em;
       text-transform: uppercase;
-      color: var(--accent-2);
+      color: var(--accent2);
     }
 
     .leader-list {
       list-style: none;
-      padding: 8px 0;
+      padding: 6px 0;
     }
     .leader-row {
       display: grid;
-      grid-template-columns: 20px 1fr auto;
+      grid-template-columns: 24px 1fr auto;
       align-items: center;
       gap: 10px;
-      padding: 8px 18px;
+      padding: 9px 16px;
       transition: background 0.12s;
     }
-    .leader-row:hover { background: rgba(255,255,255,0.03); }
+    .leader-row:hover { background: rgba(255,255,255,0.025); }
 
     .leader-rank {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 0.75rem;
-      font-weight: 700;
-      color: rgba(184,196,218,0.35);
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: rgba(184,196,218,0.3);
       text-align: center;
     }
-    .leader-row:nth-child(1) .leader-rank { color: #f5c542; }
-    .leader-row:nth-child(2) .leader-rank { color: #c8cfd9; }
-    .leader-row:nth-child(3) .leader-rank { color: #d9956a; }
+    .leader-row:nth-child(1) .leader-rank { color: #f5c542; font-weight: 700; }
+    .leader-row:nth-child(2) .leader-rank { color: #b0b8c8; }
+    .leader-row:nth-child(3) .leader-rank { color: #c4845c; }
 
-    .leader-player {
-      min-width: 0;
-    }
     .leader-player-name {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 0.92rem;
-      font-weight: 800;
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 600;
       color: var(--text);
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+      line-height: 1.2;
     }
     .leader-player-team {
-      font-size: 0.7rem;
+      font-size: 0.68rem;
       color: var(--muted);
-      margin-top: 1px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      margin-top: 2px;
+    }
+    .leader-team-dot {
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      flex-shrink: 0;
     }
 
     .leader-value {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 1.2rem;
-      font-weight: 900;
-      color: var(--accent-2);
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--accent2);
       white-space: nowrap;
     }
-
-    /* ---- EMPTY STATE ---- */
-    .empty-state {
-      padding: 40px 24px;
-      text-align: center;
-    }
-    .empty-state-icon { font-size: 2rem; margin-bottom: 10px; }
-    .empty-state-title {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 1rem;
-      font-weight: 800;
-      color: var(--text);
-      margin-bottom: 4px;
-    }
-    .empty-state-sub {
-      font-size: 0.82rem;
-      color: var(--muted);
+    .leader-row:nth-child(1) .leader-value {
+      font-size: 1.45rem;
+      color: #ffdd88;
     }
 
-    /* ---- ANIMATIONS ---- */
-    @keyframes cardIn {
-      from { opacity: 0; transform: translateY(14px); }
+    /* ── ANIMATIONS ── */
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(18px); }
       to   { opacity: 1; transform: translateY(0); }
     }
+    .standings-panel { animation: slideUp 0.4s ease both 0.05s; }
+    .leader-card:nth-child(1) { animation: slideUp 0.4s ease both 0.08s; }
+    .leader-card:nth-child(2) { animation: slideUp 0.4s ease both 0.13s; }
+    .leader-card:nth-child(3) { animation: slideUp 0.4s ease both 0.18s; }
+    .leader-card:nth-child(4) { animation: slideUp 0.4s ease both 0.23s; }
+    .leader-card:nth-child(5) { animation: slideUp 0.4s ease both 0.28s; }
 
-    /* ---- RESPONSIVE ---- */
-    @media (max-width: 900px) {
-      .standings-layout {
+    /* ── RESPONSIVE ── */
+    @media (max-width: 960px) {
+      .content-grid {
         grid-template-columns: 1fr;
       }
       .leaders-stack {
+        display: grid;
         grid-template-columns: 1fr 1fr;
       }
     }
-    @media (max-width: 580px) {
+    @media (max-width: 640px) {
       .leaders-stack { grid-template-columns: 1fr; }
-      .standings-table { font-size: 0.85rem; }
       .standings-table thead th,
-      .standings-table tbody td { padding: 10px 10px; }
+      .standings-table tbody td { padding: 12px 10px; }
+      .team-name { font-size: 0.95rem; }
     }
   </style>
 </head>
@@ -339,77 +521,73 @@
 
 <div id="site-header"></div>
 
-<header>
-  <div style="width:min(1140px,calc(100% - 32px));margin:0 auto;">
-    <h1>Standings</h1>
-    <p>Spring 2026 season · Updated after every game</p>
+<!-- PAGE HEADER -->
+<div class="page-header">
+  <div class="page-header-inner">
+    <div class="page-title-block">
+      <div class="page-eyebrow">Spring 2026 Season</div>
+      <h1 class="page-title">Standings</h1>
+      <p class="page-subtitle">Updated after every game · Top 4 advance to playoffs</p>
+    </div>
+    <div class="live-badge">
+      <span class="live-dot"></span>
+      Live Season
+    </div>
   </div>
-</header>
+</div>
+<div class="header-divider"></div>
 
-<main style="width:min(1140px,calc(100% - 32px));margin:0 auto;">
-  <div class="standings-layout">
+<div class="page-body">
+  <div class="content-grid">
 
-    <!-- ── LEFT: Standings Table ── -->
+    <!-- LEFT: Standings -->
     <div>
-      <div class="section-title">
-        <span class="section-title-accent"></span>
-        League Standings
-      </div>
+      <div class="section-label">League Standings</div>
 
-      <div class="panel-card">
-        <div class="panel-header">
-          <span class="panel-header-title">Spring 2026</span>
-          <span class="panel-header-sub">Top 4 advance to playoffs</span>
+      <div class="standings-panel">
+        <div class="standings-panel-header">
+          <span class="standings-panel-title">Spring 2026</span>
+          <span class="playoffs-pill">Top 4 → Playoffs</span>
         </div>
         <div id="standings-wrap">
           <div class="empty-state">
-            <div class="empty-state-icon">📅</div>
-            <div class="empty-state-title">Season hasn't started yet</div>
-            <div class="empty-state-sub">Standings will appear here after the first game — April 18, 2026</div>
+            <div class="empty-icon">⚾</div>
+            <div class="empty-title">Season hasn't started yet</div>
+            <div class="empty-sub">Standings will appear here after the first game — April 18, 2026</div>
           </div>
         </div>
+        <div class="tiebreaker-note">
+          Tiebreakers: 1) Run Differential &nbsp;·&nbsp; 2) Head-to-Head &nbsp;·&nbsp;
+          For teams that play twice, both scores are averaged and count as one game.
+        </div>
       </div>
-
-      <!-- Tiebreaker note -->
-      <p style="margin-top:12px;font-size:0.78rem;color:rgba(184,196,218,0.45);line-height:1.6;">
-        Tiebreakers: 1) Run Differential &nbsp;·&nbsp; 2) Head-to-Head &nbsp;·&nbsp;
-        For teams that play twice, both scores are averaged and count as one game.
-      </p>
     </div>
 
-    <!-- ── RIGHT: League Leaders ── -->
+    <!-- RIGHT: League Leaders -->
     <div>
-      <div class="section-title">
-        <span class="section-title-accent"></span>
-        League Leaders
-      </div>
+      <div class="section-label">League Leaders</div>
       <div class="leaders-stack" id="leaders-stack">
         <!-- populated by JS -->
       </div>
     </div>
 
   </div>
-</main>
-
-<footer style="width:min(1140px,calc(100% - 32px));margin:0 auto;">
-  Baseball For Bums League Central · Staten Island
-</footer>
+</div>
 
 <script src="./shared.js?v=5"></script>
 <script src="./header.js?v=5"></script>
 <script>
 
-/* ---- Team colors ---- */
 const TEAM_COLORS = {
   "Renegades":  "#f5c542",
   "See Ya!":    "#4da3ff",
-  "Hurricanes": "#5ee8d8",
-  "Elite":      "#ff9090",
-  "Legends":    "#b47eff",
-  "Cut Fresh":  "#6de6a0"
+  "Hurricanes": "#3ee8d8",
+  "Elite":      "#ff8080",
+  "Legends":    "#c084fc",
+  "Cut Fresh":  "#4cdb8a"
 };
 
-/* ---- Helpers ---- */
+/* ── Formatters ── */
 function fmtRD(val) {
   const n = Number(val || 0);
   return n > 0 ? "+" + n : String(n);
@@ -436,37 +614,37 @@ function fmtInt(v) {
 function getName(r) { return r.player_name || r.full_name || r.Name || "Unknown"; }
 function getTeam(r) { return r.team || r.team_name || r.Team || ""; }
 
-/* ================================================================
-   STANDINGS
-================================================================ */
+/* ── Standings ── */
 function renderStandings(rows) {
   if (!Array.isArray(rows) || !rows.length) return;
 
-  const sorted = rows.slice().sort((a, b) => {
-    const wDiff = Number(b.wins||b.w||0) - Number(a.wins||a.w||0);
-    if (wDiff !== 0) return wDiff;
-    return Number(b.run_diff||b.rd||b.run_differential||0) -
-           Number(a.run_diff||a.rd||a.run_differential||0);
-  });
-
-  const getW   = r => Number(r.wins||r.w||r.W||0);
-  const getL   = r => Number(r.losses||r.l||r.L||0);
-  const getRD  = r => Number(r.run_diff||r.rd||r.run_differential||r.RD||0);
-  const getRS  = r => Number(r.runs_scored||r.rs||r.RS||0);
-  const getRA  = r => Number(r.runs_allowed||r.ra||r.RA||0);
-  const getGP  = r => Number(r.gp||r.games_played||r.GP||(getW(r)+getL(r))||0);
+  const getW  = r => Number(r.wins||r.w||r.W||0);
+  const getL  = r => Number(r.losses||r.l||r.L||0);
+  const getRD = r => Number(r.run_diff||r.rd||r.run_differential||r.RD||r.diff||r.Diff||0);
+  const getRS = r => Number(r.runs_scored||r.rs||r.RS||r.rf||r.RF||0);
+  const getRA = r => Number(r.runs_allowed||r.ra||r.RA||0);
+  const getGP = r => Number(r.gp||r.games_played||r.GP||(getW(r)+getL(r))||0);
   const getName2 = r => r.team_name||r.team||r.Team||"";
 
-  // Games behind leader
+  const sorted = rows.slice().sort((a, b) => {
+    const wDiff = getW(b) - getW(a);
+    return wDiff !== 0 ? wDiff : getRD(b) - getRD(a);
+  });
+
   const leader = sorted[0];
-  const leaderW = getW(leader), leaderL = getL(leader);
+  const lW = getW(leader), lL = getL(leader);
   const gb = r => {
-    const diff = ((leaderW - getW(r)) + (getL(r) - leaderL)) / 2;
+    const diff = ((lW - getW(r)) + (getL(r) - lL)) / 2;
     return diff <= 0 ? "—" : diff % 1 === 0 ? String(diff) : diff.toFixed(1);
   };
 
-  const rankCls = i => i === 0 ? "gold" : i === 1 ? "silver" : i === 2 ? "bronze" : "";
-  const medal   = i => i === 0 ? "🥇" : i === 1 ? "🥈" : i === 2 ? "🥉" : i + 1;
+  const topCls = i => i === 0 ? "top-1" : i === 1 ? "top-2" : i === 2 ? "top-3" : "";
+  const rankCell = i => {
+    if (i === 0) return `<span class="rank-medal">🥇</span>`;
+    if (i === 1) return `<span class="rank-medal">🥈</span>`;
+    if (i === 2) return `<span class="rank-medal">🥉</span>`;
+    return `<span class="rank-num">${i + 1}</span>`;
+  };
 
   const wrap = document.getElementById("standings-wrap");
   wrap.innerHTML = `
@@ -488,17 +666,20 @@ function renderStandings(rows) {
       <tbody>
         ${sorted.map((r, i) => {
           const name  = getName2(r);
-          const color = TEAM_COLORS[name] || "rgba(255,255,255,0.3)";
+          const color = TEAM_COLORS[name] || "rgba(255,255,255,0.2)";
           const w = getW(r), l = getL(r), rd = getRD(r);
-          // dashed line after 4th place (playoff cutoff)
-          const cutoff = i === 3 ? ' class="playoffs-cutoff"' : '';
+          const cutoffAttr = i === 3 ? ' class="playoffs-cutoff"' : (topCls(i) ? ` class="${topCls(i)}"` : '');
+          const rowClass = i === 3 ? 'playoffs-cutoff' : topCls(i);
           return `
-          <tr${cutoff}>
-            <td class="td-rank ${rankCls(i)}">${medal(i)}</td>
+          <tr class="${rowClass}">
+            <td class="td-rank">${rankCell(i)}</td>
             <td class="td-team">
-              <div class="team-name-row">
-                <span class="team-dot" style="background:${color};"></span>
-                <span class="team-name-text">${name}</span>
+              <div class="team-cell">
+                <div class="team-color-bar" style="background:${color};box-shadow:0 0 8px ${color}60;"></div>
+                <div class="team-info">
+                  <div class="team-name">${name || "—"}</div>
+                  <div class="team-record">${w}W – ${l}L</div>
+                </div>
               </div>
             </td>
             <td>${fmtInt(getGP(r))}</td>
@@ -512,37 +693,32 @@ function renderStandings(rows) {
           </tr>`;
         }).join("")}
       </tbody>
-    </table>
-  `;
+    </table>`;
 }
 
-/* ================================================================
-   LEAGUE LEADERS
-================================================================ */
+/* ── League Leaders ── */
 const LEADER_CATS = [
-  { key: "avg",  label: "Batting Average", icon: "🎯", fmt: fmtAvg,  min: 0 },
-  { key: "hr",   label: "Home Runs",       icon: "🚀", fmt: fmtInt,  min: 1 },
-  { key: "rbi",  label: "RBI",             icon: "🏠", fmt: fmtInt,  min: 1 },
-  { key: "ops",  label: "OPS",             icon: "💥", fmt: fmtAvg,  min: 0 },
-  { key: "sb",   label: "Stolen Bases",    icon: "💨", fmt: fmtInt,  min: 1 },
+  { key: "avg",  label: "Batting Average", icon: "🎯", fmt: fmtAvg, min: 0 },
+  { key: "hr",   label: "Home Runs",       icon: "💣", fmt: fmtInt, min: 1 },
+  { key: "rbi",  label: "RBI",             icon: "🏠", fmt: fmtInt, min: 1 },
+  { key: "ops",  label: "OPS",             icon: "📈", fmt: fmtAvg, min: 0 },
+  { key: "sb",   label: "Stolen Bases",    icon: "⚡", fmt: fmtInt, min: 1 },
 ];
 
 function renderLeaders(stats) {
   const container = document.getElementById("leaders-stack");
-
   if (!Array.isArray(stats) || !stats.length) {
     container.innerHTML = `
       <div class="leader-card">
         <div class="empty-state">
-          <div class="empty-state-icon">⚾</div>
-          <div class="empty-state-title">No stats yet</div>
-          <div class="empty-state-sub">Leaders appear after the first game</div>
+          <div class="empty-icon">⚾</div>
+          <div class="empty-title">No stats yet</div>
+          <div class="empty-sub">Leaders appear after the first game</div>
         </div>
       </div>`;
     return;
   }
 
-  // compute 1b if missing
   stats.forEach(r => {
     if (r["1b"] == null) {
       r["1b"] = Math.max(0, (Number(r.h)||0)-(Number(r["2b"])||0)-(Number(r["3b"])||0)-(Number(r.hr)||0));
@@ -554,20 +730,19 @@ function renderLeaders(stats) {
       .filter(r => Number(r[cat.key] || 0) > cat.min || cat.min === 0)
       .sort((a, b) => Number(b[cat.key]||0) - Number(a[cat.key]||0))
       .slice(0, 5);
-
     if (!sorted.length) return "";
 
     const rows = sorted.map((r, i) => {
       const name  = getName(r);
       const team  = getTeam(r);
-      const color = TEAM_COLORS[team] || "rgba(255,255,255,0.3)";
+      const color = TEAM_COLORS[team] || "rgba(255,255,255,0.25)";
       return `
         <li class="leader-row">
           <div class="leader-rank">${i + 1}</div>
           <div class="leader-player">
             <div class="leader-player-name">${name}</div>
-            <div class="leader-player-team" style="display:flex;align-items:center;gap:5px;">
-              <span style="width:6px;height:6px;border-radius:50%;background:${color};display:inline-block;flex-shrink:0;"></span>
+            <div class="leader-player-team">
+              <span class="leader-team-dot" style="background:${color};"></span>
               ${team}
             </div>
           </div>
@@ -586,24 +761,14 @@ function renderLeaders(stats) {
   }).join("");
 }
 
-/* ================================================================
-   INIT — load both data sources in parallel
-================================================================ */
+/* ── Init ── */
 async function init() {
   const [standings, stats] = await Promise.allSettled([
     loadData("Standings"),
     loadData("Web_Player_Stats")
   ]);
-
-  if (standings.status === "fulfilled") {
-    renderStandings(standings.value);
-  }
-
-  if (stats.status === "fulfilled") {
-    renderLeaders(stats.value);
-  } else {
-    renderLeaders([]);
-  }
+  if (standings.status === "fulfilled") renderStandings(standings.value);
+  renderLeaders(stats.status === "fulfilled" ? stats.value : []);
 }
 
 init();
