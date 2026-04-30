@@ -246,33 +246,39 @@
 ================================================================ */
 const BASE_SCHEDULE = [
   // Date 1 · Motzei Shabbos April 18 · 9:30 PM
-  { game_date:"2026-04-18", game_time:"9:30 PM",  away_team:"Renegades",  home_team:"Cut Fresh",  field:"Field 1", status:"Scheduled" },
-  { game_date:"2026-04-18", game_time:"9:30 PM",  away_team:"See Ya!",    home_team:"Legends",    field:"Field 2", status:"Scheduled" },
-  { game_date:"2026-04-18", game_time:"9:30 PM",  away_team:"Hurricanes", home_team:"Elite",      field:"Field 3", status:"Scheduled" },
+  { game_date:"2026-04-18", game_time:"9:30 PM",  away_team:"Cut Fresh",   home_team:"Renegades",  field:"Field 1", status:"Scheduled" },
+  { game_date:"2026-04-18", game_time:"9:30 PM",  away_team:"Legends",     home_team:"See Ya!",    field:"Field 2", status:"Scheduled" },
+  { game_date:"2026-04-18", game_time:"9:30 PM",  away_team:"Elite",       home_team:"Hurricanes", field:"Field 3", status:"Scheduled" },
+
   // Date 2 · Motzei Shabbos April 25 · 9:30 PM
-  { game_date:"2026-04-25", game_time:"9:30 PM",  away_team:"See Ya!",    home_team:"Hurricanes", field:"Field 1", status:"Scheduled" },
-  { game_date:"2026-04-25", game_time:"9:30 PM",  away_team:"Cut Fresh",  home_team:"Elite",      field:"Field 2", status:"Scheduled" },
-  { game_date:"2026-04-25", game_time:"9:30 PM",  away_team:"Renegades",  home_team:"Legends",    field:"Field 3", status:"Scheduled" },
+  { game_date:"2026-04-25", game_time:"9:30 PM",  away_team:"Hurricanes",  home_team:"See Ya!",    field:"Field 1", status:"Scheduled" },
+  { game_date:"2026-04-25", game_time:"9:30 PM",  away_team:"Elite",       home_team:"Cut Fresh",  field:"Field 2", status:"Scheduled" },
+  { game_date:"2026-04-25", game_time:"9:30 PM",  away_team:"Legends",     home_team:"Renegades",  field:"Field 3", status:"Scheduled" },
+
   // Date 3 · Motzei Shabbos May 2 · 9:30 PM
-  { game_date:"2026-05-02", game_time:"9:30 PM",  away_team:"Legends",    home_team:"Hurricanes", field:"Field 1", status:"Scheduled" },
-  { game_date:"2026-05-02", game_time:"9:30 PM",  away_team:"Renegades",  home_team:"Elite",      field:"Field 2", status:"Scheduled" },
-  { game_date:"2026-05-02", game_time:"9:30 PM",  away_team:"Cut Fresh",  home_team:"See Ya!",    field:"Field 3", status:"Scheduled" },
+  { game_date:"2026-05-02", game_time:"9:30 PM",  away_team:"Hurricanes",  home_team:"Legends",    field:"Field 1", status:"Scheduled" },
+  { game_date:"2026-05-02", game_time:"9:30 PM",  away_team:"Elite",       home_team:"Renegades",  field:"Field 2", status:"Scheduled" },
+  { game_date:"2026-05-02", game_time:"9:30 PM",  away_team:"See Ya!",     home_team:"Cut Fresh",  field:"Field 3", status:"Scheduled" },
+
   // Date 4 · Motzei Shabbos May 9 · 9:30 PM
-  { game_date:"2026-05-09", game_time:"9:30 PM",  away_team:"Elite",      home_team:"See Ya!",    field:"Field 1", status:"Scheduled" },
-  { game_date:"2026-05-09", game_time:"9:30 PM",  away_team:"Renegades",  home_team:"Hurricanes", field:"Field 2", status:"Scheduled" },
-  { game_date:"2026-05-09", game_time:"9:30 PM",  away_team:"Legends",    home_team:"Cut Fresh",  field:"Field 3", status:"Scheduled" },
+  { game_date:"2026-05-09", game_time:"9:30 PM",  away_team:"See Ya!",     home_team:"Elite",      field:"Field 1", status:"Scheduled" },
+  { game_date:"2026-05-09", game_time:"9:30 PM",  away_team:"Hurricanes",  home_team:"Renegades",  field:"Field 2", status:"Scheduled" },
+  { game_date:"2026-05-09", game_time:"9:30 PM",  away_team:"Cut Fresh",   home_team:"Legends",    field:"Field 3", status:"Scheduled" },
+
   // Date 5 · Motzei Shabbos May 16 · 10:00 PM
-  { game_date:"2026-05-16", game_time:"10:00 PM", away_team:"Elite",      home_team:"Legends",    field:"Field 1", status:"Scheduled" },
-  { game_date:"2026-05-16", game_time:"10:00 PM", away_team:"Hurricanes", home_team:"Cut Fresh",  field:"Field 2", status:"Scheduled" },
-  { game_date:"2026-05-16", game_time:"10:00 PM", away_team:"Renegades",  home_team:"See Ya!",    field:"Field 3", status:"Scheduled" },
+  { game_date:"2026-05-16", game_time:"10:00 PM", away_team:"Legends",     home_team:"Elite",      field:"Field 1", status:"Scheduled" },
+  { game_date:"2026-05-16", game_time:"10:00 PM", away_team:"Cut Fresh",   home_team:"Hurricanes", field:"Field 2", status:"Scheduled" },
+  { game_date:"2026-05-16", game_time:"10:00 PM", away_team:"See Ya!",     home_team:"Renegades",  field:"Field 3", status:"Scheduled" },
+
   // Date 6 · Tuesday May 26 · Rematches ★
-  { game_date:"2026-05-26", game_time:"9:30 PM",  away_team:"See Ya!",    home_team:"Elite",      field:"Field 1", status:"Scheduled", rematch:true },
-  { game_date:"2026-05-26", game_time:"9:30 PM",  away_team:"Renegades",  home_team:"Legends",    field:"Field 2", status:"Scheduled", rematch:true },
-  { game_date:"2026-05-26", game_time:"10:00 PM", away_team:"Hurricanes", home_team:"Cut Fresh",  field:"Field 3", status:"Scheduled", rematch:true },
+  { game_date:"2026-05-26", game_time:"9:30 PM",  away_team:"Elite",       home_team:"See Ya!",    field:"Field 1", status:"Scheduled", rematch:true },
+  { game_date:"2026-05-26", game_time:"9:30 PM",  away_team:"Legends",     home_team:"Renegades",  field:"Field 2", status:"Scheduled", rematch:true },
+  { game_date:"2026-05-26", game_time:"10:00 PM", away_team:"Cut Fresh",   home_team:"Hurricanes", field:"Field 3", status:"Scheduled", rematch:true },
+
   // Date 7 · Tuesday June 2 · Rematches ★
-  { game_date:"2026-06-02", game_time:"10:00 PM", away_team:"Renegades",  home_team:"Cut Fresh",  field:"Field 1", status:"Scheduled", rematch:true },
-  { game_date:"2026-06-02", game_time:"10:00 PM", away_team:"See Ya!",    home_team:"Hurricanes", field:"Field 2", status:"Scheduled", rematch:true },
-  { game_date:"2026-06-02", game_time:"10:00 PM", away_team:"Elite",      home_team:"Legends",    field:"Field 3", status:"Scheduled", rematch:true },
+  { game_date:"2026-06-02", game_time:"10:00 PM", away_team:"Cut Fresh",   home_team:"Renegades",  field:"Field 1", status:"Scheduled", rematch:true },
+  { game_date:"2026-06-02", game_time:"10:00 PM", away_team:"Hurricanes",  home_team:"See Ya!",    field:"Field 2", status:"Scheduled", rematch:true },
+  { game_date:"2026-06-02", game_time:"10:00 PM", away_team:"Legends",     home_team:"Elite",      field:"Field 3", status:"Scheduled", rematch:true },
 ];
 
 function formatDateLabel(value) {
