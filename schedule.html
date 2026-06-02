@@ -13,6 +13,89 @@
   <style>
     body { font-family: 'Barlow', sans-serif; }
 
+    /* ============ POSTSEASON SECTION (top of page) ============ */
+    .postseason-section {
+      position: relative;
+      margin-bottom: 40px;
+      padding: 26px 28px 22px;
+      border-radius: 22px;
+      background:
+        radial-gradient(circle at 0% 0%, rgba(214,64,69,0.10), transparent 55%),
+        radial-gradient(circle at 100% 100%, rgba(255,204,102,0.10), transparent 55%),
+        rgba(15,22,38,0.96);
+      border: 2px solid rgba(255,204,102,0.45);
+      box-shadow:
+        0 0 0 1px rgba(255,204,102,0.1) inset,
+        0 0 60px rgba(255,204,102,0.08),
+        0 30px 70px rgba(0,0,0,0.45);
+    }
+    .postseason-section::before {
+      content: "";
+      position: absolute;
+      top: -2px; left: 24px; right: 24px;
+      height: 3px; border-radius: 999px;
+      background: linear-gradient(90deg, transparent, rgba(255,204,102,0.85), rgba(214,64,69,0.85), rgba(255,204,102,0.85), transparent);
+      filter: blur(0.5px);
+    }
+    .postseason-header { margin-bottom: 22px; padding-bottom: 16px; border-bottom: 1px solid rgba(255,204,102,0.22); }
+    .postseason-eyebrow {
+      display: inline-block;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.78rem; font-weight: 800;
+      letter-spacing: 0.22em; text-transform: uppercase;
+      color: #ffcc66; margin-bottom: 4px;
+    }
+    .postseason-title {
+      margin: 0;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900; font-size: clamp(1.8rem, 3.6vw, 2.4rem);
+      letter-spacing: 0.01em; line-height: 1.05;
+      background: linear-gradient(135deg, #fff2c2 0%, #ffcc66 45%, #ff8a8c 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .postseason-subtitle { color: var(--muted); font-size: 0.92rem; margin: 6px 0 0; }
+    .postseason-section .date-card {
+      background: rgba(20,28,45,0.94);
+      border: 1px solid rgba(255,204,102,0.28);
+      box-shadow: 0 12px 28px rgba(0,0,0,0.35);
+    }
+    .postseason-section .date-card + .date-card { margin-top: 14px; }
+    .postseason-section .date-accent-bar { background: linear-gradient(180deg, #ffcc66 0%, #d64045 100%); }
+
+    /* All-Star card: cool blue accent so it visually reads as separate-but-special */
+    .postseason-section .date-card.allstar { border-color: rgba(77,163,255,0.4); }
+    .postseason-section .date-card.allstar .date-accent-bar { background: linear-gradient(180deg, #9dd4ff 0%, #4da3ff 100%); }
+    .allstar-badge {
+      display: inline-flex; align-items: center;
+      padding: 2px 8px; border-radius: 999px;
+      background: rgba(77,163,255,0.15); border: 1px solid rgba(77,163,255,0.45);
+      color: #9dd4ff; font-size: 0.6rem; font-weight: 800;
+      font-family: 'Barlow Condensed', sans-serif; letter-spacing: 0.1em;
+      text-transform: uppercase; margin-left: 8px; vertical-align: middle;
+    }
+    /* All-Star matchup label (replaces the standard away/home blocks) */
+    .allstar-matchup {
+      display: flex; flex: 1; align-items: center; justify-content: center;
+      padding: 14px 20px; gap: 12px;
+    }
+    .allstar-matchup .allstar-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900; font-size: 1.3rem;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      background: linear-gradient(135deg, #9dd4ff 0%, #ffcc66 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .allstar-matchup .star-icon { color: #ffcc66; font-size: 1.1rem; }
+
+    @media (max-width: 700px) {
+      .postseason-section { padding: 20px 18px 16px; border-radius: 18px; }
+    }
+    /* =========================================================== */
+
     header h1 {
       font-family: 'Barlow Condensed', sans-serif;
       font-weight: 900;
@@ -87,6 +170,25 @@
       font-family: 'Barlow Condensed', sans-serif; letter-spacing: 0.1em;
       text-transform: uppercase; margin-left: 8px; vertical-align: middle;
     }
+    .playoff-badge {
+      display: inline-flex; align-items: center;
+      padding: 2px 8px; border-radius: 999px;
+      background: rgba(214,64,69,0.15); border: 1px solid rgba(214,64,69,0.45);
+      color: #ffb3b5; font-size: 0.6rem; font-weight: 800;
+      font-family: 'Barlow Condensed', sans-serif; letter-spacing: 0.1em;
+      text-transform: uppercase; margin-left: 8px; vertical-align: middle;
+    }
+    .championship-badge {
+      display: inline-flex; align-items: center;
+      padding: 2px 8px; border-radius: 999px;
+      background: linear-gradient(135deg, rgba(255,204,102,0.25), rgba(214,64,69,0.25));
+      border: 1px solid rgba(255,204,102,0.6);
+      color: #fff2c2; font-size: 0.6rem; font-weight: 900;
+      font-family: 'Barlow Condensed', sans-serif; letter-spacing: 0.12em;
+      text-transform: uppercase; margin-left: 8px; vertical-align: middle;
+      box-shadow: 0 0 10px rgba(255,204,102,0.15);
+    }
+    .field-badge.tbd { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.15); color: var(--muted); }
 
     .games-list { padding: 14px; display: grid; gap: 10px; }
 
@@ -114,6 +216,31 @@
     .vs-divider { display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 6px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); font-family: 'Barlow Condensed', sans-serif; font-size: 0.7rem; font-weight: 900; letter-spacing: 0.05em; color: var(--muted); flex-shrink: 0; }
     .team-role { font-size: 0.62rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(184,196,218,0.5); margin-top: 2px; }
     .team-block { display: flex; flex-direction: column; min-width: 0; }
+
+    /* === Final game styling: score display + winner highlight === */
+    .team-line { display: flex; align-items: baseline; gap: 10px; }
+    .team-score {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900; font-size: 1.6rem; line-height: 1;
+      color: rgba(184,196,218,0.55); letter-spacing: 0.01em;
+      transition: color 0.15s ease;
+    }
+    .team-block.win .team-name  { color: #fff; }
+    .team-block.win .team-score { color: #6de6a0; }
+    .team-block.loss .team-name { color: rgba(184,196,218,0.55); }
+    .team-block.loss .team-score { color: rgba(184,196,218,0.45); }
+    .win-check {
+      display: inline-block; margin-left: 4px;
+      color: #6de6a0; font-size: 0.8em; font-weight: 900;
+    }
+    /* Replace VS divider with FINAL label when game is finished */
+    .vs-divider.final-label {
+      width: auto; min-width: 44px; padding: 0 8px; height: 24px;
+      background: rgba(255,255,255,0.05);
+      border-color: rgba(255,255,255,0.12);
+      color: rgba(184,196,218,0.8); font-size: 0.6rem; letter-spacing: 0.12em;
+    }
+    /* =========================================================== */
 
     .game-field-cell { display: flex; align-items: center; padding: 14px 18px; border-left: 1px solid rgba(255,255,255,0.05); }
     .field-chip { display: inline-flex; flex-direction: column; align-items: center; gap: 3px; }
@@ -147,6 +274,8 @@
     .date-card:nth-child(5) { animation-delay: 0.25s; }
     .date-card:nth-child(6) { animation-delay: 0.30s; }
     .date-card:nth-child(7) { animation-delay: 0.35s; }
+    .date-card:nth-child(8) { animation-delay: 0.40s; }
+    .date-card:nth-child(9) { animation-delay: 0.45s; }
 
     @media (max-width: 700px) {
       .game-item { grid-template-columns: 1fr; }
@@ -191,7 +320,17 @@
   </div>
 
   <div class="schedule-layout">
-    <section class="schedule-groups" id="schedule-groups"></section>
+    <section class="schedule-groups">
+      <div class="postseason-section" id="postseason-section" style="display:none;">
+        <div class="postseason-header">
+          <span class="postseason-eyebrow">★ Spring 2026 Postseason</span>
+          <h2 class="postseason-title">Playoffs, Championship &amp; All-Star Game</h2>
+          <p class="postseason-subtitle">Top 4 seeds advance to semifinals. First seed picks the championship field.</p>
+        </div>
+        <div id="postseason-groups"></div>
+      </div>
+      <div id="schedule-groups"></div>
+    </section>
 
     <aside class="side-panel">
       <h2>Field Guide</h2>
@@ -229,8 +368,10 @@
 
    Dates 1–5: Full round-robin (every team plays every other team once)
      All on Saturday nights (Motzei Shabbos)
-   Dates 6–7: Rematches (★)
-     Date 6 on Tuesday night, Date 7 on Motzei Shabbos
+   Dates 6–7: Rematches (★) — both on Tuesday nights
+   Date 8: Playoffs / Semifinals (Motzei Shabbos June 6)
+   Date 9: Championship (Motzei Shabbos June 13 — teams & field TBD; first seed picks field)
+   Date 10: All-Star Game (Sunday June 14 · 8:00 PM · field TBD)
 
    Each game night uses Field 1, Field 2, and Field 3 exactly once.
    Field distribution per team over the full season:
@@ -246,39 +387,49 @@
 ================================================================ */
 const BASE_SCHEDULE = [
   // Date 1 · Motzei Shabbos April 18 · 9:30 PM
-  { game_date:"2026-04-18", game_time:"9:30 PM",  away_team:"Cut Fresh",   home_team:"Renegades",  field:"Field 1", status:"Scheduled" },
-  { game_date:"2026-04-18", game_time:"9:30 PM",  away_team:"Legends",     home_team:"See Ya!",    field:"Field 2", status:"Scheduled" },
-  { game_date:"2026-04-18", game_time:"9:30 PM",  away_team:"Elite",       home_team:"Hurricanes", field:"Field 3", status:"Scheduled" },
+  { game_date:"2026-04-18", game_time:"9:30 PM",  away_team:"Cut Fresh",   home_team:"Renegades",  field:"Field 1", status:"Final", away_score:17, home_score:3 },
+  { game_date:"2026-04-18", game_time:"9:30 PM",  away_team:"Legends",     home_team:"See Ya!",    field:"Field 2", status:"Final", away_score:5,  home_score:7 },
+  { game_date:"2026-04-18", game_time:"9:30 PM",  away_team:"Elite",       home_team:"Hurricanes", field:"Field 3", status:"Final", away_score:9,  home_score:10 },
 
   // Date 2 · Motzei Shabbos April 25 · 9:30 PM
-  { game_date:"2026-04-25", game_time:"9:30 PM",  away_team:"Hurricanes",  home_team:"See Ya!",    field:"Field 1", status:"Scheduled" },
-  { game_date:"2026-04-25", game_time:"9:30 PM",  away_team:"Elite",       home_team:"Cut Fresh",  field:"Field 2", status:"Scheduled" },
-  { game_date:"2026-04-25", game_time:"9:30 PM",  away_team:"Legends",     home_team:"Renegades",  field:"Field 3", status:"Scheduled" },
+  { game_date:"2026-04-25", game_time:"9:30 PM",  away_team:"Hurricanes",  home_team:"See Ya!",    field:"Field 1", status:"Final", away_score:4,  home_score:9 },
+  { game_date:"2026-04-25", game_time:"9:30 PM",  away_team:"Elite",       home_team:"Cut Fresh",  field:"Field 2", status:"Final", away_score:5,  home_score:7 },
+  { game_date:"2026-04-25", game_time:"9:30 PM",  away_team:"Legends",     home_team:"Renegades",  field:"Field 3", status:"Final", away_score:42, home_score:6 },
 
   // Date 3 · Motzei Shabbos May 2 · 9:30 PM
-  { game_date:"2026-05-02", game_time:"9:30 PM",  away_team:"Hurricanes",  home_team:"Legends",    field:"Field 1", status:"Scheduled" },
-  { game_date:"2026-05-02", game_time:"9:30 PM",  away_team:"Elite",       home_team:"Renegades",  field:"Field 2", status:"Scheduled" },
-  { game_date:"2026-05-02", game_time:"9:30 PM",  away_team:"See Ya!",     home_team:"Cut Fresh",  field:"Field 3", status:"Scheduled" },
+  { game_date:"2026-05-02", game_time:"9:30 PM",  away_team:"Hurricanes",  home_team:"Legends",    field:"Field 1", status:"Final", away_score:15, home_score:5 },
+  { game_date:"2026-05-02", game_time:"9:30 PM",  away_team:"Elite",       home_team:"Renegades",  field:"Field 2", status:"Final", away_score:8,  home_score:19 },
+  { game_date:"2026-05-02", game_time:"9:30 PM",  away_team:"See Ya!",     home_team:"Cut Fresh",  field:"Field 3", status:"Final", away_score:12, home_score:16 },
 
   // Date 4 · Motzei Shabbos May 9 · 9:30 PM
-  { game_date:"2026-05-09", game_time:"9:30 PM",  away_team:"See Ya!",     home_team:"Elite",      field:"Field 1", status:"Scheduled" },
-  { game_date:"2026-05-09", game_time:"9:30 PM",  away_team:"Hurricanes",  home_team:"Renegades",  field:"Field 2", status:"Scheduled" },
-  { game_date:"2026-05-09", game_time:"9:30 PM",  away_team:"Cut Fresh",   home_team:"Legends",    field:"Field 3", status:"Scheduled" },
+  { game_date:"2026-05-09", game_time:"9:30 PM",  away_team:"See Ya!",     home_team:"Elite",      field:"Field 1", status:"Final", away_score:4,  home_score:5 },
+  { game_date:"2026-05-09", game_time:"9:30 PM",  away_team:"Hurricanes",  home_team:"Renegades",  field:"Field 2", status:"Final", away_score:19, home_score:11 },
+  { game_date:"2026-05-09", game_time:"9:30 PM",  away_team:"Cut Fresh",   home_team:"Legends",    field:"Field 3", status:"Final", away_score:10, home_score:19 },
 
   // Date 5 · Motzei Shabbos May 16 · 10:00 PM
-  { game_date:"2026-05-16", game_time:"10:00 PM", away_team:"Legends",     home_team:"Elite",      field:"Field 1", status:"Scheduled" },
-  { game_date:"2026-05-16", game_time:"10:00 PM", away_team:"Cut Fresh",   home_team:"Hurricanes", field:"Field 2", status:"Scheduled" },
-  { game_date:"2026-05-16", game_time:"10:00 PM", away_team:"See Ya!",     home_team:"Renegades",  field:"Field 3", status:"Scheduled" },
+  { game_date:"2026-05-16", game_time:"10:00 PM", away_team:"Legends",     home_team:"Elite",      field:"Field 1", status:"Final", away_score:11, home_score:7 },
+  { game_date:"2026-05-16", game_time:"10:00 PM", away_team:"Cut Fresh",   home_team:"Hurricanes", field:"Field 2", status:"Final", away_score:1,  home_score:4 },
+  { game_date:"2026-05-16", game_time:"10:00 PM", away_team:"See Ya!",     home_team:"Renegades",  field:"Field 3", status:"Final", away_score:23, home_score:6 },
 
   // Date 6 · Tuesday May 26 · Rematches ★
-  { game_date:"2026-05-26", game_time:"9:30 PM",  away_team:"Elite",       home_team:"See Ya!",    field:"Field 1", status:"Scheduled", rematch:true },
-  { game_date:"2026-05-26", game_time:"9:30 PM",  away_team:"Legends",     home_team:"Renegades",  field:"Field 2", status:"Scheduled", rematch:true },
-  { game_date:"2026-05-26", game_time:"10:00 PM", away_team:"Cut Fresh",   home_team:"Hurricanes", field:"Field 3", status:"Scheduled", rematch:true },
+  { game_date:"2026-05-26", game_time:"9:30 PM",  away_team:"See Ya!",     home_team:"Elite",      field:"Field 1", status:"Final", away_score:4,  home_score:0,  rematch:true },
+  { game_date:"2026-05-26", game_time:"9:30 PM",  away_team:"Renegades",   home_team:"Legends",    field:"Field 2", status:"Final", away_score:19, home_score:16, rematch:true },
+  { game_date:"2026-05-26", game_time:"10:00 PM", away_team:"Hurricanes",  home_team:"Cut Fresh",  field:"Field 3", status:"Final", away_score:9,  home_score:13, rematch:true },
 
-  // Date 7 · Motzei Shabbos May 30 · Rematches ★
-  { game_date:"2026-05-30", game_time:"10:00 PM", away_team:"Cut Fresh",   home_team:"Renegades",  field:"Field 1", status:"Scheduled", rematch:true },
-  { game_date:"2026-05-30", game_time:"10:00 PM", away_team:"Hurricanes",  home_team:"See Ya!",    field:"Field 2", status:"Scheduled", rematch:true },
-  { game_date:"2026-05-30", game_time:"10:00 PM", away_team:"Legends",     home_team:"Elite",      field:"Field 3", status:"Scheduled", rematch:true },
+  // Date 7 · Tuesday June 2 · Rematches ★
+  { game_date:"2026-06-02", game_time:"10:00 PM", away_team:"Renegades",   home_team:"Cut Fresh",  field:"Field 1", status:"Final", away_score:4,  home_score:9,  rematch:true },
+  { game_date:"2026-06-02", game_time:"10:00 PM", away_team:"See Ya!",     home_team:"Hurricanes", field:"Field 2", status:"Final", away_score:6,  home_score:9,  rematch:true },
+  { game_date:"2026-06-02", game_time:"10:00 PM", away_team:"Elite",       home_team:"Legends",    field:"Field 3", status:"Final", away_score:12, home_score:14, rematch:true },
+
+  // Date 8 · Motzei Shabbos June 6 · Playoffs ★ (Semifinals — seeds will be finalized after Date 7)
+  { game_date:"2026-06-06", game_time:"10:00 PM", away_team:"Hurricanes",  home_team:"Legends",    field:"Field 1", status:"Scheduled", playoff:true },
+  { game_date:"2026-06-06", game_time:"10:00 PM", away_team:"Cut Fresh",   home_team:"See Ya!",    field:"Field 2", status:"Scheduled", playoff:true },
+
+  // Date 9 · Motzei Shabbos June 13 · Championship ★ (teams & field TBD — first seed picks field)
+  { game_date:"2026-06-13", game_time:"10:00 PM", away_team:"TBD",         home_team:"TBD",        field:"TBD",     status:"Scheduled", championship:true },
+
+  // Date 10 · Sunday June 14 · All-Star Game ★ (field TBD)
+  { game_date:"2026-06-14", game_time:"8:00 PM",  away_team:"All-Stars",   home_team:"All-Stars",  field:"TBD",     status:"Scheduled", allstar:true },
 ];
 
 function formatDateLabel(value) {
@@ -298,7 +449,10 @@ const FIELD_META = {
   "Field 2": { cls: "f2", label: "Right Field" },
   "Field 3": { cls: "f3", label: "Small Field" },
 };
-function getFieldMeta(f) { return FIELD_META[f] || { cls:"f1", label: f||"TBD" }; }
+function getFieldMeta(f) {
+  if (!f || f === "TBD") return { cls:"tbd", label:"TBD" };
+  return FIELD_META[f] || { cls:"f1", label: f||"TBD" };
+}
 
 function getStatusClass(s) {
   const v = (s||"").toLowerCase();
@@ -325,14 +479,19 @@ function groupByDate(games) {
   return g;
 }
 
-/* Overlay sheet status updates onto base schedule */
+/* Overlay sheet status/scores onto base schedule */
 function mergeStatuses(base, sheet) {
   if (!Array.isArray(sheet) || !sheet.length) return base;
   const map = {};
   sheet.forEach(r => { map[`${r.game_date||r.date}|${r.away_team}|${r.home_team}`] = r; });
   return base.map(g => {
     const live = map[`${g.game_date}|${g.away_team}|${g.home_team}`];
-    return live ? Object.assign({}, g, { status: live.status || g.status }) : g;
+    if (!live) return g;
+    const merged = Object.assign({}, g, { status: live.status || g.status });
+    // Only overlay scores when present (avoid clobbering hardcoded ones with nulls)
+    if (live.away_score != null && live.away_score !== "") merged.away_score = Number(live.away_score);
+    if (live.home_score != null && live.home_score !== "") merged.home_score = Number(live.home_score);
+    return merged;
   });
 }
 
@@ -361,20 +520,37 @@ function buildFilterPills(games) {
       const allHid = [...card.querySelectorAll(".game-item")].every(i => i.classList.contains("hidden"));
       card.style.display = allHid ? "none" : "";
     });
+    // Hide the postseason wrapper if all its cards are hidden
+    const postWrap = document.getElementById("postseason-section");
+    if (postWrap) {
+      const postCards = postWrap.querySelectorAll(".date-card");
+      if (postCards.length) {
+        const allPostHid = [...postCards].every(c => c.style.display === "none");
+        postWrap.style.display = allPostHid ? "none" : "";
+      }
+    }
   });
 }
 
-function renderSchedule(games) {
-  const container = document.getElementById("schedule-groups");
+function renderDateCards(games, container, opts = {}) {
   const grouped = groupByDate(games);
   container.innerHTML = Object.entries(grouped).map(([date, list]) => {
-    const hasRematch = list.some(g => g.rematch);
+    const hasChampionship = list.some(g => g.championship);
+    const hasPlayoff      = list.some(g => g.playoff);
+    const hasAllstar      = list.some(g => g.allstar);
+    const hasRematch      = list.some(g => g.rematch);
+    let badge = "";
+    if (hasChampionship)   badge = '<span class="championship-badge">★ Championship</span>';
+    else if (hasPlayoff)   badge = '<span class="playoff-badge">★ Semifinals</span>';
+    else if (hasAllstar)   badge = '<span class="allstar-badge">★ All-Star Game</span>';
+    else if (hasRematch)   badge = '<span class="rematch-badge">★ Rematch Night</span>';
+    const cardCls = hasAllstar ? "date-card allstar" : "date-card";
     return `
-    <article class="date-card">
+    <article class="${cardCls}">
       <div class="date-card-header">
         <div class="date-card-header-left">
           <div class="date-accent-bar"></div>
-          <h2>${formatDateLabel(date)}${hasRematch ? '<span class="rematch-badge">★ Rematch Night</span>' : ""}</h2>
+          <h2>${formatDateLabel(date)}${badge}</h2>
         </div>
         <span class="date-game-count">${list.length} game${list.length===1?"":"s"}</span>
       </div>
@@ -383,24 +559,50 @@ function renderSchedule(games) {
           const { value:tv, ampm } = splitTime(game.game_time);
           const fm    = getFieldMeta(game.field);
           const sCls  = getStatusClass(game.status);
-          const teams = [game.away_team, game.home_team].filter(Boolean).join("|");
+          // All-Star and TBD-matchup games show on every team filter
+          const ALL_TEAMS = ["Legends","See Ya!","Hurricanes","Elite","Cut Fresh","Renegades"];
+          const isTbd = game.away_team === "TBD" || game.home_team === "TBD";
+          const teams = (game.allstar || isTbd)
+            ? ALL_TEAMS.join("|")
+            : [game.away_team, game.home_team].filter(Boolean).join("|");
+          // All-Star games render a single centered label instead of away/home blocks
+          const isFinal = (game.status||"").toLowerCase().includes("final");
+          const aScore  = game.away_score, hScore = game.home_score;
+          const haveScores = isFinal && aScore != null && hScore != null;
+          const awayWin = haveScores && aScore > hScore;
+          const homeWin = haveScores && hScore > aScore;
+          const matchupHTML = game.allstar ? `
+            <div class="allstar-matchup">
+              <span class="star-icon">★</span>
+              <span class="allstar-label">All-Star Game</span>
+              <span class="star-icon">★</span>
+            </div>
+          ` : `
+            <div class="game-matchup-cell">
+              <div class="team-block ${awayWin?'win':homeWin?'loss':''}">
+                <div class="team-line">
+                  <span class="team-name">${game.away_team||"TBD"}</span>
+                  ${haveScores ? `<span class="team-score">${aScore}</span>` : ""}
+                </div>
+                <span class="team-role">Away${awayWin?'<span class="win-check">✓ WIN</span>':''}</span>
+              </div>
+              <span class="vs-divider${isFinal?' final-label':''}">${isFinal?'FINAL':'VS'}</span>
+              <div class="team-block ${homeWin?'win':awayWin?'loss':''}">
+                <div class="team-line">
+                  ${haveScores ? `<span class="team-score">${hScore}</span>` : ""}
+                  <span class="team-name">${game.home_team||"TBD"}</span>
+                </div>
+                <span class="team-role">Home${homeWin?'<span class="win-check">✓ WIN</span>':''}</span>
+              </div>
+            </div>
+          `;
           return `
           <div class="game-item" data-field="${game.field||""}" data-teams="${teams}">
             <div class="game-time-cell">
               <span class="game-time-value">${tv}</span>
               ${ampm ? `<span class="game-time-ampm">${ampm}</span>` : ""}
             </div>
-            <div class="game-matchup-cell">
-              <div class="team-block">
-                <span class="team-name">${game.away_team||"TBD"}</span>
-                <span class="team-role">Away</span>
-              </div>
-              <span class="vs-divider">VS</span>
-              <div class="team-block">
-                <span class="team-name">${game.home_team||"TBD"}</span>
-                <span class="team-role">Home</span>
-              </div>
-            </div>
+            ${matchupHTML}
             <div class="game-field-cell">
               <div class="field-chip">
                 <span class="field-badge ${fm.cls}">${game.field||"TBD"}</span>
@@ -415,6 +617,22 @@ function renderSchedule(games) {
       </div>
     </article>`;
   }).join("");
+}
+
+function renderSchedule(games) {
+  // Split: postseason/all-star at top, regular schedule below
+  const featured = games.filter(g => g.playoff || g.championship || g.allstar);
+  const regular  = games.filter(g => !(g.playoff || g.championship || g.allstar));
+
+  const postWrap = document.getElementById("postseason-section");
+  const postGroups = document.getElementById("postseason-groups");
+  if (featured.length) {
+    postWrap.style.display = "";
+    renderDateCards(featured, postGroups);
+  } else {
+    postWrap.style.display = "none";
+  }
+  renderDateCards(regular, document.getElementById("schedule-groups"));
 }
 
 async function init() {
