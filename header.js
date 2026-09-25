@@ -179,6 +179,7 @@ const HEADER_STYLES = `
 .nav-menu { position: relative; }
 .nav-panel { position: absolute; top: calc(100% + 10px); left: 50%; transform: translate(-50%, 6px); width: 520px; padding: 10px; display: grid; grid-template-columns: 1fr 1fr; gap: 4px; border-radius: 16px; background: #ffffff; border: 1px solid var(--line-2); box-shadow: 0 24px 60px rgba(13,34,64,0.193); opacity: 0; pointer-events: none; transition: opacity .16s, transform .16s; }
 .nav-menu.open .nav-panel { opacity: 1; pointer-events: auto; transform: translate(-50%, 0); }
+.nav-panel::before { content: ""; position: absolute; left: 0; right: 0; top: -14px; height: 14px; } /* hover bridge over the gap */
 .nav-panel a { display: flex; gap: 12px; padding: 11px 12px; border-radius: 11px; text-decoration: none; transition: background .12s; }
 .nav-panel a:hover, .nav-panel a[aria-current="page"] { background: rgba(13,34,64,.05); }
 .nav-panel .ico { width: 34px; height: 34px; flex-shrink: 0; border-radius: 9px; display: grid; place-items: center; background: rgba(13,34,64,.05); font-size: 1rem; }
@@ -606,9 +607,23 @@ function setupHeaderInteractions() {
   const dd = document.getElementById("nav-menu");
   const ddBtn = dd.querySelector(".nav-menu-btn");
   const setDD = open => { dd.classList.toggle("open", open); ddBtn.setAttribute("aria-expanded", String(open)); };
-  ddBtn.addEventListener("click", e => { e.stopPropagation(); setDD(!dd.classList.contains("open")); });
-  dd.addEventListener("mouseenter", () => { if (matchMedia("(hover:hover)").matches) setDD(true); });
-  dd.addEventListener("mouseleave", () => { if (matchMedia("(hover:hover)").matches) setDD(false); });
+  const canHover = () => matchMedia("(hover:hover)").matches;
+  let hoverOpenedAt = 0, closeTimer = null;
+  ddBtn.addEventListener("click", e => {
+    e.stopPropagation();
+    // A click right after hover-open keeps it open instead of toggling it shut
+    if (dd.classList.contains("open") && Date.now() - hoverOpenedAt < 600) return;
+    setDD(!dd.classList.contains("open"));
+  });
+  dd.addEventListener("mouseenter", () => {
+    if (!canHover()) return;
+    clearTimeout(closeTimer);
+    if (!dd.classList.contains("open")) { hoverOpenedAt = Date.now(); setDD(true); }
+  });
+  dd.addEventListener("mouseleave", () => {
+    if (!canHover()) return;
+    closeTimer = setTimeout(() => setDD(false), 220);
+  });
   document.addEventListener("click", e => {
     if (!dd.contains(e.target)) setDD(false);
     if (!menu.hidden && !e.target.closest(".site-header") && !e.target.closest("[data-menu-open]")) setMenu(false);
