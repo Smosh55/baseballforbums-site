@@ -195,7 +195,9 @@ const HEADER_STYLES = `
 .search-btn kbd { font-family: var(--font-body); font-size: .7rem; padding: 2px 6px; border-radius: 5px; border: 1px solid var(--line-2); color: var(--muted); }
 .cta { display: inline-flex; align-items: center; height: 38px; padding: 0 16px; border-radius: 999px; background: linear-gradient(135deg, var(--accent), var(--accent-hi)); color: #fff; text-decoration: none; font-family: var(--font-display); font-weight: 900; font-size: .88rem; letter-spacing: .1em; text-transform: uppercase; box-shadow: 0 6px 18px rgba(59,158,230,.35); transition: transform .15s, box-shadow .15s; white-space: nowrap; }
 .cta:hover { transform: translateY(-1px); box-shadow: 0 10px 24px rgba(59,158,230,.45); }
-.icon-btn { display: none; width: 40px; height: 40px; border-radius: 10px; border: 1px solid var(--line-2); background: rgba(13,34,64,.03); color: var(--text-2); cursor: pointer; place-items: center; }
+.mm-top { display: flex; align-items: center; justify-content: space-between; }
+.mm-top > span { font-family: var(--font-display); font-size: .8rem; font-weight: 800; letter-spacing: .18em; text-transform: uppercase; color: var(--muted); }
+.mm-close { display: inline-flex; align-items: center; gap: 6px; height: 40px; padding: 0 14px; border-radius: 10px; border: 1px solid var(--line-2); background: rgba(13,34,64,.03); color: var(--text-2); cursor: pointer; font-family: var(--font-display); font-weight: 800; font-size: .85rem; letter-spacing: .08em; text-transform: uppercase; }
 
 .mobile-menu { background: #ffffff; border-bottom: 1px solid var(--line); max-height: calc(100vh - 94px); overflow-y: auto; }
 .mobile-menu[hidden] { display: none; }
@@ -215,7 +217,6 @@ const HEADER_STYLES = `
 }
 @media (max-width: 900px) {
   .nav, .cta { display: none; }
-  .icon-btn { display: grid; }
   .search-btn { height: 40px; }
   .bottom-nav { display: grid; grid-template-columns: repeat(5, 1fr); position: fixed; left: 0; right: 0; bottom: 0; z-index: 9000; padding: 6px 6px calc(6px + env(safe-area-inset-bottom)); background: rgba(255,255,255,.96); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-top: 1px solid var(--line-2); }
   .bottom-nav a, .bottom-nav button { display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 6px 0; border: 0; background: none; text-decoration: none; color: var(--muted); font-family: var(--font-display); font-size: .68rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; cursor: pointer; border-radius: 10px; }
@@ -331,10 +332,10 @@ function renderHeader() {
         <div class="bar-actions">
           <button class="search-btn" type="button" data-qj-open aria-label="Search the site">${ICON.search}<span>Search</span><kbd>Ctrl K</kbd></button>
           <a class="cta" href="${CONFIG.ctaHref}">${esc(CONFIG.ctaLabel)}</a>
-          <button class="icon-btn" id="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open menu">${ICON.menu}</button>
         </div>
       </div></div>
       <div class="mobile-menu" id="mobile-menu" hidden><div class="wrap">
+        <div class="mm-top"><span>All pages</span><button type="button" class="mm-close" data-menu-close aria-label="Close menu">${ICON.close}<span>Close</span></button></div>
         ${SITE.groups.map(g => `
           <div class="mm-group"><h4>${esc(g.label)}</h4><div class="mm-links">
             ${SITE.pages.filter(p => p.group === g.id).map(p => `<a href="${p.path}"${isActive(p) ? ' aria-current="page"' : ""}><span aria-hidden="true">${p.icon}</span>${esc(p.short || p.title)}</a>`).join("")}
@@ -354,7 +355,7 @@ function renderBottomNav() {
   const tabs = ["home", "schedule", "standings", "stats"].map(pageById);
   return `<nav class="bottom-nav" aria-label="Quick">
     ${tabs.map(p => `<a href="${p.path}"${isActive(p) ? ' aria-current="page"' : ""}>${TAB_ICON[p.id]}<span>${esc(p.short || p.title)}</span></a>`).join("")}
-    <button type="button" data-menu-open aria-label="More pages">${ICON.menu}<span>More</span></button>
+    <button type="button" data-menu-open aria-controls="mobile-menu" aria-expanded="false" aria-label="More pages">${ICON.menu}<span>More</span></button>
   </nav>`;
 }
 
@@ -591,17 +592,16 @@ function setupQuickJump() {
 
 /* ── interactions ── */
 function setupHeaderInteractions() {
-  const toggle = document.getElementById("menu-toggle");
   const menu = document.getElementById("mobile-menu");
+  const openers = document.querySelectorAll("[data-menu-open]");
   const setMenu = open => {
-    toggle.setAttribute("aria-expanded", String(open));
-    toggle.innerHTML = open ? ICON.close : ICON.menu;
+    openers.forEach(b => b.setAttribute("aria-expanded", String(open)));
     menu.hidden = !open;
     document.body.classList.toggle("menu-open", open);
     if (open) window.scrollTo({ top: 0 });
   };
-  toggle.addEventListener("click", () => setMenu(menu.hidden));
-  document.querySelectorAll("[data-menu-open]").forEach(b => b.addEventListener("click", () => setMenu(menu.hidden)));
+  openers.forEach(b => b.addEventListener("click", () => setMenu(menu.hidden)));
+  document.querySelectorAll("[data-menu-close]").forEach(b => b.addEventListener("click", () => setMenu(false)));
   window.addEventListener("resize", () => { if (window.innerWidth > 900 && !menu.hidden) setMenu(false); });
 
   const dd = document.getElementById("nav-menu");
