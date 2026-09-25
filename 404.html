@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <title>Page Not Found | Baseball For Bums</title>
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#ffffff">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E⚾%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800;900&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/app.css?v=8">
+  <style>
+    .nf { padding: 70px 0 40px; text-align: center; }
+    .nf-big { font-family: var(--font-display); font-weight: 900; font-size: clamp(6rem, 22vw, 11rem); line-height: .85; background: linear-gradient(135deg, #0d2240, var(--accent)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+    .nf h1 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 900; text-transform: uppercase; margin-top: 10px; }
+    .nf p { color: var(--text-2); margin: 10px auto 24px; max-width: 48ch; }
+    .nf-actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+    #suggest { max-width: 900px; margin: 34px auto 0; text-align: left; }
+  </style>
+</head>
+<body>
+
+<div id="site-header"></div>
+
+<main>
+  <section class="nf">
+    <div class="wrap">
+      <div class="nf-big" aria-hidden="true">Foul!</div>
+      <h1>That page is out of play</h1>
+      <p>We couldn't find <code id="bad-path" style="color:var(--gold)"></code>. It may have moved — try one of these, or search the whole site.</p>
+      <div class="nf-actions">
+        <button class="btn btn-primary" type="button" id="nf-search">🔎 Search the site</button>
+        <a class="btn" href="/">Home</a>
+        <a class="btn" href="/sitemap/">Site map</a>
+      </div>
+      <div id="suggest"></div>
+    </div>
+  </section>
+</main>
+
+<div id="site-footer"></div>
+
+<script src="/shared.js?v=8"></script>
+<script src="/header.js?v=11"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  var path = decodeURIComponent(location.pathname);
+  document.getElementById("bad-path").textContent = path;
+
+  // Turn the bad URL into search words and rank pages by keyword overlap
+  var words = path.toLowerCase().replace(/\.html?$/, "").split(/[^a-z0-9]+/).filter(function (w) { return w.length > 1; });
+  var pages = (typeof SITE !== "undefined" ? SITE.pages : []).filter(function (p) { return p.id !== "home"; });
+  var scored = pages.map(function (p) {
+    var hay = (p.title + " " + (p.short || "") + " " + p.path + " " + (p.keywords || "")).toLowerCase();
+    var s = words.reduce(function (n, w) { return n + (hay.indexOf(w) > -1 ? 2 : 0) + (hay.indexOf(w.slice(0, 4)) > -1 ? 1 : 0); }, 0);
+    return { p: p, s: s };
+  }).sort(function (a, b) { return b.s - a.s; });
+  var best = scored.filter(function (x) { return x.s > 0; }).slice(0, 3);
+  if (best.length < 3) best = best.concat(["schedule", "standings", "stats"].map(function (id) {
+    return { p: pages.filter(function (p) { return p.id === id; })[0] };
+  }).filter(function (x) { return x.p && best.every(function (b) { return b.p.id !== x.p.id; }); })).slice(0, 3);
+
+  document.getElementById("suggest").innerHTML =
+    '<div class="section-head"><h2>' + (scored[0] && scored[0].s > 0 ? "Did you mean" : "Popular pages") + '</h2></div><div class="grid-3">' +
+    best.map(function (x) {
+      return '<a class="tile" href="' + x.p.path + '"><span class="tile-icon">' + x.p.icon + '</span><span class="tile-title">' + x.p.title + '</span><span class="tile-desc">' + x.p.desc + '</span><span class="tile-go">Go →</span></a>';
+    }).join("") + '</div>';
+
+  document.getElementById("nf-search").addEventListener("click", function () { qjOpen(words.join(" ")); });
+});
+</script>
+</body>
+</html>

@@ -2,649 +2,174 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Waiver & Code of Conduct | Baseball For Bums</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <title>Waiver &amp; Code of Conduct | Baseball For Bums</title>
+  <meta name="description" content="Baseball For Bums liability waiver and code of conduct — assumption of risk, release, medical care, sportsmanship, discipline, rainouts and media release.">
+  <link rel="canonical" href="https://baseballforbums.com/waiver-and-conduct/">
+  <meta name="theme-color" content="#ffffff">
+  <meta property="og:title" content="Waiver &amp; Code of Conduct | Baseball For Bums">
+  <meta property="og:url" content="https://baseballforbums.com/waiver-and-conduct/">
+  <meta property="og:type" content="article">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E⚾%3C/text%3E%3C/svg%3E">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
-  <link rel="stylesheet" href="../app.css?v=5">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800;900&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/app.css?v=8">
 
   <style>
-    body { font-family: 'Barlow', sans-serif; }
-
-    /* ---- PAGE HEADER ---- */
-    header {
-      padding: 40px 0 24px;
-      border-bottom: 1px solid rgba(255,255,255,0.06);
-      margin-bottom: 0;
-      position: relative;
-    }
-    header::before {
-      content: "";
-      position: absolute;
-      bottom: -1px; left: 0;
-      width: 80px; height: 2px;
-      background: var(--accent);
-      border-radius: 999px;
-    }
-    header h1 {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 900;
-      font-size: clamp(2.4rem, 5vw, 3.6rem);
-      letter-spacing: -0.02em;
-      margin: 0 0 6px;
-      background: linear-gradient(135deg, #eef4ff 30%, #ffcc66 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    header p { color: var(--muted); margin: 0; font-size: 1rem; }
-
-    /* ---- ALERT BANNER ---- */
-    .alert-banner {
-      background: rgba(214,64,69,0.1);
-      border: 1px solid rgba(214,64,69,0.3);
-      border-radius: 14px;
-      padding: 14px 18px;
-      display: flex;
-      align-items: flex-start;
-      gap: 12px;
-      margin: 24px 0;
-    }
-    .alert-banner-icon { font-size: 1.1rem; flex-shrink: 0; margin-top: 1px; }
-    .alert-banner p {
-      font-size: 0.9rem;
-      color: #ffd5d6;
-      line-height: 1.6;
-      margin: 0;
-    }
-    .alert-banner p strong {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 0.85rem;
-      font-weight: 800;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: #ffb3b5;
-      display: block;
-      margin-bottom: 3px;
-    }
-
-    /* ---- PAGE LAYOUT ---- */
-    .waiver-layout {
-      display: grid;
-      grid-template-columns: minmax(0,1fr) 270px;
-      gap: 32px;
-      align-items: start;
-      padding: 28px 0 60px;
-    }
-
-    /* ---- SECTIONS ---- */
-    .waiver-sections { display: grid; gap: 0; }
-
-    .waiver-section {
-      padding: 30px 0;
-      border-bottom: 1px solid rgba(255,255,255,0.06);
-      animation: cardIn 0.4s ease both;
-    }
-    .waiver-section:first-child { padding-top: 0; }
-    .waiver-section:last-child { border-bottom: none; padding-bottom: 0; }
-
-    .waiver-section:nth-child(1) { animation-delay: 0.05s; }
-    .waiver-section:nth-child(2) { animation-delay: 0.10s; }
-    .waiver-section:nth-child(3) { animation-delay: 0.15s; }
-    .waiver-section:nth-child(4) { animation-delay: 0.20s; }
-    .waiver-section:nth-child(5) { animation-delay: 0.25s; }
-    .waiver-section:nth-child(6) { animation-delay: 0.30s; }
-    .waiver-section:nth-child(7) { animation-delay: 0.35s; }
-    .waiver-section:nth-child(8) { animation-delay: 0.40s; }
-
-    .section-heading {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 16px;
-    }
-
-    .section-num {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 0.7rem;
-      font-weight: 800;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--accent-2);
-      white-space: nowrap;
-      flex-shrink: 0;
-    }
-
-    .section-num-divider {
-      width: 1px; height: 16px;
-      background: rgba(255,255,255,0.1);
-      flex-shrink: 0;
-    }
-
-    .waiver-section h2 {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 1.25rem;
-      font-weight: 800;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      color: var(--text);
-      margin: 0;
-      line-height: 1;
-    }
-
-    .waiver-section p {
-      font-size: 0.93rem;
-      line-height: 1.85;
-      color: var(--muted);
-      margin-bottom: 12px;
-      max-width: 68ch;
-    }
-    .waiver-section p:last-child { margin-bottom: 0; }
-    .waiver-section p strong { color: var(--text); font-weight: 600; }
-
-    .waiver-section ul {
-      list-style: none;
-      padding: 0;
-      display: grid;
-      gap: 8px;
-      margin: 4px 0;
-    }
-    .waiver-section ul li {
-      font-size: 0.9rem;
-      line-height: 1.65;
-      color: var(--muted);
-      padding-left: 20px;
-      position: relative;
-    }
-    .waiver-section ul li::before {
-      content: "—";
-      position: absolute;
-      left: 0;
-      color: var(--accent-2);
-      font-weight: 700;
-    }
-
-    .footnote {
-      font-size: 0.78rem !important;
-      color: rgba(184,196,218,0.5) !important;
-      font-style: italic;
-      margin-top: 6px !important;
-    }
-
-    /* ---- CALLOUT BOXES ---- */
-    .info-box {
-      background: rgba(43,110,248,0.07);
-      border-left: 3px solid rgba(43,110,248,0.5);
-      border-radius: 0 10px 10px 0;
-      padding: 14px 18px;
-      margin-top: 16px;
-    }
-    .info-box p {
-      margin: 0;
-      font-size: 0.88rem !important;
-      line-height: 1.7;
-      max-width: none !important;
-    }
-
-    .penalty-box {
-      background: rgba(214,64,69,0.12);
-      border: 1px solid rgba(214,64,69,0.3);
-      border-radius: 14px;
-      padding: 20px 22px;
-      margin-top: 16px;
-    }
-    .penalty-label {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 0.68rem;
-      font-weight: 800;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: rgba(255,179,181,0.65);
-      margin-bottom: 6px;
-    }
-    .penalty-text {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 1.8rem;
-      font-weight: 900;
-      line-height: 1.15;
-      color: #ffd5d6;
-      text-transform: uppercase;
-      letter-spacing: 0.02em;
-    }
-
-    /* ---- SIDEBAR ---- */
-    .waiver-sidebar {
-      position: sticky;
-      top: 84px;
-    }
-
-    .sidebar-card {
-      background: rgba(15,22,38,0.9);
-      border: 1px solid rgba(255,255,255,0.07);
-      border-radius: 20px;
-      overflow: hidden;
-      box-shadow: 0 20px 50px rgba(0,0,0,0.3);
-    }
-
-    .sidebar-card-header {
-      padding: 16px 20px;
-      border-bottom: 1px solid rgba(255,255,255,0.06);
-      background: rgba(255,255,255,0.02);
-    }
-    .sidebar-card-header h3 {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 0.72rem;
-      font-weight: 800;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--accent-2);
-      margin: 0;
-    }
-
-    .toc-link {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 11px 20px;
-      border-bottom: 1px solid rgba(255,255,255,0.05);
-      text-decoration: none;
-      color: var(--muted);
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 0.78rem;
-      font-weight: 700;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      transition: background 0.14s, color 0.14s;
-    }
-    .toc-link:last-of-type { border-bottom: none; }
-    .toc-link:hover { color: var(--text); background: rgba(255,255,255,0.04); }
-    .toc-num {
-      color: var(--accent-2);
-      opacity: 0.6;
-      font-size: 0.68rem;
-      flex-shrink: 0;
-    }
-
-    .sidebar-actions {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      padding: 16px 20px;
-      border-top: 1px solid rgba(255,255,255,0.06);
-    }
-
-    .btn-primary {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 44px;
-      padding: 0 20px;
-      border-radius: 999px;
-      background: linear-gradient(135deg, #d64045 0%, #f05b4f 100%);
-      color: #fff8f2;
-      font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 800;
-      font-size: 0.85rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      border: none;
-      cursor: pointer;
-      box-shadow: 0 10px 24px rgba(214,64,69,0.28);
-      transition: 0.15s ease;
-      text-decoration: none;
-    }
-    .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 14px 28px rgba(214,64,69,0.34); }
-
-    .btn-ghost {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 44px;
-      padding: 0 20px;
-      border-radius: 999px;
-      background: transparent;
-      color: var(--muted);
-      font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 800;
-      font-size: 0.85rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      border: 1px solid rgba(255,255,255,0.1);
-      cursor: pointer;
-      transition: 0.15s ease;
-      text-decoration: none;
-    }
-    .btn-ghost:hover { color: var(--text); border-color: rgba(255,255,255,0.2); }
-
-    /* ---- AGREEMENT BLOCK ---- */
-    .agreement-wrap {
-      padding: 0 0 60px;
-    }
-
-    .agreement-card {
-      background: rgba(15,22,38,0.9);
-      border: 1px solid rgba(255,255,255,0.07);
-      border-top: 3px solid var(--accent-2);
-      border-radius: 20px;
-      padding: 32px 36px;
-      box-shadow: 0 20px 50px rgba(0,0,0,0.3);
-      position: relative;
-      overflow: hidden;
-    }
-    .agreement-card::after {
-      content: "✓";
-      position: absolute;
-      right: 16px; top: -10px;
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 130px; font-weight: 900;
-      color: rgba(255,204,102,0.04);
-      pointer-events: none;
-      line-height: 1;
-    }
-
-    .agreement-card h3 {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 1.3rem;
-      font-weight: 900;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      color: var(--accent-2);
-      margin: 0 0 10px;
-    }
-
-    .agreement-card > p {
-      font-size: 0.92rem;
-      color: var(--muted);
-      line-height: 1.75;
-      margin: 0;
-      max-width: 68ch;
-    }
-
-    /* ---- WAIVER CHECKBOX ---- */
-    .waiver-check-block {
-      background: rgba(255,255,255,0.02);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 14px;
-      padding: 18px 20px;
-      margin-top: 24px;
-      cursor: pointer;
-      transition: border-color 0.18s, background 0.18s;
-      position: relative;
-      z-index: 1;
-    }
-    .waiver-check-block:hover {
-      border-color: rgba(255,204,102,0.35);
-      background: rgba(255,204,102,0.03);
-    }
-    .waiver-check-block.is-checked {
-      border-color: rgba(255,204,102,0.5);
-      background: rgba(255,204,102,0.05);
-    }
-
-    .waiver-check-inner { display: flex; align-items: flex-start; gap: 14px; }
-
-    .custom-check {
-      width: 22px; height: 22px;
-      flex-shrink: 0; margin-top: 2px;
-      border: 2px solid rgba(255,255,255,0.15);
-      border-radius: 6px;
-      background: rgba(255,255,255,0.04);
-      display: flex; align-items: center; justify-content: center;
-      transition: border-color 0.18s, background 0.18s;
-    }
-    .waiver-check-block:hover .custom-check { border-color: rgba(255,204,102,0.5); }
-    .waiver-check-block.is-checked .custom-check {
-      border-color: var(--accent-2);
-      background: var(--accent-2);
-    }
-    .custom-check svg {
-      opacity: 0; transform: scale(0.5);
-      transition: opacity 0.14s, transform 0.14s;
-    }
-    .waiver-check-block.is-checked .custom-check svg { opacity: 1; transform: scale(1); }
-
-    .check-text {
-      font-size: 0.95rem;
-      font-weight: 600;
-      color: var(--muted);
-      line-height: 1.5;
-      transition: color 0.18s;
-    }
-    .waiver-check-block.is-checked .check-text { color: var(--text); }
-
-    .check-sub {
-      font-size: 0.78rem;
-      color: rgba(184,196,218,0.45);
-      margin-top: 4px;
-      line-height: 1.5;
-    }
-
-    /* ---- ANIMATIONS ---- */
-    @keyframes cardIn {
-      from { opacity: 0; transform: translateY(12px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-    /* ---- RESPONSIVE ---- */
-    @media (max-width: 900px) {
-      .waiver-layout {
-        grid-template-columns: 1fr;
-        gap: 24px;
-      }
-      .waiver-sidebar {
-        position: static;
-        order: -1;
-      }
-    }
-
-    @media (max-width: 640px) {
-      .waiver-layout { padding: 20px 0 48px; }
-      .agreement-card { padding: 24px 20px; }
-    }
-
-    @media print {
-      body { background: #fff; color: #000; }
-      .site-header, .waiver-sidebar, .agreement-wrap, .alert-banner { display: none !important; }
-      .waiver-layout { grid-template-columns: 1fr; }
-      header h1 { -webkit-text-fill-color: #000; }
-      .waiver-section p, .waiver-section ul li { color: #333; }
-      .waiver-section h2 { color: #000; }
-    }
+    .w-sec { padding: 24px; margin-bottom: 14px; }
+    .w-sec-head { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+    .w-sec-head .n { font-family: var(--font-display); font-weight: 900; font-size: .9rem; letter-spacing: .1em; color: var(--accent-hi); white-space: nowrap; }
+    .w-sec-head .rule { width: 1px; height: 22px; background: var(--line-2); }
+    .w-sec-head h2 { font-size: 1.45rem; font-weight: 800; text-transform: uppercase; letter-spacing: .02em; }
+    .info-box { margin-top: 14px; padding: 14px 16px; border-radius: 12px; background: rgba(108,184,255,.07); border: 1px solid rgba(108,184,255,.25); }
+    .penalty { margin-top: 16px; padding: 16px 18px; border-radius: 12px; background: var(--accent-soft); border: 1px solid rgba(59,158,230,.35); }
+    .penalty .lbl { font-family: var(--font-display); font-size: .74rem; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; color: #c0343a; }
+    .penalty .txt { font-family: var(--font-display); font-size: 1.3rem; font-weight: 800; margin-top: 4px; }
+    .footnote { font-size: .84rem; color: var(--muted) !important; }
+    .agree { margin-top: 10px; padding: 24px; }
+    .agree h2 { font-size: 1.5rem; font-weight: 900; text-transform: uppercase; margin-bottom: 8px; }
+    .check { display: flex; gap: 12px; align-items: flex-start; margin-top: 16px; padding: 16px; border-radius: 12px; border: 1px solid var(--line-2); background: rgba(13,34,64,.02); cursor: pointer; }
+    .check input { width: 20px; height: 20px; min-height: 0; margin-top: 2px; accent-color: var(--gold); flex-shrink: 0; }
+    .check:has(input:checked) { border-color: rgba(59,158,230,.5); background: var(--gold-soft); }
+    .check small { display: block; color: var(--muted); font-size: .8rem; margin-top: 4px; }
+    .next-step { display: none; margin-top: 14px; }
+    .check:has(input:checked) + .next-step { display: flex; }
+    .side-actions { display: grid; gap: 8px; padding: 14px; border-top: 1px solid var(--line); }
   </style>
 </head>
 <body>
 
 <div id="site-header"></div>
 
-<header>
-  <div style="width:min(1140px,calc(100% - 32px));margin:0 auto;">
-    <h1>Waiver &amp; Code of Conduct</h1>
-    <p>Read carefully before participating in any league activity.</p>
-  </div>
-</header>
-
-<main style="width:min(1140px,calc(100% - 32px));margin:0 auto;">
-
-  <div class="alert-banner">
-    <span class="alert-banner-icon">⚠️</span>
-    <p>
-      <strong>Important Notice</strong>
-      Baseball involves physical contact, hard balls &amp; bats, running, sliding, collisions, and uneven field conditions. Participation is voluntary and carries real risk of injury.
-    </p>
-  </div>
-
-  <div class="waiver-layout">
-
-    <!-- ── SECTIONS ── -->
-    <div class="waiver-sections">
-
-      <div class="waiver-section" id="s01">
-        <div class="section-heading">
-          <span class="section-num">§ 01</span>
-          <div class="section-num-divider"></div>
-          <h2>Assumption of Risk</h2>
-        </div>
-        <p>I understand that participating in Baseball For Bums league activities — including games, practices, warmups, and related events — involves inherent risks including but not limited to: sprains, strains, fractures, concussions, heat illness, cardiac events, collisions with players or objects, and injuries caused by bats, balls, and field conditions.</p>
-        <p>I knowingly and voluntarily assume all such risks, whether known or unknown, foreseeable or unforeseeable, arising from my participation.</p>
-      </div>
-
-      <div class="waiver-section" id="s02">
-        <div class="section-heading">
-          <span class="section-num">§ 02</span>
-          <div class="section-num-divider"></div>
-          <h2>Waiver &amp; Release of Liability</h2>
-        </div>
-        <p>To the fullest extent permitted by law, I release and hold harmless Baseball For Bums, the league commissioner, league organizers, staff, volunteers, sponsors, partners, and field/property owners from any and all claims, liabilities, damages, or causes of action arising out of or related to my participation — including claims based on negligence, except to the extent prohibited by law.</p>
-      </div>
-
-      <div class="waiver-section" id="s03">
-        <div class="section-heading">
-          <span class="section-num">§ 03</span>
-          <div class="section-num-divider"></div>
-          <h2>Medical Treatment &amp; Emergency Care</h2>
-        </div>
-        <p>If I am injured or become ill, I authorize league organizers to seek emergency medical treatment on my behalf if I am unable to do so. I understand I am solely responsible for all medical costs and that the league does not provide any medical insurance coverage.</p>
-      </div>
-
-      <div class="waiver-section" id="s04">
-        <div class="section-heading">
-          <span class="section-num">§ 04</span>
-          <div class="section-num-divider"></div>
-          <h2>Fitness to Participate</h2>
-        </div>
-        <p>I affirm that I am physically able to participate and will not engage in any activity for which I am not medically cleared. I should consult a physician if I have any medical concerns prior to participation.</p>
-      </div>
-
-      <div class="waiver-section" id="s05">
-        <div class="section-heading">
-          <span class="section-num">§ 05</span>
-          <div class="section-num-divider"></div>
-          <h2>Sportsmanship &amp; Code of Conduct</h2>
-        </div>
-        <p>All participants are expected to maintain a respectful, competitive, and safe environment at all times. The following are strictly prohibited:</p>
-        <ul>
-          <li>Fighting, threats, harassment, discrimination, or hate speech</li>
-          <li>Intentional attempts to injure another player</li>
-          <li>Excessive profanity directed at any player, umpire, or spectator</li>
-          <li>Alcohol or drug impairment during games</li>
-          <li>Vandalism or disrespect of field property</li>
-        </ul>
-        <div class="info-box">
-          <p><strong>Umpire Authority:</strong> Umpires have full and final authority over all on-field decisions. All decisions are final. Arguing, abusive language, or unsportsmanlike conduct toward an umpire may result in immediate ejection.</p>
-        </div>
-      </div>
-
-      <div class="waiver-section" id="s06">
-        <div class="section-heading">
-          <span class="section-num">§ 06</span>
-          <div class="section-num-divider"></div>
-          <h2>Commissioner Authority &amp; Discipline</h2>
-        </div>
-        <p>The League Commissioner oversees all disciplinary matters related to player conduct, rule violations, safety concerns, and behavior detrimental to the league. For standard violations, the Commissioner may act directly. For significant or contested decisions — including multi-game suspensions, playoff ineligibility, or removal from the league — the matter will be reviewed by a <strong>League Review Committee</strong> of at least two additional league representatives before a final decision is issued.</p>
-        <p>This committee process exists to ensure fairness, reduce bias, and protect both players and the league from one-sided outcomes.</p>
-
-        <div class="penalty-box">
-          <div class="penalty-label">Automatic Penalty — Ejection</div>
-          <div class="penalty-text">1-Game Suspension<br>+ Removal from Current Game</div>
-        </div>
-
-        <p style="margin-top:18px;">Following committee review, additional penalties may include:</p>
-        <ul>
-          <li>Extended or multi-game suspensions</li>
-          <li>Playoff ineligibility</li>
-          <li>Full season suspension</li>
-          <li>Permanent removal from the league</li>
-        </ul>
-        <div class="info-box" style="margin-top:16px;">
-          <p>All disciplinary decisions made through the committee process are <strong>final and not subject to further appeal.</strong> Players removed due to conduct violations will not receive a refund of league fees.</p>
-        </div>
-      </div>
-
-      <div class="waiver-section" id="s07">
-        <div class="section-heading">
-          <span class="section-num">§ 07</span>
-          <div class="section-num-divider"></div>
-          <h2>Scheduling &amp; Rainouts</h2>
-        </div>
-        <p>Schedules may change due to field availability, weather, or operational needs. <strong>Rainout policy:</strong> Any rained-out game will be rescheduled for the following Tuesday* or the next available field date, subject to availability.</p>
-        <p class="footnote">* Tuesday is the default makeup date. If the field is unavailable, the league will communicate the next available slot as soon as possible.</p>
-      </div>
-
-      <div class="waiver-section" id="s08">
-        <div class="section-heading">
-          <span class="section-num">§ 08</span>
-          <div class="section-num-divider"></div>
-          <h2>Media Release</h2>
-        </div>
-        <p>I grant Baseball For Bums permission to use photos and videos taken during league activities for league-related promotion — including social media, website, and game recaps — unless I notify the league in writing to opt out.</p>
-      </div>
-
+<main>
+  <section class="page-hero">
+    <div class="wrap">
+      <nav data-crumbs aria-label="Breadcrumb"></nav>
+      <div class="eyebrow">Required for all players</div>
+      <h1 class="page-title">Waiver &amp; Code of Conduct</h1>
+      <p class="page-lede">Read carefully before participating in any league activity.</p>
     </div>
+  </section>
 
-    <!-- ── SIDEBAR ── -->
-    <aside class="waiver-sidebar">
-      <div class="sidebar-card">
-        <div class="sidebar-card-header">
-          <h3>Jump to Section</h3>
-        </div>
-        <a class="toc-link" href="#s01"><span class="toc-num">01</span> Assumption of Risk</a>
-        <a class="toc-link" href="#s02"><span class="toc-num">02</span> Waiver &amp; Release</a>
-        <a class="toc-link" href="#s03"><span class="toc-num">03</span> Medical &amp; Emergency</a>
-        <a class="toc-link" href="#s04"><span class="toc-num">04</span> Fitness to Participate</a>
-        <a class="toc-link" href="#s05"><span class="toc-num">05</span> Code of Conduct</a>
-        <a class="toc-link" href="#s06"><span class="toc-num">06</span> Commissioner Authority</a>
-        <a class="toc-link" href="#s07"><span class="toc-num">07</span> Scheduling</a>
-        <a class="toc-link" href="#s08"><span class="toc-num">08</span> Media Release</a>
-
-        <div class="sidebar-actions">
-          <button class="btn-primary" onclick="window.print()">🖨 Print / Save PDF</button>
-          <a class="btn-ghost" href="/signup/">← Back to Sign Up</a>
-        </div>
+  <section class="section">
+    <div class="wrap">
+      <div class="notice" style="margin-bottom:20px;">
+        <span class="notice-icon" aria-hidden="true">⚠️</span>
+        <p><strong>Important Notice.</strong> Baseball involves physical contact, hard balls &amp; bats, running, sliding, collisions, and uneven field conditions. Participation is voluntary and carries real risk of injury.</p>
       </div>
-    </aside>
 
-  </div><!-- /.waiver-layout -->
+      <div class="with-sidebar">
+        <div class="prose">
 
-  <!-- ── AGREEMENT ── -->
-  <div class="agreement-wrap">
-    <div class="agreement-card">
-      <h3>Agreement &amp; Acknowledgement</h3>
-      <p>By registering for Baseball For Bums, I acknowledge that I have read, understood, and agree to this waiver and code of conduct in its entirety, and that I am doing so voluntarily.</p>
+          <article class="card w-sec" id="s01">
+            <div class="w-sec-head"><span class="n">§ 01</span><span class="rule"></span><h2>Assumption of Risk</h2></div>
+            <p>I understand that participating in Baseball For Bums league activities — including games, practices, warmups, and related events — involves inherent risks including but not limited to: sprains, strains, fractures, concussions, heat illness, cardiac events, collisions with players or objects, and injuries caused by bats, balls, and field conditions.</p>
+            <p>I knowingly and voluntarily assume all such risks, whether known or unknown, foreseeable or unforeseeable, arising from my participation.</p>
+          </article>
 
-      <div class="waiver-check-block" id="waiverBlock">
-        <div class="waiver-check-inner">
-          <div class="custom-check" aria-hidden="true">
-            <svg width="12" height="10" viewBox="0 0 12 10" fill="none">
-              <path d="M1 5L4.5 8.5L11 1" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </div>
-          <div>
-            <div class="check-text">I have read and agree to this waiver and code of conduct</div>
-            <div class="check-sub">By checking this box, you confirm that you understand and accept all terms outlined above.</div>
-          </div>
+          <article class="card w-sec" id="s02">
+            <div class="w-sec-head"><span class="n">§ 02</span><span class="rule"></span><h2>Waiver &amp; Release of Liability</h2></div>
+            <p>To the fullest extent permitted by law, I release and hold harmless Baseball For Bums, the league commissioner, league organizers, staff, volunteers, sponsors, partners, and field/property owners from any and all claims, liabilities, damages, or causes of action arising out of or related to my participation — including claims based on negligence, except to the extent prohibited by law.</p>
+          </article>
+
+          <article class="card w-sec" id="s03">
+            <div class="w-sec-head"><span class="n">§ 03</span><span class="rule"></span><h2>Medical Treatment &amp; Emergency Care</h2></div>
+            <p>If I am injured or become ill, I authorize league organizers to seek emergency medical treatment on my behalf if I am unable to do so. I understand I am solely responsible for all medical costs and that the league does not provide any medical insurance coverage.</p>
+          </article>
+
+          <article class="card w-sec" id="s04">
+            <div class="w-sec-head"><span class="n">§ 04</span><span class="rule"></span><h2>Fitness to Participate</h2></div>
+            <p>I affirm that I am physically able to participate and will not engage in any activity for which I am not medically cleared. I should consult a physician if I have any medical concerns prior to participation.</p>
+          </article>
+
+          <article class="card w-sec" id="s05">
+            <div class="w-sec-head"><span class="n">§ 05</span><span class="rule"></span><h2>Sportsmanship &amp; Code of Conduct</h2></div>
+            <p>All participants are expected to maintain a respectful, competitive, and safe environment at all times. The following are strictly prohibited:</p>
+            <ul>
+              <li>Fighting, threats, harassment, discrimination, or hate speech</li>
+              <li>Intentional attempts to injure another player</li>
+              <li>Excessive profanity directed at any player, umpire, or spectator</li>
+              <li>Alcohol or drug impairment during games</li>
+              <li>Vandalism or disrespect of field property</li>
+            </ul>
+            <div class="info-box"><p><strong>Umpire Authority:</strong> Umpires have full and final authority over all on-field decisions. All decisions are final. Arguing, abusive language, or unsportsmanlike conduct toward an umpire may result in immediate ejection.</p></div>
+          </article>
+
+          <article class="card w-sec" id="s06">
+            <div class="w-sec-head"><span class="n">§ 06</span><span class="rule"></span><h2>Commissioner Authority &amp; Discipline</h2></div>
+            <p>The League Commissioner oversees all disciplinary matters related to player conduct, rule violations, safety concerns, and behavior detrimental to the league. For standard violations, the Commissioner may act directly. For significant or contested decisions — including multi-game suspensions, playoff ineligibility, or removal from the league — the matter will be reviewed by a <strong>League Review Committee</strong> of at least two additional league representatives before a final decision is issued.</p>
+            <p>This committee process exists to ensure fairness, reduce bias, and protect both players and the league from one-sided outcomes.</p>
+            <div class="penalty">
+              <div class="lbl">Automatic Penalty — Ejection</div>
+              <div class="txt">1-Game Suspension + Removal from Current Game</div>
+            </div>
+            <p style="margin-top:18px;">Following committee review, additional penalties may include:</p>
+            <ul>
+              <li>Extended or multi-game suspensions</li>
+              <li>Playoff ineligibility</li>
+              <li>Full season suspension</li>
+              <li>Permanent removal from the league</li>
+            </ul>
+            <div class="info-box"><p>All disciplinary decisions made through the committee process are <strong>final and not subject to further appeal.</strong> Players removed due to conduct violations will not receive a refund of league fees.</p></div>
+          </article>
+
+          <article class="card w-sec" id="s07">
+            <div class="w-sec-head"><span class="n">§ 07</span><span class="rule"></span><h2>Scheduling &amp; Rainouts</h2></div>
+            <p>Schedules may change due to field availability, weather, or operational needs. <strong>Rainout policy:</strong> Any rained-out game will be rescheduled for the following Tuesday* or the next available field date, subject to availability.</p>
+            <p class="footnote">* Tuesday is the default makeup date. If the field is unavailable, the league will communicate the next available slot as soon as possible. <a href="/schedule">Current schedule →</a></p>
+          </article>
+
+          <article class="card w-sec" id="s08">
+            <div class="w-sec-head"><span class="n">§ 08</span><span class="rule"></span><h2>Media Release</h2></div>
+            <p>I grant Baseball For Bums permission to use photos and videos taken during league activities for league-related promotion — including social media, website, and game recaps — unless I notify the league in writing to opt out.</p>
+          </article>
+
+          <article class="card agree" id="agreement">
+            <h2>Agreement &amp; Acknowledgement</h2>
+            <p>By registering for Baseball For Bums, I acknowledge that I have read, understood, and agree to this waiver and code of conduct in its entirety, and that I am doing so voluntarily.</p>
+            <label class="check">
+              <input type="checkbox" id="agree-box">
+              <span><b>I have read and agree to this waiver and code of conduct</b><small>By checking this box, you confirm that you understand and accept all terms outlined above.</small></span>
+            </label>
+            <div class="next-step" style="gap:10px;flex-wrap:wrap;">
+              <a class="btn btn-primary" href="/waitlist">Next: Join the Waitlist →</a>
+              <a class="btn" href="/league-rules/">Read the Rules</a>
+            </div>
+          </article>
         </div>
+
+        <aside class="sticky-side no-print">
+          <div class="card">
+            <div class="card-head"><span class="card-title">Jump to Section</span></div>
+            <nav class="toc" aria-label="Waiver sections">
+              <a href="#s01"><span class="toc-num">01</span> Assumption of Risk</a>
+              <a href="#s02"><span class="toc-num">02</span> Waiver &amp; Release</a>
+              <a href="#s03"><span class="toc-num">03</span> Medical &amp; Emergency</a>
+              <a href="#s04"><span class="toc-num">04</span> Fitness to Participate</a>
+              <a href="#s05"><span class="toc-num">05</span> Code of Conduct</a>
+              <a href="#s06"><span class="toc-num">06</span> Commissioner Authority</a>
+              <a href="#s07"><span class="toc-num">07</span> Scheduling</a>
+              <a href="#s08"><span class="toc-num">08</span> Media Release</a>
+              <a href="#agreement"><span class="toc-num">✓</span> Agreement</a>
+            </nav>
+            <div class="side-actions">
+              <button class="btn btn-primary btn-block" type="button" onclick="window.print()">🖨️ Print / Save PDF</button>
+              <a class="btn btn-block" href="/signup/">← Back to Registration</a>
+            </div>
+          </div>
+        </aside>
       </div>
+
+      <p style="margin-top:20px;font-size:.82rem;color:var(--faint);font-style:italic;">For informational purposes only — not legal advice.</p>
     </div>
-  </div>
-
+  </section>
 </main>
 
-<footer style="width:min(1140px,calc(100% - 32px));margin:0 auto;">
-  Baseball For Bums League Central · Staten Island ·
-  <span style="font-style:italic;font-size:0.85em;">For informational purposes only — not legal advice.</span>
-</footer>
+<div id="site-footer"></div>
 
-<script src="../shared.js?v=5"></script>
-<script src="../header.js?v=5"></script>
-<script>
-  var block = document.getElementById("waiverBlock");
-  var checked = false;
-  block.addEventListener("click", function () {
-    checked = !checked;
-    block.classList.toggle("is-checked", checked);
-  });
-</script>
+<script src="/shared.js?v=8"></script>
+<script src="/header.js?v=11"></script>
 </body>
 </html>

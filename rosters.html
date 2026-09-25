@@ -2,505 +2,59 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <title>League Rosters | Baseball For Bums</title>
+  <meta name="description" content="Baseball For Bums rosters — all six teams (Renegades, See Ya!, Hurricanes, Elite, Legends, Cut Fresh), every player, team records and top performers.">
+  <link rel="canonical" href="https://baseballforbums.com/rosters">
+  <meta name="theme-color" content="#ffffff">
+  <meta property="og:title" content="League Rosters | Baseball For Bums">
+  <meta property="og:url" content="https://baseballforbums.com/rosters">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E⚾%3C/text%3E%3C/svg%3E">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,300;0,400;0,600;0,700;0,800;0,900;1,800&family=Barlow:wght@300;400;500;600;700&family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-  <link rel="stylesheet" href="./app.css?v=5">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800;900&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/app.css?v=8">
 
   <style>
-    :root {
-      --bg:        #070c15;
-      --surface:   #0d1626;
-      --surface2:  #111d30;
-      --border:    rgba(255,255,255,0.07);
-      --border2:   rgba(255,255,255,0.13);
-      --text:      #e8f0ff;
-      --muted:     rgba(184,196,218,0.55);
-      --accent:    #d64045;
-      --accent2:   #ffcc66;
-      --teal:      #3ee8d8;
-      --green:     #4cdb8a;
-      --red:       #ff6b6b;
-
-      --renegades:  #f5c542;
-      --see-ya:     #4da3ff;
-      --hurricanes: #3ee8d8;
-      --elite:      #ff8080;
-      --legends:    #c084fc;
-      --cut-fresh:  #4cdb8a;
-    }
-
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    body {
-      font-family: 'Barlow', sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      min-height: 100vh;
-    }
-
-    body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
-      opacity: 0.025;
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    /* ── PAGE HEADER ── */
-    .page-header {
-      position: relative;
-      padding: 48px 0 36px;
-      overflow: hidden;
-    }
-    .page-header::before {
-      content: "ROSTERS";
-      position: absolute;
-      top: -10px; right: -20px;
-      font-family: 'Oswald', sans-serif;
-      font-size: clamp(80px, 14vw, 160px);
-      font-weight: 700;
-      letter-spacing: -0.02em;
-      color: rgba(255,255,255,0.022);
-      pointer-events: none;
-      user-select: none;
-      white-space: nowrap;
-    }
-    .page-header-inner {
-      position: relative;
-      z-index: 1;
-      width: min(1180px, calc(100% - 40px));
-      margin: 0 auto;
-      display: flex;
-      align-items: flex-end;
-      justify-content: space-between;
-      gap: 20px;
-      flex-wrap: wrap;
-    }
-    .page-eyebrow {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 0.7rem;
-      font-weight: 700;
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 8px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .page-eyebrow::before {
-      content: "";
-      display: inline-block;
-      width: 20px; height: 2px;
-      background: var(--accent);
-      border-radius: 1px;
-    }
-    .page-title {
-      font-family: 'Oswald', sans-serif;
-      font-size: clamp(2.8rem, 6vw, 4.5rem);
-      font-weight: 700;
-      letter-spacing: -0.01em;
-      line-height: 0.92;
-      background: linear-gradient(140deg, #ffffff 40%, #aac4ff 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    .page-subtitle {
-      margin-top: 10px;
-      font-size: 0.88rem;
-      color: var(--muted);
-    }
-    .header-divider {
-      height: 1px;
-      background: linear-gradient(90deg, var(--accent) 0%, rgba(255,204,102,0.3) 30%, transparent 70%);
-      margin-bottom: 36px;
-    }
-
-    /* ── PAGE BODY ── */
-    .page-body {
-      width: min(1180px, calc(100% - 40px));
-      margin: 0 auto;
-      padding-bottom: 80px;
-      position: relative;
-      z-index: 1;
-    }
-
-    /* ── TOOLBAR ── */
-    .roster-toolbar {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      flex-wrap: wrap;
-      margin-bottom: 20px;
-    }
-    .roster-search {
-      position: relative;
-      flex: 1;
-      min-width: 220px;
-      max-width: 380px;
-    }
-    .roster-search-icon {
-      position: absolute;
-      left: 16px; top: 50%;
-      transform: translateY(-50%);
-      color: var(--muted);
-      font-size: 1rem;
-      pointer-events: none;
-    }
-    .roster-search input {
-      width: 100%;
-      height: 44px;
-      padding: 0 16px 0 42px;
-      border-radius: 10px;
-      border: 1px solid var(--border2);
-      background: var(--surface);
-      color: var(--text);
-      font: inherit;
-      font-size: 0.9rem;
-      outline: none;
-      transition: border-color 0.14s, box-shadow 0.14s;
-    }
-    .roster-search input::placeholder { color: rgba(184,196,218,0.3); }
-    .roster-search input:focus {
-      border-color: rgba(214,64,69,0.5);
-      box-shadow: 0 0 0 3px rgba(214,64,69,0.1);
-    }
-    .roster-summary {
-      margin-left: auto;
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 0.78rem;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
-
-    /* ── JUMP BAR ── */
-    .jump-bar {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-bottom: 28px;
-    }
-    .jump-btn {
-      height: 34px;
-      padding: 0 14px;
-      border-radius: 8px;
-      border: 1px solid var(--border);
-      background: var(--surface);
-      color: var(--muted);
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 0.8rem;
-      font-weight: 800;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      cursor: pointer;
-      transition: all 0.13s;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      text-decoration: none;
-    }
-    .jump-btn:hover {
-      color: var(--text);
-      border-color: var(--border2);
-      background: var(--surface2);
-    }
-    .jump-dot {
-      width: 7px; height: 7px;
-      border-radius: 50%;
-      flex-shrink: 0;
-    }
-
-    /* ── ROSTER GRID ── */
-    .roster-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 24px;
-    }
-
-    /* ── ROSTER CARD ── */
-    .roster-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      overflow: hidden;
-      scroll-margin-top: 100px;
-      animation: slideUp 0.4s ease both;
-    }
-    .roster-card:nth-child(1) { animation-delay: 0.05s; }
-    .roster-card:nth-child(2) { animation-delay: 0.10s; }
-    .roster-card:nth-child(3) { animation-delay: 0.15s; }
-    .roster-card:nth-child(4) { animation-delay: 0.20s; }
-    .roster-card:nth-child(5) { animation-delay: 0.25s; }
-    .roster-card:nth-child(6) { animation-delay: 0.30s; }
-
-    /* ── CARD HEADER ── */
-    .card-header {
-      padding: 0;
-      border-bottom: 1px solid var(--border);
-      position: relative;
-      overflow: hidden;
-    }
-    .card-header-bg {
-      position: absolute;
-      inset: 0;
-      opacity: 0.06;
-    }
-    .card-header-inner {
-      position: relative;
-      z-index: 1;
-      padding: 20px 22px 0;
-    }
-    .card-team-row {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 16px;
-    }
-    .card-color-bar {
-      width: 4px;
-      height: 44px;
-      border-radius: 2px;
-      flex-shrink: 0;
-    }
-    .card-team-name {
-      font-family: 'Oswald', sans-serif;
-      font-size: 1.5rem;
-      font-weight: 700;
-      letter-spacing: 0.02em;
-      color: var(--text);
-      flex: 1;
-    }
-    .card-record-badge {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 0.78rem;
-      font-weight: 800;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      padding: 5px 12px;
-      border-radius: 6px;
-      border: 1px solid;
-    }
-    .card-record-badge.winning {
-      color: var(--green);
-      border-color: rgba(76,219,138,0.3);
-      background: rgba(76,219,138,0.08);
-    }
-    .card-record-badge.losing {
-      color: var(--red);
-      border-color: rgba(255,107,107,0.3);
-      background: rgba(255,107,107,0.08);
-    }
-    .card-record-badge.even {
-      color: var(--accent2);
-      border-color: rgba(255,204,102,0.3);
-      background: rgba(255,204,102,0.08);
-    }
-
-    /* ── TEAM STATS BAR ── */
-    .team-stats-bar {
-      display: grid;
-      grid-template-columns: repeat(6, 1fr);
-      border-top: 1px solid var(--border);
-      margin-top: 4px;
-    }
-    .stat-cell {
-      padding: 12px 8px;
-      text-align: center;
-      border-right: 1px solid var(--border);
-    }
-    .stat-cell:last-child { border-right: none; }
-    .stat-val {
-      font-family: 'Oswald', sans-serif;
-      font-size: 1.15rem;
-      font-weight: 700;
-      color: var(--text);
-      line-height: 1;
-      display: block;
-    }
-    .stat-val.highlight { color: var(--accent2); }
-    .stat-val.green { color: var(--green); }
-    .stat-val.red { color: var(--red); }
-    .stat-val.teal { color: var(--teal); }
-    .stat-lbl {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 0.58rem;
-      font-weight: 800;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: rgba(184,196,218,0.4);
-      display: block;
-      margin-top: 3px;
-    }
-
-    /* ── TOP PERFORMERS ── */
-    .top-performers {
-      padding: 14px 16px;
-      border-bottom: 1px solid var(--border);
-      background: rgba(255,255,255,0.015);
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-    .performer-chip {
-      display: flex;
-      align-items: center;
-      gap: 7px;
-      padding: 5px 10px;
-      border-radius: 6px;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 0.75rem;
-      font-weight: 700;
-    }
-    .performer-cat {
-      color: var(--muted);
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-    }
-    .performer-name {
-      color: var(--text);
-      font-weight: 800;
-    }
-    .performer-val {
-      color: var(--accent2);
-      font-weight: 900;
-    }
-
-    /* ── PLAYER LIST ── */
-    .player-list {
-      list-style: none;
-      padding: 10px;
-      display: grid;
-      gap: 5px;
-    }
-    .player-row {
-      display: grid;
-      grid-template-columns: 36px 1fr auto auto auto auto;
-      align-items: center;
-      gap: 10px;
-      padding: 10px 12px;
-      border-radius: 8px;
-      background: rgba(255,255,255,0.02);
-      border: 1px solid rgba(255,255,255,0.04);
-      transition: background 0.12s, border-color 0.12s;
-    }
-    .player-row:hover {
-      background: rgba(255,255,255,0.04);
-      border-color: rgba(255,255,255,0.09);
-    }
-    .player-row.highlight {
-      background: rgba(214,64,69,0.07);
-      border-color: rgba(214,64,69,0.2);
-    }
-    .player-num {
-      width: 32px; height: 32px;
-      border-radius: 8px;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.07);
-      display: grid;
-      place-items: center;
-      font-family: 'Oswald', sans-serif;
-      font-size: 0.85rem;
-      font-weight: 600;
-      color: rgba(184,196,218,0.5);
-      flex-shrink: 0;
-    }
-    .player-name-text {
-      font-family: 'Oswald', sans-serif;
-      font-size: 0.98rem;
-      font-weight: 600;
-      color: var(--text);
-      letter-spacing: 0.01em;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    .player-name-text mark {
-      background: rgba(255,204,102,0.22);
-      color: var(--accent2);
-      border-radius: 3px;
-      padding: 0 2px;
-    }
-    .player-stat {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 0.8rem;
-      font-weight: 700;
-      text-align: right;
-      white-space: nowrap;
-    }
-    .player-stat-val { color: rgba(200,215,240,0.7); }
-    .player-stat-lbl {
-      font-size: 0.6rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: rgba(184,196,218,0.3);
-      display: block;
-    }
-    .player-avg {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 0.9rem;
-      font-weight: 900;
-      color: var(--accent2);
-      text-align: right;
-      white-space: nowrap;
-      min-width: 44px;
-    }
-
-    /* ── HEADER TOGGLE ── */
-    .list-header {
-      display: grid;
-      grid-template-columns: 36px 1fr auto auto auto auto;
-      align-items: center;
-      gap: 10px;
-      padding: 6px 12px;
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 0.58rem;
-      font-weight: 800;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: rgba(184,196,218,0.3);
-      border-bottom: 1px solid var(--border);
-      margin: 0 10px 0;
-    }
-    .list-header-num { text-align: center; }
-    .list-header-stat { text-align: right; }
-
-    /* ── EMPTY / LOADING ── */
-    .empty-card {
-      padding: 48px 24px;
-      text-align: center;
-      color: var(--muted);
-      font-size: 0.9rem;
-    }
-
-    /* ── ANIMATIONS ── */
-    @keyframes slideUp {
-      from { opacity: 0; transform: translateY(16px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-    /* ── RESPONSIVE ── */
+    .team-jump { position: sticky; top: calc(var(--header-h) + 30px); z-index: 50; padding: 10px 0; margin-bottom: 8px; background: linear-gradient(180deg, var(--bg) 70%, transparent); }
+    .roster-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 20px; }
+    .roster { scroll-margin-top: calc(var(--header-h) + 100px); }
+    .roster.target { box-shadow: 0 0 0 2px var(--team), var(--shadow); }
+    .roster-top { position: relative; padding: 20px 20px 16px; overflow: hidden; }
+    .roster-top::before { content: ""; position: absolute; inset: 0; background: radial-gradient(ellipse at top right, var(--team), transparent 65%); opacity: .12; pointer-events: none; }
+    .roster-name { position: relative; display: flex; align-items: center; gap: 12px; }
+    .roster-name .bar { width: 5px; height: 40px; border-radius: 3px; background: var(--team); box-shadow: 0 0 14px var(--team); }
+    .roster-name h2 { flex: 1; font-size: 1.7rem; font-weight: 900; text-transform: uppercase; letter-spacing: .02em; }
+    .roster-links { position: relative; display: flex; gap: 14px; margin-top: 10px; font-size: .84rem; }
+    .roster-links a { color: var(--gold); text-decoration: none; font-weight: 600; }
+    .roster-links a:hover { text-decoration: underline; }
+    .team-stats { display: grid; grid-template-columns: repeat(6, 1fr); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+    .team-stats div { padding: 10px 4px; text-align: center; border-right: 1px solid var(--line); }
+    .team-stats div:last-child { border-right: 0; }
+    .team-stats b { display: block; font-family: var(--font-display); font-size: 1.2rem; font-weight: 800; line-height: 1; }
+    .team-stats small { display: block; margin-top: 4px; font-family: var(--font-display); font-size: .64rem; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: var(--faint); }
+    .performers { display: flex; flex-wrap: wrap; gap: 6px; padding: 12px 16px; border-bottom: 1px solid var(--line); }
+    .players { list-style: none; padding: 8px; }
+    .players li a, .players .hdr { display: grid; grid-template-columns: 28px minmax(0,1fr) 40px 40px 40px 52px; gap: 8px; align-items: center; padding: 8px 10px; border-radius: 9px; text-decoration: none; }
+    .players li a:hover { background: rgba(13,34,64,.04); }
+    .players li.hit a { background: rgba(59,158,230,.08); }
+    .players .hdr { font-family: var(--font-display); font-size: .66rem; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: var(--faint); padding-bottom: 4px; }
+    .players .nm { font-family: var(--font-display); font-weight: 700; font-size: 1.02rem; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .players .nm mark { background: rgba(59,158,230,.25); color: var(--gold); border-radius: 3px; padding: 0 2px; }
+    .players .s { text-align: right; font-family: var(--font-display); font-weight: 700; color: var(--text-2); }
+    .players .avg { text-align: right; font-family: var(--font-display); font-weight: 900; color: var(--gold); }
+    .players .i { font-family: var(--font-display); font-weight: 700; color: var(--faint); text-align: center; }
     @media (max-width: 960px) {
       .roster-grid { grid-template-columns: 1fr; }
-      .team-stats-bar { grid-template-columns: repeat(3, 1fr); }
-      .team-stats-bar .stat-cell:nth-child(3) { border-right: none; }
-      .team-stats-bar .stat-cell:nth-child(4) { border-top: 1px solid var(--border); }
-      .team-stats-bar .stat-cell:nth-child(5) { border-top: 1px solid var(--border); }
-      .team-stats-bar .stat-cell:nth-child(6) { border-top: 1px solid var(--border); border-right: none; }
+      .team-stats { grid-template-columns: repeat(3, 1fr); }
+      .team-stats div:nth-child(3) { border-right: 0; }
+      .team-stats div:nth-child(n+4) { border-top: 1px solid var(--line); }
     }
-    @media (max-width: 600px) {
-      .player-row { grid-template-columns: 32px 1fr auto; }
-      .player-stat:not(:last-child) { display: none; }
+    @media (max-width: 520px) {
+      .players li a, .players .hdr { grid-template-columns: 24px minmax(0,1fr) 40px 52px; }
+      .players .s.h, .players .s.hr { display: none; }
     }
   </style>
 </head>
@@ -508,333 +62,182 @@
 
 <div id="site-header"></div>
 
-<div class="page-header">
-  <div class="page-header-inner">
-    <div>
-      <div class="page-eyebrow">Spring 2026 Season</div>
-      <h1 class="page-title">League Rosters</h1>
-      <p class="page-subtitle">Team stats, records & full player listings</p>
+<main>
+  <section class="page-hero">
+    <div class="wrap">
+      <nav data-crumbs aria-label="Breadcrumb"></nav>
+      <div class="page-hero-inner">
+        <div>
+          <div class="eyebrow">Spring 2026 Season</div>
+          <h1 class="page-title">League Rosters</h1>
+          <p class="page-lede">Team stats, records and full player listings. Tap a player to see their full stat line.</p>
+        </div>
+      </div>
     </div>
-  </div>
-</div>
-<div class="header-divider"></div>
+  </section>
 
-<div class="page-body">
-
-  <!-- Toolbar -->
-  <div class="roster-toolbar">
-    <div class="roster-search">
-      <span class="roster-search-icon">⌕</span>
-      <input type="search" id="search" placeholder="Search team or player…" autocomplete="off">
+  <section class="section">
+    <div class="wrap">
+      <div class="toolbar">
+        <label class="search">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+          <span class="sr-only">Search team or player</span>
+          <input type="search" id="search" placeholder="Search team or player…" autocomplete="off">
+        </label>
+        <span class="spacer"></span>
+        <span class="count-label" id="summary"></span>
+      </div>
+      <div class="team-jump"><div class="pills pills-scroll" id="jump-bar" aria-label="Jump to team"></div></div>
+      <div id="content"><div class="roster-grid">
+        <div class="card"><div class="skeleton skeleton-row"></div><div class="skeleton skeleton-row"></div><div class="skeleton skeleton-row"></div></div>
+        <div class="card"><div class="skeleton skeleton-row"></div><div class="skeleton skeleton-row"></div><div class="skeleton skeleton-row"></div></div>
+      </div></div>
     </div>
-    <span class="roster-summary" id="summary"></span>
-  </div>
+  </section>
+</main>
 
-  <!-- Jump bar -->
-  <div class="jump-bar" id="jump-bar"></div>
+<div id="site-footer"></div>
 
-  <!-- Content -->
-  <div id="content">
-    <div class="empty-card">Loading rosters…</div>
-  </div>
-
-</div>
-
-<script src="./shared.js?v=5"></script>
-<script src="./header.js?v=5"></script>
+<script src="/shared.js?v=8"></script>
+<script src="/header.js?v=11"></script>
 <script>
+(function () {
+  var B = window.BFB, esc = B.esc;
 
-const TEAM_COLORS = {
-  "Renegades":  "#f5c542",
-  "See Ya!":    "#4da3ff",
-  "Hurricanes": "#3ee8d8",
-  "Elite":      "#ff8080",
-  "Legends":    "#c084fc",
-  "Cut Fresh":  "#4cdb8a"
-};
-
-const TEAM_IDS = {
-  "Renegades":  "renegades",
-  "See Ya!":    "see-ya",
-  "Hurricanes": "hurricanes",
-  "Elite":      "elite",
-  "Legends":    "legends",
-  "Cut Fresh":  "cut-fresh"
-};
-
-function slugify(v) {
-  return String(v||"").toLowerCase().trim().replace(/[^a-z0-9]+/g,"-").replace(/^-+|-+$/g,"");
-}
-function esc(s) {
-  return String(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
-}
-function highlight(text, term) {
-  if (!term) return esc(text);
-  const safe = esc(text);
-  const re = new RegExp(`(${term.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")})`, "gi");
-  return safe.replace(re, "<mark>$1</mark>");
-}
-function fmtAvg(v) {
-  const n = Number(v||0);
-  return isNaN(n) ? ".000" : n===1 ? "1.000" : n.toFixed(3).replace(/^0/,"");
-}
-function fmtInt(v) { return String(Number(v||0)); }
-function fmtRD(v) {
-  const n = Number(v||0);
-  return n > 0 ? "+" + n : String(n);
-}
-
-/* ── Group rosters ── */
-function groupRosters(rows) {
-  const map = new Map();
-  rows.forEach(r => {
-    const team = r.team_name || r.team || r.Team || "";
-    const name = r.full_name || r.player_name || [r.first_name||"",r.last_name||""].join(" ").trim();
-    if (!team || !name) return;
-    const id = r.team_id || TEAM_IDS[team] || slugify(team);
-    if (!map.has(id)) map.set(id, { id, name: team, players: [] });
-    map.get(id).players.push({ name: name.trim(), pid: r.player_id || "" });
-  });
-  return Array.from(map.values())
-    .map(t => ({ ...t, players: t.players.sort((a,b) => a.name.localeCompare(b.name)) }))
-    .sort((a,b) => a.name.localeCompare(b.name));
-}
-
-/* ── Group player stats ── */
-function groupStats(rows) {
-  const map = {};
-  rows.forEach(r => {
-    const team = r.team || r.team_name || r.Team || "";
-    const name = r.player_name || r.full_name || r.Name || "";
-    if (!team || !name) return;
-    const tid = r.team_id || TEAM_IDS[team] || slugify(team);
-    if (!map[tid]) map[tid] = {};
-    map[tid][name.trim()] = r;
-  });
-  return map;
-}
-
-/* ── Compute team-level stats from standings ── */
-function buildTeamStats(standings) {
-  const map = {};
-  if (!Array.isArray(standings)) return map;
-  standings.forEach(r => {
-    const tid = r.team_id || slugify(r.team||"");
-    map[tid] = {
-      w:    Number(r.w||r.W||r.wins||0),
-      l:    Number(r.l||r.L||r.losses||0),
-      gp:   Number(r.gp||r.GP||0),
-      rf:   Number(r.rf||r.RF||r.rs||r.RS||0),
-      ra:   Number(r.ra||r.RA||0),
-      diff: Number(r.diff||r.Diff||r.rd||r.RD||0),
-      pct:  Number(r.win_pct||r.pct||0),
-    };
-  });
-  return map;
-}
-
-/* ── Get top performers per team ── */
-function getTopPerformers(players, statsMap) {
-  let topAvg = null, topRbi = null, topHr = null;
-  let topAvgVal = -1, topRbiVal = -1, topHrVal = -1;
-  players.forEach(p => {
-    const s = statsMap[p.name];
-    if (!s) return;
-    const avg = Number(s.avg||0), rbi = Number(s.rbi||0), hr = Number(s.hr||0);
-    if (avg > topAvgVal && Number(s.ab||0) >= 3) { topAvgVal = avg; topAvg = p.name; }
-    if (rbi > topRbiVal) { topRbiVal = rbi; topRbi = p.name; }
-    if (hr > topHrVal) { topHrVal = hr; topHr = p.name; }
-  });
-  const chips = [];
-  if (topAvg) chips.push({ cat: "AVG", name: topAvg.split(" ").pop(), val: fmtAvg(topAvgVal) });
-  if (topRbi && topRbiVal > 0) chips.push({ cat: "RBI", name: topRbi.split(" ").pop(), val: fmtInt(topRbiVal) });
-  if (topHr && topHrVal > 0)  chips.push({ cat: "HR",  name: topHr.split(" ").pop(),  val: fmtInt(topHrVal) });
-  return chips;
-}
-
-/* ── Render ── */
-function render(teams, teamStats, playerStatsMap, term = "") {
-  const content = document.getElementById("content");
-  const jb = document.getElementById("jump-bar");
-  const q = term.trim().toLowerCase();
-
-  // Filter
-  const visible = teams.map(t => {
-    const teamMatch = t.name.toLowerCase().includes(q);
-    const players = q ? t.players.filter(p => p.name.toLowerCase().includes(q)) : t.players;
-    if (q && !teamMatch && !players.length) return null;
-    return { ...t, players: q && !teamMatch ? players : t.players, _filtered: players };
-  }).filter(Boolean);
-
-  // Summary
-  const total = visible.reduce((s,t) => s + t.players.length, 0);
-  document.getElementById("summary").textContent = `${visible.length} teams · ${total} players`;
-
-  // Jump bar
-  jb.innerHTML = visible.map(t => {
-    const color = TEAM_COLORS[t.name] || "rgba(255,255,255,0.3)";
-    return `<a class="jump-btn" href="#team-${t.id}">
-      <span class="jump-dot" style="background:${color}"></span>
-      ${esc(t.name)}
-    </a>`;
-  }).join("");
-
-  if (!visible.length) {
-    content.innerHTML = `<div class="empty-card">No results for "${esc(term)}"</div>`;
-    return;
+  function highlight(text, term) {
+    var safe = esc(text);
+    if (!term) return safe;
+    var re = new RegExp("(" + esc(term).replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + ")", "gi");
+    return safe.replace(re, "<mark>$1</mark>");
   }
 
-  content.innerHTML = `<div class="roster-grid">${visible.map(team => {
-    const color  = TEAM_COLORS[team.name] || "rgba(255,255,255,0.3)";
-    const ts     = teamStats[team.id] || {};
-    const w = ts.w||0, l = ts.l||0, gp = ts.gp||0;
-    const rf = ts.rf||0, ra = ts.ra||0, diff = ts.diff||0;
-    const pct = ts.pct || (gp ? w/gp : 0);
-    const recordCls = w > l ? "winning" : w < l ? "losing" : "even";
-    const record = gp ? `${w}W – ${l}L` : "No games yet";
-    const rdCls = diff > 0 ? "teal" : diff < 0 ? "red" : "";
-
-    const psm = playerStatsMap[team.id] || {};
-    const performers = getTopPerformers(team.players, psm);
-
-    const playersWithStats = team.players.map(p => {
-      const s = psm[p.name] || {};
-      return {
-        ...p,
-        avg: Number(s.avg||0),
-        h:   Number(s.h||0),
-        rbi: Number(s.rbi||0),
-        hr:  Number(s.hr||0),
-        ab:  Number(s.ab||0),
-      };
-    }).sort((a,b) => b.avg - a.avg);
-
-    return `
-    <article class="roster-card" id="team-${team.id}">
-
-      <!-- Header -->
-      <div class="card-header">
-        <div class="card-header-bg" style="background:radial-gradient(ellipse at top right, ${color} 0%, transparent 70%)"></div>
-        <div class="card-header-inner">
-          <div class="card-team-row">
-            <div class="card-color-bar" style="background:${color};box-shadow:0 0 12px ${color}80"></div>
-            <div class="card-team-name">${highlight(team.name, term)}</div>
-            <span class="card-record-badge ${recordCls}">${record}</span>
-          </div>
-        </div>
-
-        <!-- Stats bar -->
-        <div class="team-stats-bar">
-          <div class="stat-cell">
-            <span class="stat-val highlight">${fmtAvg(pct)}</span>
-            <span class="stat-lbl">PCT</span>
-          </div>
-          <div class="stat-cell">
-            <span class="stat-val">${gp}</span>
-            <span class="stat-lbl">GP</span>
-          </div>
-          <div class="stat-cell">
-            <span class="stat-val green">${w}</span>
-            <span class="stat-lbl">W</span>
-          </div>
-          <div class="stat-cell">
-            <span class="stat-val red">${l}</span>
-            <span class="stat-lbl">L</span>
-          </div>
-          <div class="stat-cell">
-            <span class="stat-val">${rf}</span>
-            <span class="stat-lbl">RS</span>
-          </div>
-          <div class="stat-cell">
-            <span class="stat-val ${rdCls}">${fmtRD(diff)}</span>
-            <span class="stat-lbl">RD</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Top performers -->
-      ${performers.length ? `
-      <div class="top-performers">
-        ${performers.map(p => `
-          <div class="performer-chip">
-            <span class="performer-cat">${p.cat}</span>
-            <span class="performer-name">${esc(p.name)}</span>
-            <span class="performer-val">${p.val}</span>
-          </div>
-        `).join("")}
-      </div>` : ""}
-
-      <!-- Column headers -->
-      <div class="list-header">
-        <div class="list-header-num">#</div>
-        <div>Player</div>
-        <div class="list-header-stat">H</div>
-        <div class="list-header-stat">RBI</div>
-        <div class="list-header-stat">HR</div>
-        <div class="list-header-stat" style="color:var(--accent2)">AVG</div>
-      </div>
-
-      <!-- Players -->
-      <ol class="player-list">
-        ${playersWithStats.map((p, i) => {
-          const isMatch = q && p.name.toLowerCase().includes(q);
-          return `
-          <li class="player-row${isMatch ? " highlight" : ""}">
-            <div class="player-num">${i + 1}</div>
-            <div class="player-name-text">${highlight(p.name, term)}</div>
-            <div class="player-stat">
-              <span class="player-stat-val">${p.ab > 0 ? fmtInt(p.h) : "—"}</span>
-              <span class="player-stat-lbl">H</span>
-            </div>
-            <div class="player-stat">
-              <span class="player-stat-val">${p.ab > 0 ? fmtInt(p.rbi) : "—"}</span>
-              <span class="player-stat-lbl">RBI</span>
-            </div>
-            <div class="player-stat">
-              <span class="player-stat-val">${p.hr > 0 ? fmtInt(p.hr) : "—"}</span>
-              <span class="player-stat-lbl">HR</span>
-            </div>
-            <div class="player-avg">${p.ab >= 3 ? fmtAvg(p.avg) : "—"}</div>
-          </li>`;
-        }).join("")}
-      </ol>
-
-    </article>`;
-  }).join("")}</div>`;
-}
-
-/* ── Init ── */
-async function init() {
-  try {
-    const [rostersRes, statsRes, standingsRes] = await Promise.allSettled([
-      loadData("Web_Rosters"),
-      loadData("Web_Player_Stats"),
-      loadData("Standings"),
-    ]);
-
-    const rosters   = rostersRes.status   === "fulfilled" ? rostersRes.value   : [];
-    const stats     = statsRes.status     === "fulfilled" ? statsRes.value     : [];
-    const standings = standingsRes.status === "fulfilled" ? standingsRes.value : [];
-
-    const teams       = groupRosters(rosters);
-    const teamStats   = buildTeamStats(standings);
-    const playerStats = groupStats(stats);
-
-    render(teams, teamStats, playerStats);
-
-    document.getElementById("search").addEventListener("input", e => {
-      render(teams, teamStats, playerStats, e.target.value);
+  function groupRosters(rows) {
+    var map = {};
+    rows.forEach(function (r) {
+      var teamName = r.team_name || r.team || r.Team || "";
+      var name = (r.full_name || r.player_name || [r.first_name || "", r.last_name || ""].join(" ")).trim();
+      if (!teamName || !name) return;
+      var t = B.team(r.team_id || teamName);
+      var id = t ? t.id : (r.team_id || B.slugify(teamName));
+      if (!map[id]) map[id] = { id: id, name: t ? t.name : teamName, color: t ? t.color : "#888", players: [] };
+      map[id].players.push(name);
     });
-
-  } catch(err) {
-    console.error(err);
-    document.getElementById("content").innerHTML =
-      `<div class="empty-card">Unable to load rosters right now.</div>`;
+    return Object.keys(map).map(function (k) { return map[k]; }).sort(function (a, b) { return a.name.localeCompare(b.name); });
   }
-}
 
-document.addEventListener("DOMContentLoaded", init);
+  function statsByTeam(rows) {
+    var m = {};
+    rows.forEach(function (r) {
+      var t = B.team(r.team_id || r.team), id = t ? t.id : B.slugify(r.team);
+      (m[id] = m[id] || {})[(r.player_name || r.full_name || "").trim()] = r;
+    });
+    return m;
+  }
+
+  function standingsByTeam(rows) {
+    var m = {};
+    (rows || []).forEach(function (r) {
+      var t = B.team(r.team_id || r.team), id = t ? t.id : B.slugify(r.team);
+      m[id] = { w: B.num(r.w || r.wins), l: B.num(r.l || r.losses), gp: B.num(r.gp), rf: B.num(r.rf || r.rs), ra: B.num(r.ra), diff: B.num(r.diff != null ? r.diff : r.rd) };
+    });
+    return m;
+  }
+
+  function performers(players, ps) {
+    var best = { avg: null, rbi: null, hr: null };
+    players.forEach(function (n) {
+      var s = ps[n]; if (!s) return;
+      if (B.num(s.ab) >= 5 && (!best.avg || B.num(s.avg) > B.num(best.avg.avg))) best.avg = s;
+      if (!best.rbi || B.num(s.rbi) > B.num(best.rbi.rbi)) best.rbi = s;
+      if (!best.hr || B.num(s.hr) > B.num(best.hr.hr)) best.hr = s;
+    });
+    var chips = [];
+    if (best.avg) chips.push(["AVG", best.avg, B.fmtRate(best.avg.avg)]);
+    if (best.rbi && B.num(best.rbi.rbi) > 0) chips.push(["RBI", best.rbi, B.fmtInt(best.rbi.rbi)]);
+    if (best.hr && B.num(best.hr.hr) > 0) chips.push(["HR", best.hr, B.fmtInt(best.hr.hr)]);
+    return chips.map(function (c) {
+      var n = c[1].player_name || c[1].full_name;
+      return '<a class="chip" href="/stats?q=' + encodeURIComponent(n) + '" style="text-decoration:none">' + c[0] + ' <span style="color:var(--text)">' + esc(n) + '</span> <span style="color:var(--gold)">' + c[2] + '</span></a>';
+    }).join("");
+  }
+
+  var TEAMS = [], PS = {}, TS = {};
+
+  function render(term) {
+    var q = (term || "").trim().toLowerCase();
+    var visible = TEAMS.map(function (t) {
+      var teamHit = q && t.name.toLowerCase().indexOf(q) > -1;
+      var players = q && !teamHit ? t.players.filter(function (n) { return n.toLowerCase().indexOf(q) > -1; }) : t.players;
+      return (!q || teamHit || players.length) ? { t: t, players: players } : null;
+    }).filter(Boolean);
+
+    var total = visible.reduce(function (s, v) { return s + v.players.length; }, 0);
+    document.getElementById("summary").textContent = visible.length + " teams · " + total + " players";
+    document.getElementById("jump-bar").innerHTML = visible.map(function (v) {
+      return '<a class="pill" href="#team-' + v.t.id + '"><span class="dot" style="background:' + v.t.color + '"></span>' + esc(v.t.name) + '</a>';
+    }).join("");
+
+    if (!visible.length) {
+      document.getElementById("content").innerHTML = '<div class="card"><div class="empty"><div class="empty-title">No results</div>Nothing matches “' + esc(term) + '”. Try the <a href="/stats?q=' + encodeURIComponent(term) + '" style="color:var(--gold)">stats search</a>.</div></div>';
+      return;
+    }
+
+    document.getElementById("content").innerHTML = '<div class="roster-grid">' + visible.map(function (v) {
+      var t = v.t, ps = PS[t.id] || {}, ts = TS[t.id] || {};
+      var w = ts.w || 0, l = ts.l || 0, gp = ts.gp || 0, diff = ts.diff || 0;
+      var rec = gp ? w + "W – " + l + "L" : "No games yet";
+      var recCls = w > l ? "chip-green" : w < l ? "chip-red" : "chip-gold";
+      var list = v.players.map(function (n) {
+        var s = ps[n] || {};
+        return { n: n, avg: B.num(s.avg), h: B.num(s.h), rbi: B.num(s.rbi), hr: B.num(s.hr), ab: B.num(s.ab) };
+      }).sort(function (a, b) { return (b.avg - a.avg) || a.n.localeCompare(b.n); });
+
+      return '<article class="card roster" id="team-' + t.id + '" style="--team:' + t.color + '">' +
+        '<div class="roster-top"><div class="roster-name"><span class="bar"></span><h2>' + highlight(t.name, term) + '</h2><span class="chip ' + recCls + '">' + rec + '</span></div>' +
+        '<div class="roster-links"><a href="/schedule?team=' + t.id + '">Schedule →</a><a href="/stats?team=' + t.id + '">Team stats →</a></div></div>' +
+        '<div class="team-stats">' +
+          '<div><b style="color:var(--gold)">' + (gp ? B.fmtRate(w / gp) : ".000") + '</b><small>PCT</small></div>' +
+          '<div><b>' + gp + '</b><small>GP</small></div>' +
+          '<div><b style="color:var(--green)">' + w + '</b><small>W</small></div>' +
+          '<div><b style="color:var(--red)">' + l + '</b><small>L</small></div>' +
+          '<div><b>' + (ts.rf || 0) + '</b><small>RS</small></div>' +
+          '<div><b class="' + B.rdClass(diff) + '">' + B.fmtRD(diff) + '</b><small>RD</small></div>' +
+        '</div>' +
+        (function () { var p = performers(t.players, ps); return p ? '<div class="performers">' + p + '</div>' : ''; })() +
+        '<ol class="players"><li class="hdr" aria-hidden="true"><span>#</span><span>Player</span><span class="s h">H</span><span class="s">RBI</span><span class="s hr">HR</span><span class="avg" style="color:var(--gold)">AVG</span></li>' +
+        list.map(function (p, i) {
+          var hit = q && p.n.toLowerCase().indexOf(q) > -1;
+          return '<li' + (hit ? ' class="hit"' : '') + '><a href="/stats?q=' + encodeURIComponent(p.n) + '">' +
+            '<span class="i">' + (i + 1) + '</span><span class="nm">' + highlight(p.n, term) + '</span>' +
+            '<span class="s h">' + (p.ab ? p.h : "—") + '</span><span class="s">' + (p.ab ? p.rbi : "—") + '</span><span class="s hr">' + (p.hr || "—") + '</span>' +
+            '<span class="avg">' + (p.ab >= 3 ? B.fmtRate(p.avg) : "—") + '</span></a></li>';
+        }).join("") + '</ol></article>';
+    }).join("") + '</div>';
+  }
+
+  function highlightTarget() {
+    document.querySelectorAll(".roster.target").forEach(function (e) { e.classList.remove("target"); });
+    if (!location.hash) return;
+    var el = document.getElementById(location.hash.slice(1));
+    if (el && el.classList.contains("roster")) { el.classList.add("target"); el.scrollIntoView(); }
+  }
+  window.addEventListener("hashchange", highlightTarget);
+
+  Promise.allSettled([loadData("Web_Rosters"), loadData("Web_Player_Stats"), loadData("Standings")]).then(function (res) {
+    var rosters = res[0].status === "fulfilled" ? res[0].value : [];
+    if (!rosters.length) {
+      document.getElementById("content").innerHTML = '<div class="card"><div class="empty">Unable to load rosters right now — please refresh in a minute.</div></div>';
+      return;
+    }
+    TEAMS = groupRosters(rosters);
+    PS = statsByTeam(res[1].status === "fulfilled" ? res[1].value : []);
+    TS = standingsByTeam(res[2].status === "fulfilled" ? res[2].value : []);
+    var s = document.getElementById("search");
+    render(s.value);
+    highlightTarget();
+    s.addEventListener("input", function () { render(s.value); });
+  });
+})();
 </script>
-
 </body>
 </html>

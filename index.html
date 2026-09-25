@@ -2,530 +2,90 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <title>Baseball For Bums — Staten Island</title>
-  <meta name="description" content="Baseball For Bums — Staten Island's competitive adult baseball league. Register for Spring League.">
+  <meta name="description" content="Baseball For Bums — Staten Island's competitive adult baseball league. Schedule, standings, player stats, rosters, rules and the sub waitlist.">
+  <link rel="canonical" href="https://baseballforbums.com/">
+  <meta name="theme-color" content="#ffffff">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Baseball For Bums">
+  <meta property="og:title" content="Baseball For Bums — Staten Island">
+  <meta property="og:description" content="Staten Island's competitive adult baseball league. Schedule, standings, stats and rosters.">
+  <meta property="og:url" content="https://baseballforbums.com/">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E⚾%3C/text%3E%3C/svg%3E">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800;900&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/app.css?v=8">
 
-  <link rel="stylesheet" href="./app.css?v=5">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SportsOrganization",
+    "name": "Baseball For Bums",
+    "url": "https://baseballforbums.com/",
+    "sport": "Baseball",
+    "description": "Staten Island's competitive adult baseball league.",
+    "areaServed": { "@type": "Place", "name": "Staten Island, NY" }
+  }
+  </script>
 
   <style>
-    body { font-family: 'Barlow', sans-serif; }
+    .home-hero { position: relative; padding: 56px 0 48px; overflow: hidden; }
+    .home-hero::before {
+      content: ""; position: absolute; inset: -120px -10% auto; height: 620px; pointer-events: none;
+      background: radial-gradient(ellipse at 30% 30%, rgba(59,158,230,.18), transparent 60%),
+                  radial-gradient(ellipse at 80% 10%, rgba(59,158,230,.10), transparent 55%);
+    }
+    .home-hero-grid { position: relative; display: grid; grid-template-columns: minmax(0,1fr) 400px; gap: 52px; align-items: center; }
+    .home-title {
+      font-size: clamp(3.4rem, 8.5vw, 6.2rem); font-weight: 900; line-height: .88; text-transform: uppercase; letter-spacing: -.01em;
+    }
+    .home-title span { display: block; background: linear-gradient(135deg, #5db8f2 10%, #1f7fc8 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+    .home-lede { margin: 20px 0 28px; font-size: 1.15rem; color: var(--text-2); max-width: 46ch; line-height: 1.6; }
+    .home-ctas { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 24px; }
+    .home-hero .notice { max-width: 470px; }
 
-    /* ================================================================
-       HERO
-    ================================================================ */
-    .hero {
-      padding: 72px 0 64px;
-      border-bottom: 1px solid rgba(255,255,255,0.06);
-      position: relative;
-      overflow: hidden;
-    }
+    .snapshot-row { display: grid; grid-template-columns: 22px minmax(0,1fr) 30px 30px 52px; gap: 8px; align-items: center; padding: 9px 20px; text-decoration: none; transition: background .12s; }
+    a.snapshot-row:hover { background: rgba(13,34,64,.035); }
+    .snapshot-row.head { padding-top: 12px; padding-bottom: 6px; font-family: var(--font-display); font-size: .68rem; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; color: var(--faint); }
+    .snapshot-row .n { font-family: var(--font-display); font-weight: 700; font-size: .98rem; text-align: right; color: var(--text-2); }
+    .snapshot-row.head .n { font-size: .68rem; color: var(--faint); }
+    .snapshot-row .pos-n { font-family: var(--font-display); font-weight: 800; color: var(--faint); text-align: center; }
+    .snapshot-row.cut { border-top: 1px dashed rgba(59,158,230,.35); }
+    .snapshot-foot { display: flex; justify-content: space-between; align-items: center; padding: 12px 20px; border-top: 1px solid var(--line); font-size: .8rem; color: var(--muted); }
+    .snapshot-foot a { color: var(--gold); text-decoration: none; font-weight: 700; }
 
-    /* subtle radial glow behind hero */
-    .hero::before {
-      content: "";
-      position: absolute;
-      top: -100px; left: 50%;
-      transform: translateX(-50%);
-      width: 900px; height: 600px;
-      background: radial-gradient(ellipse at center,
-        rgba(214,64,69,0.16) 0%,
-        rgba(214,64,69,0.06) 40%,
-        transparent 70%);
-      pointer-events: none;
-    }
+    .results-grid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 14px; }
+    .result-card { padding: 14px 16px; border-radius: 14px; background: var(--surface); border: 1px solid var(--line); text-decoration: none; display: grid; gap: 8px; transition: border-color .15s, transform .15s; }
+    .result-card:hover { border-color: var(--line-2); transform: translateY(-2px); }
+    .result-line { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+    .result-line .team-tag .name { font-size: 1.08rem; }
+    .result-line .sc { font-family: var(--font-display); font-weight: 900; font-size: 1.5rem; line-height: 1; color: var(--faint); }
+    .result-line.win .sc { color: var(--green); }
+    .result-line.loss .team-tag .name { color: var(--muted); }
+    .result-meta { display: flex; justify-content: space-between; font-size: .76rem; color: var(--muted); font-family: var(--font-display); font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
 
-    .hero-inner {
-      width: min(1140px, calc(100% - 32px));
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: 1fr 380px;
-      gap: 60px;
-      align-items: center;
-      position: relative;
-    }
+    .leader-mini { display: grid; gap: 2px; padding: 8px; }
+    .leader-mini a { display: grid; grid-template-columns: 26px minmax(0,1fr) auto; align-items: center; gap: 10px; padding: 8px 10px; border-radius: 10px; text-decoration: none; }
+    .leader-mini a:hover { background: rgba(13,34,64,.035); }
+    .leader-mini .who { min-width: 0; }
+    .leader-mini .who b { display: block; font-family: var(--font-display); font-weight: 800; font-size: 1.02rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .leader-mini .who small { display: flex; align-items: center; gap: 6px; font-size: .74rem; color: var(--muted); }
+    .leader-mini .val { font-family: var(--font-display); font-weight: 900; font-size: 1.35rem; color: var(--gold); }
 
-    /* ---- LEFT: text ---- */
-    .hero-kicker {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 0.72rem;
-      font-weight: 800;
-      letter-spacing: 0.28em;
-      text-transform: uppercase;
-      color: #8fa4c4;
-      margin-bottom: 18px;
-    }
-    .hero-kicker::before {
-      content: "";
-      display: inline-block;
-      width: 6px; height: 6px;
-      border-radius: 50%;
-      background: var(--accent);
-      flex-shrink: 0;
-    }
+    .facts .card-body h3 { font-size: 1.25rem; font-weight: 800; margin-bottom: 8px; text-transform: uppercase; letter-spacing: .02em; }
+    .facts .card-body p { color: var(--text-2); font-size: .93rem; line-height: 1.7; }
+    .facts .card-body p strong { color: var(--text); }
 
-    .hero-headline {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 900;
-      font-size: clamp(3.2rem, 7vw, 5.4rem);
-      line-height: 0.95;
-      letter-spacing: -0.01em;
-      text-transform: uppercase;
-      color: var(--text);
-      margin-bottom: 20px;
+    @media (max-width: 960px) {
+      .home-hero-grid { grid-template-columns: 1fr; gap: 32px; }
+      .results-grid { grid-template-columns: 1fr 1fr; }
     }
-    .hero-headline .line2 {
-      display: block;
-      background: linear-gradient(135deg, #ffcc66 20%, #ffaa33 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .hero-tagline {
-      font-size: 1.15rem;
-      font-weight: 500;
-      color: #c8d6ee;
-      line-height: 1.65;
-      margin-bottom: 32px;
-      max-width: 44ch;
-    }
-
-    .hero-ctas {
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-      margin-bottom: 28px;
-    }
-
-    .btn-hero-primary {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 52px;
-      padding: 0 30px;
-      border-radius: 999px;
-      background: linear-gradient(135deg, #d64045 0%, #f05b4f 100%);
-      color: #fff8f2;
-      font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 900;
-      font-size: 1rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      text-decoration: none;
-      border: none;
-      box-shadow: 0 14px 32px rgba(214,64,69,0.32);
-      transition: 0.18s ease;
-    }
-    .btn-hero-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 18px 38px rgba(214,64,69,0.4);
-    }
-
-    .btn-hero-secondary {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 52px;
-      padding: 0 28px;
-      border-radius: 999px;
-      background: transparent;
-      color: var(--muted);
-      font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 800;
-      font-size: 1rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      text-decoration: none;
-      border: 1px solid rgba(255,255,255,0.12);
-      transition: 0.18s ease;
-    }
-    .btn-hero-secondary:hover {
-      color: var(--text);
-      border-color: rgba(255,255,255,0.25);
-      background: rgba(255,255,255,0.04);
-    }
-
-    .waitlist-notice {
-      display: flex;
-      gap: 10px;
-      align-items: flex-start;
-      background: rgba(214,64,69,0.07);
-      border: 1px solid rgba(214,64,69,0.22);
-      border-radius: 12px;
-      padding: 12px 16px;
-      max-width: 420px;
-    }
-    .waitlist-notice-icon { font-size: 0.9rem; flex-shrink: 0; margin-top: 2px; }
-    .waitlist-notice p {
-      font-size: 0.83rem;
-      color: #ffd5d6;
-      line-height: 1.55;
-      margin: 0;
-    }
-    .waitlist-notice p strong { color: #ffb3b5; font-weight: 700; }
-
-    /* ---- RIGHT: league card ---- */
-    .league-card {
-      background: rgba(15,22,38,0.92);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 22px;
-      overflow: hidden;
-      box-shadow: 0 24px 60px rgba(0,0,0,0.4);
-    }
-
-    .league-card-header {
-      padding: 15px 20px;
-      border-bottom: 1px solid rgba(255,255,255,0.06);
-      background: rgba(255,255,255,0.02);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-    .league-card-header-label {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 0.68rem;
-      font-weight: 800;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--accent-2);
-    }
-    .league-card-header-season {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 0.65rem;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: rgba(184,196,218,0.45);
-    }
-
-    /* Teams section */
-    .league-teams-section {
-      padding: 16px 20px 14px;
-      border-bottom: 1px solid rgba(255,255,255,0.05);
-    }
-    .league-section-title {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 0.62rem;
-      font-weight: 800;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: rgba(184,196,218,0.45);
-      margin-bottom: 10px;
-    }
-    .teams-list {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 6px;
-    }
-    .team-chip {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding: 8px 10px;
-      background: rgba(255,255,255,0.03);
-      border: 1px solid rgba(255,255,255,0.06);
-      border-radius: 8px;
-    }
-    .team-dot {
-      width: 8px; height: 8px;
-      border-radius: 50%;
-      flex-shrink: 0;
-    }
-    .team-chip-name {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 0.9rem;
-      font-weight: 800;
-      letter-spacing: 0.03em;
-      color: var(--text);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    /* Standings / leaderboard */
-    .league-standings-section {
-      padding: 14px 20px 18px;
-    }
-    .standings-table {
-      width: 100%;
-    }
-    .standings-thead {
-      display: grid;
-      grid-template-columns: 18px 1fr 34px 34px 48px;
-      gap: 6px;
-      padding: 0 6px 8px;
-      border-bottom: 1px solid rgba(255,255,255,0.06);
-      margin-bottom: 4px;
-    }
-    .standings-th {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 0.6rem;
-      font-weight: 800;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: rgba(184,196,218,0.4);
-      text-align: right;
-    }
-    .standings-th:nth-child(2) { text-align: left; }
-    .standings-row {
-      display: grid;
-      grid-template-columns: 18px 1fr 34px 34px 48px;
-      gap: 6px;
-      padding: 7px 6px;
-      border-radius: 7px;
-      transition: background 0.12s;
-    }
-    .standings-row:hover { background: rgba(255,255,255,0.03); }
-    .standings-rank {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 0.75rem;
-      font-weight: 700;
-      color: rgba(184,196,218,0.35);
-      text-align: center;
-      align-self: center;
-    }
-    .standings-row:nth-child(1) .standings-rank { color: #f5c542; }
-    .standings-row:nth-child(2) .standings-rank { color: #c8cfd9; }
-    .standings-row:nth-child(3) .standings-rank { color: #d9956a; }
-    .standings-team-name {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 0.88rem;
-      font-weight: 800;
-      color: var(--text);
-      align-self: center;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    .standings-num {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 0.88rem;
-      font-weight: 700;
-      color: #c8d6ee;
-      text-align: right;
-      align-self: center;
-    }
-    .standings-rd {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 0.88rem;
-      font-weight: 800;
-      text-align: right;
-      align-self: center;
-    }
-    .standings-rd.pos { color: #5ee8d8; }
-    .standings-rd.neg { color: #ff9090; }
-    .standings-rd.zero { color: #8fa4c4; }
-
-    .standings-empty {
-      padding: 14px 0 6px;
-      text-align: center;
-    }
-    .standings-empty-icon { font-size: 1.4rem; margin-bottom: 6px; }
-    .standings-empty-text {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 0.8rem;
-      font-weight: 700;
-      letter-spacing: 0.06em;
-      color: rgba(184,196,218,0.4);
-    }
-    .standings-empty-date {
-      font-size: 0.75rem;
-      color: var(--accent-2);
-      margin-top: 3px;
-      font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 700;
-      letter-spacing: 0.04em;
-    }
-
-    /* ================================================================
-       FEATURE CARDS
-    ================================================================ */
-    .features-section {
-      padding: 56px 0 64px;
-      border-bottom: 1px solid rgba(255,255,255,0.06);
-    }
-
-    .features-inner {
-      width: min(1140px, calc(100% - 32px));
-      margin: 0 auto;
-    }
-
-    .features-heading {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 0.72rem;
-      font-weight: 800;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: #8fa4c4;
-      margin-bottom: 22px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-    .features-heading::after {
-      content: "";
-      flex: 1;
-      height: 1px;
-      background: rgba(255,255,255,0.06);
-    }
-
-    .features-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
-    }
-
-    .feat-card {
-      background: rgba(15,22,38,0.9);
-      border: 1px solid rgba(255,255,255,0.07);
-      border-top: 3px solid rgba(255,255,255,0.07);
-      border-radius: 18px;
-      padding: 26px 24px;
-      text-decoration: none;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      box-shadow: 0 12px 30px rgba(0,0,0,0.2);
-      transition: border-top-color 0.18s, transform 0.18s, box-shadow 0.18s;
-      animation: cardIn 0.4s ease both;
-    }
-    .feat-card:nth-child(1) { animation-delay: 0.05s; }
-    .feat-card:nth-child(2) { animation-delay: 0.12s; }
-    .feat-card:nth-child(3) { animation-delay: 0.19s; }
-
-    .feat-card:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 20px 44px rgba(0,0,0,0.3);
-      border-top-color: var(--accent-2);
-    }
-    .feat-card.red:hover  { border-top-color: var(--accent); }
-    .feat-card.teal:hover { border-top-color: #5ee8d8; }
-
-    .feat-icon { font-size: 1.6rem; margin-bottom: 2px; }
-
-    .feat-title {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 1.25rem;
-      font-weight: 900;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      color: var(--text);
-      line-height: 1;
-    }
-
-    .feat-desc {
-      font-size: 0.92rem;
-      color: #c8d6ee;
-      line-height: 1.75;
-      flex: 1;
-    }
-
-    .feat-arrow {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 0.78rem;
-      font-weight: 800;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--accent-2);
-      margin-top: 6px;
-    }
-    .feat-card.red  .feat-arrow { color: #ff9090; }
-    .feat-card.teal .feat-arrow { color: #5ee8d8; }
-
-    /* ================================================================
-       INFO STRIP
-    ================================================================ */
-    .info-strip {
-      padding: 48px 0 56px;
-    }
-    .info-strip-inner {
-      width: min(1140px, calc(100% - 32px));
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 16px;
-    }
-
-    .info-card {
-      background: rgba(15,22,38,0.9);
-      border: 1px solid rgba(255,255,255,0.07);
-      border-radius: 16px;
-      padding: 22px 22px;
-      box-shadow: 0 10px 28px rgba(0,0,0,0.18);
-    }
-
-    .info-card-label {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 0.65rem;
-      font-weight: 800;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--accent-2);
-      margin-bottom: 10px;
-      display: flex;
-      align-items: center;
-      gap: 7px;
-    }
-    .info-card-label::before {
-      content: "";
-      display: inline-block;
-      width: 4px; height: 14px;
-      border-radius: 999px;
-      background: var(--accent);
-      flex-shrink: 0;
-    }
-
-    .info-card h3 {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 1.1rem;
-      font-weight: 800;
-      color: var(--text);
-      margin-bottom: 10px;
-      letter-spacing: 0.03em;
-    }
-
-    .info-card p {
-      font-size: 0.92rem;
-      color: #c8d6ee;
-      line-height: 1.8;
-    }
-    .info-card p strong { color: var(--text); font-weight: 600; }
-
-    /* ================================================================
-       ANIMATIONS
-    ================================================================ */
-    @keyframes cardIn {
-      from { opacity: 0; transform: translateY(14px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-    /* ================================================================
-       RESPONSIVE
-    ================================================================ */
-    @media (max-width: 900px) {
-      .hero-inner {
-        grid-template-columns: 1fr;
-        gap: 36px;
-      }
-      .hero-stat-card { max-width: 420px; }
-      .hero-tagline { max-width: none; }
-      .features-grid { grid-template-columns: 1fr; }
-      .info-strip-inner { grid-template-columns: 1fr 1fr; }
-    }
-
     @media (max-width: 640px) {
-      .hero { padding: 48px 0 48px; }
-      .hero-headline { font-size: clamp(2.8rem, 10vw, 3.8rem); }
-      .features-section { padding: 40px 0 48px; }
-      .info-strip { padding: 36px 0 48px; }
-      .info-strip-inner { grid-template-columns: 1fr; }
+      .home-hero { padding: 36px 0 32px; }
+      .results-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -533,237 +93,211 @@
 
 <div id="site-header"></div>
 
-<!-- ================================================================
-     HERO
-================================================================ -->
-<section class="hero">
-  <div class="hero-inner">
-
-    <!-- Left -->
-    <div class="hero-left">
-      <div class="hero-kicker">Spring Season · Staten Island</div>
-
-      <h1 class="hero-headline">
-        Baseball
-        <span class="line2">For Bums</span>
-      </h1>
-
-      <p class="hero-tagline">
-        Real baseball. Real competition. No nonsense. Staten Island's competitive adult league — spring season now registering.
-      </p>
-
-      <div class="hero-ctas">
-        <a href="/signup/" class="btn-hero-primary">Join the Waitlist →</a>
-        <a href="/schedule.html" class="btn-hero-secondary">View Schedule</a>
+<main>
+  <!-- HERO -->
+  <section class="home-hero">
+    <div class="wrap home-hero-grid">
+      <div class="rise">
+        <div class="eyebrow">Spring Season · Staten Island</div>
+        <h1 class="home-title">Baseball <span>For Bums</span></h1>
+        <p class="home-lede">Real baseball. Real competition. No nonsense. Staten Island's competitive adult league.</p>
+        <div class="home-ctas">
+          <a href="/waitlist" class="btn btn-primary btn-lg">Join the Waitlist →</a>
+          <a href="/schedule" class="btn btn-lg">View Schedule</a>
+        </div>
+        <div class="notice">
+          <span class="notice-icon" aria-hidden="true">⚾</span>
+          <p><strong>Registration is full.</strong> Sign up to join the <strong>waitlist as a sub</strong> — we call on subs regularly throughout the season when teams are short.</p>
+        </div>
       </div>
 
-      <div class="waitlist-notice">
-        <span class="waitlist-notice-icon">⚾</span>
-        <p><strong>Registration is full.</strong> Sign up to join the <strong>waitlist as a sub</strong> — we call on subs regularly throughout the season when teams are short.</p>
+      <!-- Standings snapshot -->
+      <div class="card rise" style="animation-delay:.08s">
+        <div class="card-head">
+          <span class="card-title">Spring 2026 Standings</span>
+          <span class="chip">6 Teams</span>
+        </div>
+        <div id="home-standings">
+          <div class="skeleton skeleton-row"></div><div class="skeleton skeleton-row"></div>
+          <div class="skeleton skeleton-row"></div><div class="skeleton skeleton-row"></div>
+        </div>
+        <div class="snapshot-foot">
+          <span>Top 4 advance to the playoffs</span>
+          <a href="/standings">Full standings →</a>
+        </div>
       </div>
     </div>
+  </section>
 
-    <!-- Right: league card -->
-    <div class="hero-right">
-      <div class="league-card">
-
-        <div class="league-card-header">
-          <span class="league-card-header-label">Spring 2026</span>
-          <span class="league-card-header-season">Staten Island · 6 Teams</span>
-        </div>
-
-        <!-- Teams -->
-        <div class="league-teams-section">
-          <div class="league-section-title">This Season's Teams</div>
-          <div class="teams-list">
-            <div class="team-chip"><span class="team-dot" style="background:#f5c542;"></span><span class="team-chip-name">Renegades</span></div>
-            <div class="team-chip"><span class="team-dot" style="background:#4da3ff;"></span><span class="team-chip-name">See Ya!</span></div>
-            <div class="team-chip"><span class="team-dot" style="background:#5ee8d8;"></span><span class="team-chip-name">Hurricanes</span></div>
-            <div class="team-chip"><span class="team-dot" style="background:#ff9090;"></span><span class="team-chip-name">Elite</span></div>
-            <div class="team-chip"><span class="team-dot" style="background:#b47eff;"></span><span class="team-chip-name">Legends</span></div>
-            <div class="team-chip"><span class="team-dot" style="background:#6de6a0;"></span><span class="team-chip-name">Cut Fresh</span></div>
-          </div>
-        </div>
-
-        <!-- Standings leaderboard — populated by JS -->
-        <div class="league-standings-section">
-          <div class="league-section-title">Standings</div>
-          <div id="home-standings">
-            <div class="standings-empty">
-              <div class="standings-empty-icon">📅</div>
-              <div class="standings-empty-text">Season hasn't started yet</div>
-              <div class="standings-empty-date">Opener: April 18, 2026</div>
-            </div>
-          </div>
-        </div>
-
+  <!-- SEASON BY THE NUMBERS -->
+  <section class="section">
+    <div class="wrap">
+      <div class="stat-row" id="season-numbers">
+        <div class="stat"><div class="stat-value">6</div><div class="stat-label">Teams</div></div>
+        <div class="stat"><div class="stat-value" id="n-games">—</div><div class="stat-label">Games played</div></div>
+        <div class="stat"><div class="stat-value" id="n-runs">—</div><div class="stat-label">Runs scored</div></div>
+        <div class="stat"><div class="stat-value" id="n-players">—</div><div class="stat-label">Players</div></div>
       </div>
     </div>
+  </section>
 
-  </div>
-</section>
-
-<!-- ================================================================
-     FEATURE CARDS
-================================================================ -->
-<section class="features-section">
-  <div class="features-inner">
-    <div class="features-heading">Quick Links</div>
-
-    <div class="features-grid">
-      <a href="/schedule.html" class="feat-card teal">
-        <div class="feat-icon">📅</div>
-        <div class="feat-title">Schedule</div>
-        <div class="feat-desc">View the full Spring 2026 game schedule. Game dates, times, field assignments, and status for every matchup this season.</div>
-        <div class="feat-arrow">View Schedule →</div>
-      </a>
-
-      <a href="/league-rules/" class="feat-card">
-        <div class="feat-icon">📖</div>
-        <div class="feat-title">League Rules</div>
-        <div class="feat-desc">Game basics, base running, equipment requirements, conduct policy, standings, and playoff format — everything you need to know before first pitch.</div>
-        <div class="feat-arrow">Read the Rules →</div>
-      </a>
-
-      <a href="/waiver-and-conduct/" class="feat-card red">
-        <div class="feat-icon">🤝</div>
-        <div class="feat-title">Waiver &amp; Conduct</div>
-        <div class="feat-desc">Review the league waiver and code of conduct before registering. All players must agree to these terms prior to participation.</div>
-        <div class="feat-arrow">View Waiver →</div>
-      </a>
+  <!-- LATEST RESULTS -->
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head"><h2 id="results-heading">Latest results</h2><a class="more" href="/schedule">Full schedule →</a></div>
+      <div class="results-grid" id="latest-results"></div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- ================================================================
-     INFO STRIP
-================================================================ -->
-<section class="info-strip">
-  <div class="info-strip-inner">
-
-    <div class="info-card">
-      <div class="info-card-label">Format</div>
-      <h3 style="color:#7cc4ff;">7-Inning Games</h3>
-      <p>11 players per side. Everyone bats, even if rotating in and out on defense. <strong>Single-elimination playoffs</strong> cap the season.</p>
+  <!-- LEADERS -->
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head"><h2>League leaders</h2><a class="more" href="/stats">All stats →</a></div>
+      <div class="grid-3" id="home-leaders">
+        <div class="card"><div class="skeleton skeleton-row"></div><div class="skeleton skeleton-row"></div><div class="skeleton skeleton-row"></div></div>
+        <div class="card"><div class="skeleton skeleton-row"></div><div class="skeleton skeleton-row"></div><div class="skeleton skeleton-row"></div></div>
+        <div class="card"><div class="skeleton skeleton-row"></div><div class="skeleton skeleton-row"></div><div class="skeleton skeleton-row"></div></div>
+      </div>
     </div>
+  </section>
 
-    <div class="info-card">
-      <div class="info-card-label">Standings</div>
-      <h3 style="color:#ffcc66;">Run Differential</h3>
-      <p>Standings are determined by <strong>run differential</strong>. Tiebreakers go to head-to-head record. Both scores vs. a double-opponent are averaged.</p>
+  <!-- EVERYTHING ON THE SITE -->
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head"><h2>Find your way around</h2><a class="more" href="/sitemap/">Site map →</a></div>
+      <div class="grid-4">
+        <a class="tile" href="/schedule"><span class="tile-icon">📅</span><span class="tile-title">Schedule</span><span class="tile-desc">Game nights, fields, final scores and the postseason bracket.</span><span class="tile-go">View schedule →</span></a>
+        <a class="tile" href="/standings"><span class="tile-icon">🏆</span><span class="tile-title">Standings</span><span class="tile-desc">Records, run differential, games back and who's in the playoffs.</span><span class="tile-go">See standings →</span></a>
+        <a class="tile" href="/stats"><span class="tile-icon">📊</span><span class="tile-title">Player Stats</span><span class="tile-desc">Leaderboards and a sortable, searchable table for every hitter.</span><span class="tile-go">Browse stats →</span></a>
+        <a class="tile" href="/rosters"><span class="tile-icon">👥</span><span class="tile-title">Rosters</span><span class="tile-desc">Every team, every player, and each team's top performers.</span><span class="tile-go">Meet the teams →</span></a>
+        <a class="tile" href="/league-rules/"><span class="tile-icon">📖</span><span class="tile-title">League Rules</span><span class="tile-desc">Game basics, base running, equipment, conduct and playoff format.</span><span class="tile-go">Read the rules →</span></a>
+        <a class="tile" href="/waiver-and-conduct/"><span class="tile-icon">🤝</span><span class="tile-title">Waiver &amp; Conduct</span><span class="tile-desc">All players agree to these terms before participating.</span><span class="tile-go">View waiver →</span></a>
+        <a class="tile" href="/scorecard" target="_blank" rel="noopener"><span class="tile-icon">🖨️</span><span class="tile-title">Scorecard</span><span class="tile-desc">Official printable scorecard — two per sheet, instructions included.</span><span class="tile-go">Open &amp; print →</span></a>
+        <a class="tile" href="/waitlist"><span class="tile-icon">✋</span><span class="tile-title">Join the Waitlist</span><span class="tile-desc">Get called as a sub when a team is short. First dibs on open spots.</span><span class="tile-go">Sign up →</span></a>
+      </div>
     </div>
+  </section>
 
-    <div class="info-card">
-      <div class="info-card-label">Rainouts</div>
-      <h3 style="color:#5ee8d8;">Tuesday Makeups</h3>
-      <p>Any rained-out game is rescheduled for the <strong>following Tuesday</strong>, or the next available field date if the field is unavailable.</p>
+  <!-- LEAGUE FACTS -->
+  <section class="section facts">
+    <div class="wrap grid-3">
+      <div class="card"><div class="card-body">
+        <div class="eyebrow">Format</div>
+        <h3 style="color:var(--blue)">7-Inning Games</h3>
+        <p>Everyone bats, even if rotating in and out on defense. <strong>Single-elimination playoffs</strong> cap the season. <a href="/league-rules/#r-basics" style="color:var(--gold)">Game basics →</a></p>
+      </div></div>
+      <div class="card"><div class="card-body">
+        <div class="eyebrow">Standings</div>
+        <h3 style="color:var(--gold)">Run Differential</h3>
+        <p>Tiebreakers go to <strong>run differential</strong>, then head-to-head. Both scores vs. a double-opponent are averaged. <a href="/league-rules/#r-standings" style="color:var(--gold)">How it works →</a></p>
+      </div></div>
+      <div class="card"><div class="card-body">
+        <div class="eyebrow">Rainouts</div>
+        <h3 style="color:var(--teal)">Tuesday Makeups</h3>
+        <p>Any rained-out game is rescheduled for the <strong>following Tuesday</strong>, or the next available field date. <a href="/waiver-and-conduct/#s07" style="color:var(--gold)">Scheduling policy →</a></p>
+      </div></div>
     </div>
+  </section>
+</main>
 
-    <div class="info-card">
-      <div class="info-card-label">Scorecard</div>
-      <h3 style="color:#ff9090;">Print &amp; Score</h3>
-      <p>Official game scorecard for scorekeepers. Two cards per sheet — one per team. Includes full instructions.</p>
-      <a href="/scorecard.html" target="_blank" style="
-        display: inline-flex;
-        align-items: center;
-        gap: 7px;
-        margin-top: 14px;
-        padding: 9px 18px;
-        border-radius: 999px;
-        background: linear-gradient(135deg, #d64045, #f05b4f);
-        color: #fff;
-        font-family: 'Barlow Condensed', sans-serif;
-        font-size: 0.82rem;
-        font-weight: 900;
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
-        text-decoration: none;
-        box-shadow: 0 8px 20px rgba(214,64,69,0.28);
-        transition: 0.15s ease;
-      " onmouseover="this.style.transform='translateY(-1px)'" onmouseout="this.style.transform='translateY(0)'">
-        🖨 Open &amp; Print Scorecard
-      </a>
-    </div>
+<div id="site-footer"></div>
 
-  </div>
-</section>
-
-<footer style="width:min(1140px,calc(100% - 32px));margin:0 auto;">
-  Baseball For Bums League Central · Staten Island · © 2026
-</footer>
-
-<script src="./shared.js?v=5"></script>
-<script src="./header.js?v=5"></script>
+<script src="/shared.js?v=8"></script>
+<script src="/header.js?v=11"></script>
 <script>
-// Team color map matches the team chips above
-var TEAM_COLORS = {
-  "Renegades":  "#f5c542",
-  "See Ya!":    "#4da3ff",
-  "Hurricanes": "#5ee8d8",
-  "Elite":      "#ff9090",
-  "Legends":    "#b47eff",
-  "Cut Fresh":  "#6de6a0"
-};
+(function () {
+  var B = window.BFB, esc = B.esc;
 
-function rdClass(val) {
-  var n = Number(val || 0);
-  if (n > 0) return "pos";
-  if (n < 0) return "neg";
-  return "zero";
-}
-function rdSign(val) {
-  var n = Number(val || 0);
-  return n > 0 ? "+" + n : String(n);
-}
-
-async function loadHomeStandings() {
-  var el = document.getElementById("home-standings");
-  try {
-    var data = await loadData("Standings");
-    if (!Array.isArray(data) || !data.length) return; // keep default empty state
-
-    // Sort by wins desc, then run diff desc
-    var sorted = data.slice().sort(function(a, b) {
-      var wDiff = Number(b.wins || b.w || 0) - Number(a.wins || a.w || 0);
-      if (wDiff !== 0) return wDiff;
-      return Number(b.run_diff || b.rd || b.run_differential || 0) -
-             Number(a.run_diff || a.rd || a.run_differential || 0);
-    });
-
-    var getName = function(r) { return r.team_name || r.team || r.Team || ""; };
-    var getW    = function(r) { return r.wins || r.w || r.W || 0; };
-    var getL    = function(r) { return r.losses || r.l || r.L || 0; };
-    var getRD   = function(r) { return r.run_diff || r.rd || r.run_differential || r.RD || 0; };
-
-    el.innerHTML =
-      '<div class="standings-thead">' +
-        '<div class="standings-th">#</div>' +
-        '<div class="standings-th" style="text-align:left;">Team</div>' +
-        '<div class="standings-th">W</div>' +
-        '<div class="standings-th">L</div>' +
-        '<div class="standings-th">RD</div>' +
-      '</div>' +
-      sorted.map(function(row, i) {
-        var name  = getName(row);
-        var color = TEAM_COLORS[name] || "rgba(255,255,255,0.3)";
-        var rd    = getRD(row);
-        return '<div class="standings-row">' +
-          '<div class="standings-rank">' + (i + 1) + '</div>' +
-          '<div class="standings-team-name" style="display:flex;align-items:center;gap:6px;">' +
-            '<span style="width:7px;height:7px;border-radius:50%;background:' + color + ';flex-shrink:0;display:inline-block;"></span>' +
-            name +
-          '</div>' +
-          '<div class="standings-num">' + getW(row) + '</div>' +
-          '<div class="standings-num">' + getL(row) + '</div>' +
-          '<div class="standings-rd ' + rdClass(rd) + '">' + rdSign(rd) + '</div>' +
-        '</div>';
-      }).join("");
-  } catch(e) {
-    // silently keep the "season hasn't started" placeholder
+  function teamTag(name, href) {
+    var t = B.team(name);
+    return '<a class="team-tag" href="' + (href || ('/rosters#team-' + (t ? t.id : B.slugify(name)))) + '">' +
+      '<span class="bar" style="background:' + B.teamColor(name) + '"></span><span class="name">' + esc(name) + '</span></a>';
   }
-}
 
-loadHomeStandings();
+  /* Standings snapshot — sorted like the standings page (wins, then run diff) */
+  loadData("Standings").then(function (rows) {
+    var el = document.getElementById("home-standings");
+    if (!Array.isArray(rows) || !rows.length || !standingsHasData(rows)) {
+      el.innerHTML = '<div class="empty"><div class="empty-icon">📅</div><div class="empty-title">No games yet</div>Standings appear after opening night.</div>';
+      return;
+    }
+    var w = function (r) { return B.num(r.w || r.wins); };
+    var rd = function (r) { return B.num(r.rd != null ? r.rd : r.diff); };
+    var sorted = rows.slice().sort(function (a, b) { return (w(b) - w(a)) || (rd(b) - rd(a)); });
+    el.innerHTML =
+      '<div class="snapshot-row head"><span>#</span><span>Team</span><span class="n">W</span><span class="n">L</span><span class="n">RD</span></div>' +
+      sorted.map(function (r, i) {
+        var name = r.team || r.team_name || "";
+        var t = B.team(name);
+        return '<a class="snapshot-row' + (i === 4 ? ' cut' : '') + '" href="/rosters#team-' + (t ? t.id : B.slugify(name)) + '">' +
+          '<span class="pos-n">' + (i + 1) + '</span>' +
+          '<span class="team-tag"><span class="bar" style="background:' + B.teamColor(name) + '"></span><span class="name">' + esc(name) + '</span></span>' +
+          '<span class="n">' + w(r) + '</span><span class="n">' + B.num(r.l || r.losses) + '</span>' +
+          '<span class="n ' + B.rdClass(rd(r)) + '">' + B.fmtRD(rd(r)) + '</span></a>';
+      }).join("");
+  }).catch(function () {
+    document.getElementById("home-standings").innerHTML = '<div class="empty">Standings are unavailable right now. <a href="/standings" style="color:var(--gold)">Try the standings page →</a></div>';
+  });
+
+  /* Latest results + season numbers from the schedule */
+  function renderResults(games) {
+    var finals = games.filter(function (g) { return B.gameState(g) === "final"; });
+    var runs = finals.reduce(function (s, g) { return s + B.num(g.away_score) + B.num(g.home_score); }, 0);
+    document.getElementById("n-games").textContent = finals.length;
+    document.getElementById("n-runs").textContent = runs;
+
+    var upcoming = games.filter(function (g) { return B.gameState(g) === "upcoming" && !g.allstar; });
+    var list, heading;
+    if (upcoming.length) {
+      var nextDate = upcoming[0].game_date;
+      list = upcoming.filter(function (g) { return g.game_date === nextDate; });
+      heading = "Next up · " + B.dateLabel(nextDate, { short: true });
+    } else {
+      var lastDate = finals.length ? finals[finals.length - 1].game_date : null;
+      list = finals.filter(function (g) { return g.game_date === lastDate; });
+      heading = "Latest results · " + (lastDate ? B.dateLabel(lastDate, { short: true }) : "");
+    }
+    document.getElementById("results-heading").textContent = heading;
+    document.getElementById("latest-results").innerHTML = list.map(function (g) {
+      var win = B.winner(g), fin = B.gameState(g) === "final";
+      function line(name, sc) {
+        var cls = !fin ? "" : (win === name ? "win" : "loss");
+        return '<div class="result-line ' + cls + '">' + teamTag(name) + (fin ? '<span class="sc">' + sc + '</span>' : '') + '</div>';
+      }
+      var f = B.FIELDS[g.field] || { cls: "", label: g.field };
+      return '<div class="result-card">' + line(g.away_team, g.away_score) + line(g.home_team, g.home_score) +
+        '<div class="result-meta"><span>' + esc(g.game_time) + ' · ' + esc(g.field) + '</span><span>' + (fin ? "Final" : B.STATE_LABEL[B.gameState(g)]) + '</span></div></div>';
+    }).join("") || '<div class="empty">No games to show yet.</div>';
+  }
+  renderResults(B.SCHEDULE);          // instant, from the built-in schedule
+  B.loadSchedule().then(renderResults); // then overlay live sheet results
+
+  /* Leaders */
+  loadData("Web_Player_Stats").then(function (stats) {
+    if (!Array.isArray(stats) || !stats.length) throw new Error("empty");
+    document.getElementById("n-players").textContent = stats.length;
+    var cats = [
+      { key: "ops", label: "OPS", rate: true, minAb: 10 },
+      { key: "hr",  label: "Home Runs" },
+      { key: "rbi", label: "RBI" }
+    ];
+    document.getElementById("home-leaders").innerHTML = cats.map(function (c) {
+      var top = stats.filter(function (r) { return !c.minAb || B.num(r.ab) >= c.minAb; })
+        .filter(function (r) { return B.num(r[c.key]) > 0; })
+        .sort(function (a, b) { return B.num(b[c.key]) - B.num(a[c.key]); }).slice(0, 5);
+      return '<div class="card"><div class="card-head"><span class="card-title">' + c.label + '</span>' +
+        (c.minAb ? '<span class="chip">Min ' + c.minAb + ' AB</span>' : '') + '</div><div class="leader-mini">' +
+        top.map(function (r, i) {
+          var name = r.player_name || r.full_name || "";
+          return '<a href="/stats?q=' + encodeURIComponent(name) + '"><span class="rank rank-' + (i + 1) + '">' + (i + 1) + '</span>' +
+            '<span class="who"><b>' + esc(name) + '</b><small><span class="dot" style="background:' + B.teamColor(r.team) + '"></span>' + esc(r.team) + '</small></span>' +
+            '<span class="val">' + (c.rate ? B.fmtRate(r[c.key]) : B.fmtInt(r[c.key])) + '</span></a>';
+        }).join("") + '</div></div>';
+    }).join("");
+  }).catch(function () {
+    document.getElementById("home-leaders").innerHTML = '<div class="card" style="grid-column:1/-1"><div class="empty">Leaders appear once stats are posted. <a href="/stats" style="color:var(--gold)">Stats page →</a></div></div>';
+  });
+})();
 </script>
 </body>
 </html>

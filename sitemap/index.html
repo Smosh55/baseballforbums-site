@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <title>Site Map | Baseball For Bums</title>
+  <meta name="description" content="Every page on Baseball For Bums in one place — schedule, standings, stats, rosters, league rules, waiver, scorecard, registration and the waitlist.">
+  <link rel="canonical" href="https://baseballforbums.com/sitemap/">
+  <meta name="theme-color" content="#ffffff">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E⚾%3C/text%3E%3C/svg%3E">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800;900&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/app.css?v=8">
+
+  <style>
+    .ask { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 10px; }
+    .ask a { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 14px 16px; border-radius: 12px; border: 1px solid var(--line); background: var(--surface); text-decoration: none; color: var(--text-2); font-size: .95rem; transition: border-color .15s, background .15s; }
+    .ask a:hover { border-color: var(--line-2); background: var(--surface-2); color: var(--text); }
+    .ask a b { color: var(--gold); font-family: var(--font-display); font-size: .8rem; letter-spacing: .08em; text-transform: uppercase; white-space: nowrap; }
+    .map-group { scroll-margin-top: calc(var(--header-h) + 50px); }
+    .map-page { padding: 18px 20px; }
+    .map-page h3 { font-size: 1.3rem; font-weight: 800; text-transform: uppercase; letter-spacing: .02em; }
+    .map-page h3 a { text-decoration: none; }
+    .map-page h3 a:hover { color: var(--gold); }
+    .map-page > p { color: var(--muted); font-size: .9rem; margin: 4px 0 10px; }
+    .map-page .url { font-family: ui-monospace, Consolas, monospace; font-size: .76rem; color: var(--faint); }
+    .map-page ul { list-style: none; display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+    .map-page ul a { display: inline-flex; padding: 5px 10px; border-radius: 8px; border: 1px solid var(--line); font-size: .82rem; color: var(--text-2); text-decoration: none; }
+    .map-page ul a:hover { border-color: var(--line-2); color: var(--text); }
+    .teams-map { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 12px; }
+    .team-map { padding: 16px 18px; border-left: 4px solid var(--team); }
+    .team-map h3 { font-size: 1.25rem; font-weight: 900; text-transform: uppercase; }
+    .team-map div { display: flex; gap: 12px; margin-top: 8px; font-size: .86rem; }
+    .team-map a { color: var(--gold); text-decoration: none; font-weight: 600; }
+    .team-map a:hover { text-decoration: underline; }
+    @media (max-width: 900px) { .ask, .teams-map { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 560px) { .ask, .teams-map { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+
+<div id="site-header"></div>
+
+<main>
+  <section class="page-hero">
+    <div class="wrap">
+      <nav data-crumbs aria-label="Breadcrumb"></nav>
+      <div class="eyebrow">Find anything</div>
+      <h1 class="page-title">Site Map</h1>
+      <p class="page-lede">Every page, section and team on the site. Tip: press <kbd style="border:1px solid var(--line-2);border-radius:5px;padding:1px 6px;font-size:.85em;">Ctrl K</kbd> (or <kbd style="border:1px solid var(--line-2);border-radius:5px;padding:1px 6px;font-size:.85em;">/</kbd>) on any page to jump straight there.</p>
+      <div style="margin-top:16px;"><button class="btn" type="button" data-qj-open>🔎 Search the site</button></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head"><h2>I want to…</h2></div>
+      <div class="ask">
+        <a href="/schedule">See when my team plays next <b>Schedule →</b></a>
+        <a href="/standings">Check who's in playoff position <b>Standings →</b></a>
+        <a href="/stats">Look up a player's numbers <b>Stats →</b></a>
+        <a href="/waitlist">Sign up to play or sub <b>Waitlist →</b></a>
+        <a href="/league-rules/#r-baserunning">Settle a base-running argument <b>Rules →</b></a>
+        <a href="/waiver-and-conduct/#s07">Know what happens on a rainout <b>Policy →</b></a>
+        <a href="/league-rules/#r-equipment">Check if my bat or cleats are legal <b>Equipment →</b></a>
+        <a href="/scorecard">Print a scorecard for tonight <b>Scorecard →</b></a>
+        <a href="/schedule#postseason">See the playoff bracket <b>Postseason →</b></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section map-group" id="season">
+    <div class="wrap">
+      <div class="section-head"><h2>Season</h2></div>
+      <div class="grid-2">
+        <div class="card map-page">
+          <h3><a href="/schedule">📅 Schedule</a></h3>
+          <p>Every game night — dates, fields, results and the postseason bracket.</p>
+          <span class="url">baseballforbums.com/schedule</span>
+          <ul><li><a href="/schedule#postseason">Postseason &amp; All-Star Game</a></li><li><a href="/schedule#field-guide">Field Guide</a></li></ul>
+        </div>
+        <div class="card map-page">
+          <h3><a href="/standings">🏆 Standings</a></h3>
+          <p>Team records, run differential, games back and league leaders.</p>
+          <span class="url">baseballforbums.com/standings</span>
+          <ul><li><a href="/standings#leaders">League Leaders</a></li></ul>
+        </div>
+        <div class="card map-page">
+          <h3><a href="/stats">📊 Player Stats</a></h3>
+          <p>Full batting stats and leaderboards for every player.</p>
+          <span class="url">baseballforbums.com/stats</span>
+          <ul>
+            <li><a href="/stats#leaderboards">Leaderboards</a></li><li><a href="/stats#full-stats">Full Stats Table</a></li>
+            <li><a href="/stats?sort=hr">Home run leaders</a></li><li><a href="/stats?sort=rbi">RBI leaders</a></li><li><a href="/stats?sort=avg">Batting average</a></li>
+          </ul>
+        </div>
+        <div class="card map-page">
+          <h3><a href="/rosters">👥 Rosters</a></h3>
+          <p>All six teams, their players and top performers.</p>
+          <span class="url">baseballforbums.com/rosters</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section map-group" id="teams">
+    <div class="wrap">
+      <div class="section-head"><h2>Teams</h2></div>
+      <div class="teams-map">
+        <div class="card team-map" style="--team:#4cdb8a"><h3>Cut Fresh</h3><div><a href="/rosters#team-cut-fresh">Roster</a><a href="/schedule?team=cut-fresh">Schedule</a><a href="/stats?team=cut-fresh">Stats</a></div></div>
+        <div class="card team-map" style="--team:#ff8080"><h3>Elite</h3><div><a href="/rosters#team-elite">Roster</a><a href="/schedule?team=elite">Schedule</a><a href="/stats?team=elite">Stats</a></div></div>
+        <div class="card team-map" style="--team:#3ee8d8"><h3>Hurricanes</h3><div><a href="/rosters#team-hurricanes">Roster</a><a href="/schedule?team=hurricanes">Schedule</a><a href="/stats?team=hurricanes">Stats</a></div></div>
+        <div class="card team-map" style="--team:#c084fc"><h3>Legends</h3><div><a href="/rosters#team-legends">Roster</a><a href="/schedule?team=legends">Schedule</a><a href="/stats?team=legends">Stats</a></div></div>
+        <div class="card team-map" style="--team:#f5c542"><h3>Renegades</h3><div><a href="/rosters#team-renegades">Roster</a><a href="/schedule?team=renegades">Schedule</a><a href="/stats?team=renegades">Stats</a></div></div>
+        <div class="card team-map" style="--team:#4da3ff"><h3>See Ya!</h3><div><a href="/rosters#team-see-ya">Roster</a><a href="/schedule?team=see-ya">Schedule</a><a href="/stats?team=see-ya">Stats</a></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section map-group" id="league">
+    <div class="wrap">
+      <div class="section-head"><h2>League Info</h2></div>
+      <div class="grid-2">
+        <div class="card map-page">
+          <h3><a href="/league-rules/">📖 League Rules</a></h3>
+          <p>Game basics, equipment, base running, conduct and playoff format.</p>
+          <span class="url">baseballforbums.com/league-rules/</span>
+          <ul>
+            <li><a href="/league-rules/#r-philosophy">Philosophy</a></li><li><a href="/league-rules/#r-basics">Game Basics</a></li><li><a href="/league-rules/#r-time">Time</a></li>
+            <li><a href="/league-rules/#r-equipment">Equipment</a></li><li><a href="/league-rules/#r-fielding">Fielding</a></li><li><a href="/league-rules/#r-baserunning">Base Running</a></li>
+            <li><a href="/league-rules/#r-conduct">Umpires &amp; Conduct</a></li><li><a href="/league-rules/#r-ties">Tie Games</a></li><li><a href="/league-rules/#r-standings">Standings &amp; Playoffs</a></li>
+          </ul>
+        </div>
+        <div class="card map-page">
+          <h3><a href="/waiver-and-conduct/">🤝 Waiver &amp; Code of Conduct</a></h3>
+          <p>Liability waiver and code of conduct every player agrees to.</p>
+          <span class="url">baseballforbums.com/waiver-and-conduct/</span>
+          <ul>
+            <li><a href="/waiver-and-conduct/#s01">Assumption of Risk</a></li><li><a href="/waiver-and-conduct/#s02">Waiver &amp; Release</a></li><li><a href="/waiver-and-conduct/#s03">Medical</a></li>
+            <li><a href="/waiver-and-conduct/#s04">Fitness</a></li><li><a href="/waiver-and-conduct/#s05">Code of Conduct</a></li><li><a href="/waiver-and-conduct/#s06">Discipline</a></li>
+            <li><a href="/waiver-and-conduct/#s07">Rainouts</a></li><li><a href="/waiver-and-conduct/#s08">Media Release</a></li>
+          </ul>
+        </div>
+        <div class="card map-page">
+          <h3><a href="/scorecard">🖨️ Printable Scorecard</a></h3>
+          <p>Official scorecard for scorekeepers — two per sheet, instructions included.</p>
+          <span class="url">baseballforbums.com/scorecard</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section map-group" id="join">
+    <div class="wrap">
+      <div class="section-head"><h2>Join</h2></div>
+      <div class="grid-2">
+        <div class="card map-page">
+          <h3><a href="/signup/">📝 Registration</a></h3>
+          <p>Where registration stands and the three steps to get on a team.</p>
+          <span class="url">baseballforbums.com/signup/</span>
+        </div>
+        <div class="card map-page">
+          <h3><a href="/waitlist">✋ Join the Waitlist</a></h3>
+          <p>Sign up as a sub — we call on the waitlist when teams are short.</p>
+          <span class="url">baseballforbums.com/waitlist</span>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div id="site-footer"></div>
+
+<script src="/shared.js?v=8"></script>
+<script src="/header.js?v=11"></script>
+</body>
+</html>

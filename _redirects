@@ -1,0 +1,19 @@
+# Cloudflare Pages short links → canonical pages (301 = permanent, SEO-safe)
+# Existing URLs (/schedule.html, /league-rules/, etc.) are untouched.
+/rules        /league-rules/        301
+/rulebook     /league-rules/        301
+/waiver       /waiver-and-conduct/  301
+/conduct      /waiver-and-conduct/  301
+/register     /signup/              301
+/registration /signup/              301
+/join         /waitlist             301
+/sub          /waitlist             301
+/subs         /waitlist             301
+/teams        /rosters              301
+/players      /stats                301
+/leaders      /stats                301
+/scores       /schedule             301
+/results      /schedule             301
+/playoffs     /schedule#postseason  301
+/table        /standings            301
+/site-map     /sitemap/             301
